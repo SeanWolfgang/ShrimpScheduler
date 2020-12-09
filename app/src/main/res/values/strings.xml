@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">ShrimpScheduler</string>
     <string name="action_settings">Settings</string>
+    <string name="done_button_text">DONE</string>
+    <string name="text_add_task">Add New Task</string>
+    <string name="task_name_hint">Name</string>
+    <string name="parent_name_hint">Parent Name</string>
+    <string name="pick_time">Start Time</string>
+    <string name="pick_date">Start Date</string>
+    <string name="description_hint">Description</string>
+    <string name="save_task_string">Save Task</string>
+    <string name="empty_not_saved">Didn\'t save</string>
+    <string name="delete_button">DELETE ALL TASKS</string>
+
+
 </resources>

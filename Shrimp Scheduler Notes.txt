@@ -1,0 +1,70 @@
+@PrimaryKey(autoGenerate = true)
+private int id;
+
+@ColumnInfo(name= "name")
+private String name;
+
+@ColumnInfo(name= "parent_name")
+private String parentName;
+
+@ColumnInfo(name= "execute_time")
+private OffsetDateTime executeTime;
+
+@ColumnInfo(name= "description")
+private String description;
+
+@ColumnInfo(name= "done")
+private boolean done = false;
+
+
+
+Storing timestamps in Room
+1.) Formatter - https://www.geeksforgeeks.org/offsetdatetime-format-method-in-java-with-examples/
+2.) Formatter - https://developer.android.com/reference/java/time/format/DateTimeFormatter
+3.) TypeConverter - https://stackoverflow.com/questions/54927913/room-localdatetime-typeconverter
+4.) Article - https://medium.com/androiddevelopers/room-time-2b4cf9672b98
+	date(...) returns just the date.
+	time(...) returns just the time.
+	datetime(...) returns both the date and time.
+	julianday(...) returns the Julian Day.
+	strftime(...) returns a value formatted with your given format string. The first four can be thought of as variations of strftime with a pre-defined format.
+
+
+
+task_name
+pick_time_button
+pick_date_button
+description
+
+
+String name, String parentName, OffsetDateTime executeTime, String description
+
+
+
+
+
+
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".MainActivity">
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/textView"
+        android:paddingTop="60dp"
+        android:id="@+id/inflating_recycler"/>
+
+    <Button
+        android:id="@+id/deleteAllTasks"
+        android:text="@string/delete_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
