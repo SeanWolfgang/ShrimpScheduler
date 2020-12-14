@@ -10,17 +10,21 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import java.time.Clock;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     private ShrimpTaskViewModel shrimpTaskViewModel;
     public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
     private RecyclerFragment recyclerFragment;
+    private Fragment buttonRibbonFragment;
+    private Fragment dataPreviewFragment;
 
 
     @Override
@@ -38,9 +44,13 @@ public class MainActivity extends AppCompatActivity {
         final ShrimpTaskAdapter adapter = new ShrimpTaskAdapter(new ShrimpTaskAdapter.ShrimpTaskDiff());
 
         recyclerFragment = new RecyclerFragment();
+        buttonRibbonFragment = new ButtonRibbonFragment();
+        dataPreviewFragment = new DataPreviewFragment();
 
         getSupportFragmentManager().beginTransaction()
+                .replace(R.id.top_container, dataPreviewFragment)
                 .replace(R.id.middle_container, recyclerFragment)
+                .replace(R.id.bottom_container, buttonRibbonFragment)
                 .commit();
 
         fab = findViewById(R.id.fab);
@@ -48,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener( view -> {
             Intent intent = new Intent(MainActivity.this, CreateTask.class);
             startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
-
         });
     }
 
@@ -79,8 +88,17 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            ShrimpTask shrimpTask = new ShrimpTask(data.getStringExtra(CreateTask.EXTRA_REPLY1), "parent", OffsetDateTime.now(Clock.systemDefaultZone()), data.getStringExtra(CreateTask.EXTRA_REPLY2));
-            shrimpTaskViewModel.insert(shrimpTask);
+            //ShrimpTask shrimpTask = new ShrimpTask("je", "parent", OffsetDateTime.now(Clock.systemDefaultZone()), "je");
+            int[] dateArray = data.getIntArrayExtra(CreateTask.EXTRA_REPLY2);
+
+            // Log.w("myApp", dateArray.toString());
+
+            OffsetDateTime startDateTime = OffsetDateTime.of(LocalDateTime.of(dateArray[0], dateArray[1] + 1, dateArray[2], 00, 00),
+                    ZoneOffset.of("+12"));
+
+            ShrimpTask shrimpTask = new ShrimpTask(data.getStringExtra(CreateTask.EXTRA_REPLY1), "parent", startDateTime, data.getStringExtra(CreateTask.EXTRA_REPLY3));
+
+            recyclerFragment.getShrimpTaskViewModel().insert(shrimpTask);
         } else {
             Toast.makeText(
                     getApplicationContext(),

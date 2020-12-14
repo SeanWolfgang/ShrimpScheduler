@@ -31,6 +31,17 @@
         app:layout_constraintStart_toEndOf="@+id/templateLabel"
         app:layout_constraintTop_toTopOf="@+id/templateLabel" />
 
+    <TextView
+        android:id="@+id/templateLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/task_template_label"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <!--
     <Button
         android:id="@+id/pick_time_button"
         android:layout_width="wrap_content"
@@ -39,15 +50,6 @@
         android:text="@string/pick_time"
         app:layout_constraintStart_toStartOf="@+id/task_name"
         app:layout_constraintTop_toBottomOf="@+id/task_name" />
-
-    <Button
-        android:id="@+id/pick_date_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="showDatePickerDialog"
-        android:text="@string/pick_date"
-        app:layout_constraintStart_toStartOf="@+id/pick_time_button"
-        app:layout_constraintTop_toBottomOf="@+id/pick_time_button" />
 
     <TextView
         android:id="@+id/startTime"
@@ -59,15 +61,15 @@
         app:layout_constraintStart_toEndOf="@+id/pick_time_button"
         app:layout_constraintTop_toTopOf="@+id/pick_time_button" />
 
-    <TextView
-        android:id="@+id/templateLabel"
+    -->
+    <Button
+        android:id="@+id/pick_date_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="@string/task_template_label"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        android:onClick="showDatePickerDialog"
+        android:text="@string/pick_date"
+        app:layout_constraintStart_toStartOf="@+id/description"
+        app:layout_constraintTop_toBottomOf="@+id/description" />
 
     <TextView
         android:id="@+id/startDate"
@@ -84,16 +86,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/save_task_string"
-        app:layout_constraintStart_toStartOf="@+id/description"
-        app:layout_constraintTop_toBottomOf="@+id/description"></Button>
+        app:layout_constraintStart_toStartOf="@+id/pick_date_button"
+        app:layout_constraintTop_toBottomOf="@+id/pick_date_button"></Button>
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/description_hint"
-        app:layout_constraintStart_toStartOf="@+id/pick_date_button"
-        app:layout_constraintTop_toBottomOf="@+id/pick_date_button"></com.google.android.material.textfield.TextInputEditText>
+        app:layout_constraintStart_toStartOf="@+id/task_name"
+        app:layout_constraintTop_toBottomOf="@+id/task_name"></com.google.android.material.textfield.TextInputEditText>
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/task_name"

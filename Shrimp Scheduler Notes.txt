@@ -36,10 +36,12 @@ pick_time_button
 pick_date_button
 description
 
-
 String name, String parentName, OffsetDateTime executeTime, String description
-
 
 Fragment tutorial
 https://www.youtube.com/watch?v=i22INe14JUc&ab_channel=PhilippLackner
 https://developer.android.com/guide/fragments/create
+
+Misc.
+Fit view to height available: https://stackoverflow.com/questions/45854413/constraintlayout-take-height-of-another-view-android
+OffsetDateTime: https://www.boraji.com/java-8-offsetdatetime-example

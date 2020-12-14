@@ -15,5 +15,8 @@
     <string name="default_start_time_text">Pick Start Time</string>
     <string name="default_start_date_text">Pick Start Date</string>
     <string name="task_template_label">Task Template</string>
+    <string name="manage_tasks_button">Manage Tasks</string>
+    <string name="manage_templates_button">Manage Templates</string>
+    <string name="data_hub_button">Data Hub</string>
 
 </resources>

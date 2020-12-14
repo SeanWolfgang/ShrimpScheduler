@@ -25,11 +25,9 @@ public class RecyclerFragment extends Fragment {
         final ShrimpTaskAdapter adapter = new ShrimpTaskAdapter(new ShrimpTaskAdapter.ShrimpTaskDiff());
 
         recyclerView = view.findViewById(R.id.recycler_view);
-
-
-
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(adapter);
+        recyclerView.setNestedScrollingEnabled(false);
 
         shrimpTaskViewModel.getAllShrimpTasks().observe(this, shrimpTasks -> {
             // Update the cached copy of the words in the adapter.
@@ -38,4 +36,6 @@ public class RecyclerFragment extends Fragment {
 
         return view;
     }
+
+    public ShrimpTaskViewModel getShrimpTaskViewModel() {return shrimpTaskViewModel;}
 }
