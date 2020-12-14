@@ -27,25 +27,21 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton fab;
     private ShrimpTaskViewModel shrimpTaskViewModel;
     public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
+    private RecyclerFragment recyclerFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
         final ShrimpTaskAdapter adapter = new ShrimpTaskAdapter(new ShrimpTaskAdapter.ShrimpTaskDiff());
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        shrimpTaskViewModel = new ViewModelProvider(this).get(ShrimpTaskViewModel.class);
+        recyclerFragment = new RecyclerFragment();
 
-        shrimpTaskViewModel.getAllShrimpTasks().observe(this, shrimpTasks -> {
-            // Update the cached copy of the words in the adapter.
-            adapter.submitList(shrimpTasks);
-        });
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.middle_container, recyclerFragment)
+                .commit();
 
         fab = findViewById(R.id.fab);
 
