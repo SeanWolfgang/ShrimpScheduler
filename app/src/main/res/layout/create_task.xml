@@ -1,73 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:padding="24dp">
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="192dp"
+        android:layout_marginRight="192dp"
         android:text="@string/text_add_task"
-        android:textSize="24sp"/>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/task_name"
-            android:hint="@string/task_name_hint"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </com.google.android.material.textfield.TextInputEditText>
-    </com.google.android.material.textfield.TextInputLayout>
+        android:textStyle="bold"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/parent_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_width="177dp"
+        android:layout_height="wrap_content"
+        android:prompt="@string/spinner_hint"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/templateLabel"
+        app:layout_constraintStart_toEndOf="@+id/templateLabel"
+        app:layout_constraintTop_toTopOf="@+id/templateLabel" />
 
     <Button
         android:id="@+id/pick_time_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="showTimePickerDialog"
         android:text="@string/pick_time"
-        android:onClick="showTimePickerDialog" />
+        app:layout_constraintStart_toStartOf="@+id/task_name"
+        app:layout_constraintTop_toBottomOf="@+id/task_name" />
 
     <Button
         android:id="@+id/pick_date_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="showDatePickerDialog"
         android:text="@string/pick_date"
-        android:onClick="showDatePickerDialog" />
+        app:layout_constraintStart_toStartOf="@+id/pick_time_button"
+        app:layout_constraintTop_toBottomOf="@+id/pick_time_button" />
 
     <TextView
         android:id="@+id/startTime"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"/>
+        android:text="@string/default_start_time_text"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/pick_time_button"
+        app:layout_constraintStart_toEndOf="@+id/pick_time_button"
+        app:layout_constraintTop_toTopOf="@+id/pick_time_button" />
+
+    <TextView
+        android:id="@+id/templateLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/task_template_label"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
         android:id="@+id/startDate"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"/>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/description"
-            android:hint="@string/description_hint"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </com.google.android.material.textfield.TextInputEditText>
-    </com.google.android.material.textfield.TextInputLayout>
+        android:text="@string/default_start_date_text"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/pick_date_button"
+        app:layout_constraintStart_toEndOf="@+id/pick_date_button"
+        app:layout_constraintTop_toTopOf="@+id/pick_date_button" />
 
     <Button
         android:id="@+id/save_user_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/save_task_string">
-    </Button>
-</LinearLayout>
+        android:text="@string/save_task_string"
+        app:layout_constraintStart_toStartOf="@+id/description"
+        app:layout_constraintTop_toBottomOf="@+id/description"></Button>
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/description_hint"
+        app:layout_constraintStart_toStartOf="@+id/pick_date_button"
+        app:layout_constraintTop_toBottomOf="@+id/pick_date_button"></com.google.android.material.textfield.TextInputEditText>
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/task_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/task_name_hint"
+        app:layout_constraintTop_toBottomOf="@+id/templateLabel"
+        tools:layout_editor_absoluteX="24dp"></com.google.android.material.textfield.TextInputEditText>
+</androidx.constraintlayout.widget.ConstraintLayout>

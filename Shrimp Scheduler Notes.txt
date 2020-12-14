@@ -40,31 +40,6 @@ description
 String name, String parentName, OffsetDateTime executeTime, String description
 
 
-
-
-
-
-
-
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".MainActivity">
-
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/textView"
-        android:paddingTop="60dp"
-        android:id="@+id/inflating_recycler"/>
-
-    <Button
-        android:id="@+id/deleteAllTasks"
-        android:text="@string/delete_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+Fragment tutorial
+https://www.youtube.com/watch?v=i22INe14JUc&ab_channel=PhilippLackner
+https://developer.android.com/guide/fragments/create
