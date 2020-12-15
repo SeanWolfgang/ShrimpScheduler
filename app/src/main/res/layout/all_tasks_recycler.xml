@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -7,20 +8,61 @@
 
     <TextView
         android:id="@+id/task_name"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textSize="24sp"/>
+        android:paddingHorizontal="@dimen/smallest_padding"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/done_button"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="@dimen/big_text"/>
 
     <TextView
         android:id="@+id/execute_datetime"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textSize="18sp"/>
+        android:paddingHorizontal="@dimen/smallest_padding"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/done_button"
+        app:layout_constraintTop_toBottomOf="@id/task_name"
+        android:textSize="@dimen/small_text"/>
 
     <TextView
         android:id="@+id/description"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textSize="18sp"/>
+        android:paddingHorizontal="@dimen/smallest_padding"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/done_button"
+        app:layout_constraintTop_toBottomOf="@id/execute_datetime"
+        android:textSize="@dimen/small_text"/>
 
-</LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/medium_text"
+        android:minWidth="40dp"
+        android:minHeight="40dp"
+        android:background="@android:color/holo_green_light"
+        android:textColor="@android:color/holo_green_dark"
+        android:id="@+id/done_button"
+        android:text="@string/check_mark"
+        app:layout_constraintTop_toTopOf="@id/task_name"
+        app:layout_constraintBottom_toBottomOf="@id/description"
+        app:layout_constraintEnd_toStartOf="@id/not_done_button"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/medium_text"
+        android:minWidth="40dp"
+        android:minHeight="40dp"
+        android:background="@android:color/holo_red_light"
+        android:textColor="@android:color/holo_red_dark"
+        android:id="@+id/not_done_button"
+        android:text="@string/ballot_x"
+        app:layout_constraintTop_toTopOf="@id/task_name"
+        app:layout_constraintBottom_toBottomOf="@id/description"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

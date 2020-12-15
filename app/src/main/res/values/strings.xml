@@ -18,5 +18,10 @@
     <string name="manage_tasks_button">Manage Tasks</string>
     <string name="manage_templates_button">Manage Templates</string>
     <string name="data_hub_button">Data Hub</string>
+    <string name="check_mark">\u2713</string>
+    <string name="ballot_x">\u2717</string>
+    <string name="delete_all">Delete EVERYTHING in DB</string>
+    <string name="delete_future">Delete all future tasks</string>
+    <string name="something_placeholder">Do something in future?</string>
 
 </resources>

@@ -26,14 +26,19 @@ import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+    implements ButtonRibbonFragment.ButtonRibbonFragmentListener,
+        DatabaseManagementFragment.DataBaseManagementFragmentListener {
 
     FloatingActionButton fab;
     private ShrimpTaskViewModel shrimpTaskViewModel;
     public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
+
     private RecyclerFragment recyclerFragment;
     private Fragment buttonRibbonFragment;
     private Fragment dataPreviewFragment;
+
+    private Fragment databaseManagementFragment;
 
 
     @Override
@@ -106,4 +111,50 @@ public class MainActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
         }
     }
+
+    @Override
+    public void onButtonClicked(String input) {
+        switch (input) {
+            case "ManageTasks":
+                databaseManagementFragment = new DatabaseManagementFragment();
+
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.middle_container, databaseManagementFragment)
+                        .commit();
+                break;
+            case "ManageTemplates":
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.middle_container, recyclerFragment)
+                        .commit();
+                break;
+            case "DataHub":
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.middle_container, recyclerFragment)
+                        .commit();
+                break;
+        }
+    }
+
+    @Override
+    public void onDBManageButtonClicked(String input) {
+        switch (input) {
+            case "DeleteAll":
+                recyclerFragment.getShrimpTaskViewModel().deleteAll();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.middle_container, recyclerFragment)
+                        .commit();
+                break;
+            case "DeleteFuture":
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.middle_container, recyclerFragment)
+                        .commit();
+                break;
+            case "DataHub":
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.middle_container, recyclerFragment)
+                        .commit();
+                break;
+        }
+    }
+
 }

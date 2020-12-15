@@ -22,4 +22,6 @@ public class ShrimpTaskViewModel extends AndroidViewModel {
     LiveData<List<ShrimpTask>> getAllShrimpTasks() { return allShrimpTasks; }
 
     public void insert(ShrimpTask shrimpTask) { shrimpRepository.insert(shrimpTask); }
+
+    public void deleteAll() {shrimpRepository.deleteAll();}
 }

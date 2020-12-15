@@ -15,4 +15,7 @@ public interface ShrimpTaskDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(ShrimpTask shrimpTasks);
+
+    @Query("DELETE FROM shrimptask")
+    void deleteAll();
 }

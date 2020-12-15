@@ -34,4 +34,10 @@ public class ShrimpTaskRepository {
             shrimpTaskDao.insert(shrimpTask);
         });
     }
+
+    void deleteAll() {
+        ShrimpTaskDatabase.databaseWriteExecutor.execute(() -> {
+            shrimpTaskDao.deleteAll();
+        });
+    }
 }
