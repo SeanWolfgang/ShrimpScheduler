@@ -19,9 +19,10 @@
         />
 
     <Button
-        android:id="@+id/do_something_placeholder"
+        android:id="@+id/delete_templates"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/something_placeholder"/>
+        android:text="@string/delete_templates"
+        />
 
 </LinearLayout>

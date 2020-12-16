@@ -4,24 +4,38 @@
     <string name="done_button_text">DONE</string>
     <string name="text_add_task"><u>Add New Task</u></string>
     <string name="task_name_hint">Name</string>
+    <string name="task_template_name_hint">Template Name</string>
     <string name="parent_name_hint">Parent Name</string>
     <string name="pick_time">Start Time</string>
     <string name="pick_date">Start Date</string>
     <string name="description_hint">Description</string>
+    <string name="task_template_description_hint">Default Description</string>
+    <string name="task_template_days_repeat_hint">How many days between repeats?</string>
+    <string name="task_repeat_setting_text">Repeat?</string>
     <string name="spinner_hint">Pick a Template</string>
     <string name="save_task_string">Save Task</string>
+    <string name="save_task_template_button">Save Task Template</string>
     <string name="empty_not_saved">Didn\'t save</string>
     <string name="delete_button">DELETE ALL TASKS</string>
     <string name="default_start_time_text">Pick Start Time</string>
     <string name="default_start_date_text">Pick Start Date</string>
     <string name="task_template_label">Task Template</string>
+    <string name="view_tasks_button">Tasks</string>
+    <string name="view_templates_button">Templates</string>
     <string name="manage_tasks_button">Manage Tasks</string>
     <string name="manage_templates_button">Manage Templates</string>
     <string name="data_hub_button">Data Hub</string>
+    <string name="new_template_button">New Template</string>
     <string name="check_mark">\u2713</string>
     <string name="ballot_x">\u2717</string>
     <string name="delete_all">Delete EVERYTHING in DB</string>
     <string name="delete_future">Delete all future tasks</string>
+    <string name="delete_templates">Delete all task templates</string>
     <string name="something_placeholder">Do something in future?</string>
+    <string name="edit_string">Edit</string>
+
+    <string name="need_name">Name cannot be empty</string>
+    <string name="need_description">Description cannot be empty</string>
+    <string name="need_repeat_interval">Repeat interval cannot be empty if set to repeat</string>
 
 </resources>

@@ -8,9 +8,7 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 public class ShrimpTaskViewModel extends AndroidViewModel {
-
     private ShrimpTaskRepository shrimpRepository;
-
     private final LiveData<List<ShrimpTask>> allShrimpTasks;
 
     public ShrimpTaskViewModel (Application application) {

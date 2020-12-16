@@ -1,31 +1,24 @@
 package com.example.shrimpscheduler;
 
 import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
-import org.w3c.dom.Text;
-
 import java.time.LocalDate;
-import java.time.ZoneOffset;
-import java.util.Calendar;
 
-public class CreateTask extends AppCompatActivity
-        implements DatePickerDialog.OnDateSetListener {
+public class ShrimpTaskCreateNew extends AppCompatActivity
+    implements DatePickerDialog.OnDateSetListener {
 
     // implements TimePickerDialog.OnTimeSetListener
     public static final String EXTRA_REPLY1 = "REPLY1";

@@ -19,7 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CreateTask"/>
+        <activity android:name=".ShrimpTaskCreateNew"/>
         <activity android:name=".SingleScreenContainer"/>
     </application>
 

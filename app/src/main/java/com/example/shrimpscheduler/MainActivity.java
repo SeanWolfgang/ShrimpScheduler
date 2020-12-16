@@ -5,41 +5,33 @@ import android.os.Build;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import java.time.Clock;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 
 public class MainActivity extends AppCompatActivity
     implements ButtonRibbonFragment.ButtonRibbonFragmentListener,
-        DatabaseManagementFragment.DataBaseManagementFragmentListener {
+        DatabaseManagementFragment.DataBaseManagementFragmentListener,
+        TaskTemplateCreateNew.TaskTemplateFragmentListener{
 
     FloatingActionButton fab;
     private ShrimpTaskViewModel shrimpTaskViewModel;
     public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
 
-    private RecyclerFragment recyclerFragment;
+    private ShrimpTaskRecyclerFragment shrimpTaskRecyclerFragment;
+    private TaskTemplateRecyclerFragment taskTemplateRecyclerFragment;
     private Fragment buttonRibbonFragment;
     private Fragment dataPreviewFragment;
 
     private Fragment databaseManagementFragment;
+    private Fragment newTaskTemplateFragment;
 
 
     @Override
@@ -47,22 +39,26 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final ShrimpTaskAdapter adapter = new ShrimpTaskAdapter(new ShrimpTaskAdapter.ShrimpTaskDiff());
-
-        recyclerFragment = new RecyclerFragment();
+        shrimpTaskRecyclerFragment = new ShrimpTaskRecyclerFragment();
+        taskTemplateRecyclerFragment = new TaskTemplateRecyclerFragment();
         buttonRibbonFragment = new ButtonRibbonFragment();
         dataPreviewFragment = new DataPreviewFragment();
+        newTaskTemplateFragment = new TaskTemplateCreateNew();
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.top_container, dataPreviewFragment)
-                .replace(R.id.middle_container, recyclerFragment)
+                .replace(R.id.middle_container, taskTemplateRecyclerFragment)
                 .replace(R.id.bottom_container, buttonRibbonFragment)
+                .commit();
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.middle_container, shrimpTaskRecyclerFragment)
                 .commit();
 
         fab = findViewById(R.id.fab);
 
         fab.setOnClickListener( view -> {
-            Intent intent = new Intent(MainActivity.this, CreateTask.class);
+            Intent intent = new Intent(MainActivity.this, ShrimpTaskCreateNew.class);
             startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
         });
     }
@@ -95,15 +91,15 @@ public class MainActivity extends AppCompatActivity
 
         if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
             //ShrimpTask shrimpTask = new ShrimpTask("je", "parent", OffsetDateTime.now(Clock.systemDefaultZone()), "je");
-            int[] dateArray = data.getIntArrayExtra(CreateTask.EXTRA_REPLY2);
+            int[] dateArray = data.getIntArrayExtra(ShrimpTaskCreateNew.EXTRA_REPLY2);
 
             // Log.w("myApp", dateArray.toString());
 
             LocalDate startDateTime = LocalDate.of(dateArray[0], dateArray[1] + 1, dateArray[2]);
 
-            ShrimpTask shrimpTask = new ShrimpTask(data.getStringExtra(CreateTask.EXTRA_REPLY1), "parent", startDateTime, data.getStringExtra(CreateTask.EXTRA_REPLY3));
+            ShrimpTask shrimpTask = new ShrimpTask(data.getStringExtra(ShrimpTaskCreateNew.EXTRA_REPLY1), "parent", startDateTime, data.getStringExtra(ShrimpTaskCreateNew.EXTRA_REPLY3));
 
-            recyclerFragment.getShrimpTaskViewModel().insert(shrimpTask);
+            shrimpTaskRecyclerFragment.getShrimpTaskViewModel().insert(shrimpTask);
         } else {
             Toast.makeText(
                     getApplicationContext(),
@@ -115,6 +111,16 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onButtonClicked(String input) {
         switch (input) {
+            case "ViewTasks":
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.middle_container, shrimpTaskRecyclerFragment)
+                        .commit();
+                break;
+            case "ViewTemplates":
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.middle_container, taskTemplateRecyclerFragment)
+                        .commit();
+                break;
             case "ManageTasks":
                 databaseManagementFragment = new DatabaseManagementFragment();
 
@@ -123,13 +129,20 @@ public class MainActivity extends AppCompatActivity
                         .commit();
                 break;
             case "ManageTemplates":
+                databaseManagementFragment = new DatabaseManagementFragment();
+
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.middle_container, recyclerFragment)
+                        .replace(R.id.middle_container, databaseManagementFragment)
+                        .commit();
+                break;
+            case "NewTaskTemplate":
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.middle_container, newTaskTemplateFragment)
                         .commit();
                 break;
             case "DataHub":
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.middle_container, recyclerFragment)
+                        .replace(R.id.middle_container, shrimpTaskRecyclerFragment)
                         .commit();
                 break;
         }
@@ -139,22 +152,33 @@ public class MainActivity extends AppCompatActivity
     public void onDBManageButtonClicked(String input) {
         switch (input) {
             case "DeleteAll":
-                recyclerFragment.getShrimpTaskViewModel().deleteAll();
+                shrimpTaskRecyclerFragment.getShrimpTaskViewModel().deleteAll();
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.middle_container, recyclerFragment)
+                        .replace(R.id.middle_container, shrimpTaskRecyclerFragment)
                         .commit();
                 break;
             case "DeleteFuture":
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.middle_container, recyclerFragment)
+                        .replace(R.id.middle_container, shrimpTaskRecyclerFragment)
                         .commit();
                 break;
-            case "DataHub":
+            case "DeleteTemplates":
+                taskTemplateRecyclerFragment.getTaskTemplateViewModel().deleteAll();
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.middle_container, recyclerFragment)
+                        .replace(R.id.middle_container, shrimpTaskRecyclerFragment)
                         .commit();
                 break;
         }
     }
 
+    @Override
+    public void onTaskTemplateButtonClicked(String name, String description, int daysBetweenRepeat, boolean repeat) {
+        TaskTemplate taskTemplate = new TaskTemplate(name, name, description, daysBetweenRepeat, repeat);
+
+        taskTemplateRecyclerFragment.getTaskTemplateViewModel().insert(taskTemplate);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.middle_container, taskTemplateRecyclerFragment)
+                .commit();
+    }
 }

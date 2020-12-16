@@ -12,14 +12,14 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class RecyclerFragment extends Fragment {
+public class ShrimpTaskRecyclerFragment extends Fragment {
     private RecyclerView recyclerView;
     private ShrimpTaskViewModel shrimpTaskViewModel;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.content_main, container, false);
+        View view = inflater.inflate(R.layout.shrimp_task_content_main, container, false);
 
         shrimpTaskViewModel = new ViewModelProvider(this).get(ShrimpTaskViewModel.class);
         final ShrimpTaskAdapter adapter = new ShrimpTaskAdapter(new ShrimpTaskAdapter.ShrimpTaskDiff());

@@ -19,8 +19,11 @@ public class ButtonRibbonFragment extends Fragment {
 
     private ButtonRibbonFragmentListener listener;
 
+    private Button viewTasksButton;
+    private Button viewTemplatesButton;
     private Button manageTasksButton;
     private Button manageTemplatesButton;
+    private Button newTaskTemplateButton;
     private Button dataHubButton;
 
     public interface ButtonRibbonFragmentListener{
@@ -32,9 +35,28 @@ public class ButtonRibbonFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.button_ribbon, container, false);
 
+        viewTasksButton = (Button) view.findViewById(R.id.view_tasks);
+        viewTemplatesButton = (Button) view.findViewById(R.id.view_templates);
         manageTasksButton = (Button) view.findViewById(R.id.manage_tasks);
         manageTemplatesButton = (Button) view.findViewById(R.id.manage_templates);
+        newTaskTemplateButton = (Button) view.findViewById(R.id.new_template_button);
         dataHubButton = (Button) view.findViewById(R.id.data_hub);
+
+        viewTasksButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String buttonTitle = "ViewTasks";
+                listener.onButtonClicked(buttonTitle);
+            }
+        });
+
+        viewTemplatesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String buttonTitle = "ViewTemplates";
+                listener.onButtonClicked(buttonTitle);
+            }
+        });
 
         manageTasksButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +70,14 @@ public class ButtonRibbonFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 String buttonTitle = "ManageTemplates";
+                listener.onButtonClicked(buttonTitle);
+            }
+        });
+
+        newTaskTemplateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String buttonTitle = "NewTaskTemplate";
                 listener.onButtonClicked(buttonTitle);
             }
         });
