@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class ShrimpTaskViewHolder extends RecyclerView.ViewHolder {
@@ -25,11 +25,9 @@ public class ShrimpTaskViewHolder extends RecyclerView.ViewHolder {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void bind(String name, OffsetDateTime executeTime, String description) {
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
-
+    public void bind(String name, LocalDate executeTime, String description) {
         nameTextView.setText(name);
-        executeDatetimeTextView.setText(formatter.format(executeTime));
+        executeDatetimeTextView.setText(executeTime.toString());
         descriptionTextView.setText(description);
     }
 

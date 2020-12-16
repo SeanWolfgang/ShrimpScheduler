@@ -22,14 +22,26 @@
 
     <Spinner
         android:id="@+id/parent_name"
-        android:layout_width="177dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:prompt="@string/spinner_hint"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginStart="@dimen/small_padding"
+        android:layout_marginLeft="@dimen/small_padding"
+        android:layout_marginEnd="@dimen/small_padding"
         app:layout_constraintBottom_toBottomOf="@+id/templateLabel"
         app:layout_constraintStart_toEndOf="@+id/templateLabel"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/templateLabel" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_marginRight="@dimen/big_padding"
+        app:layout_constraintStart_toStartOf="@id/parent_name"
+        app:layout_constraintEnd_toEndOf="@id/parent_name"
+        app:layout_constraintTop_toBottomOf="@id/parent_name"/>
+
+
 
     <TextView
         android:id="@+id/templateLabel"
@@ -62,6 +74,24 @@
         app:layout_constraintTop_toTopOf="@+id/pick_time_button" />
 
     -->
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/task_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/big_padding"
+        android:hint="@string/task_name_hint"
+        app:layout_constraintTop_toBottomOf="@+id/templateLabel"
+        tools:layout_editor_absoluteX="24dp"></com.google.android.material.textfield.TextInputEditText>
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/description_hint"
+        app:layout_constraintStart_toStartOf="@+id/task_name"
+        app:layout_constraintTop_toBottomOf="@+id/task_name"></com.google.android.material.textfield.TextInputEditText>
+
+
     <Button
         android:id="@+id/pick_date_button"
         android:layout_width="wrap_content"
@@ -86,22 +116,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/save_task_string"
+        android:layout_marginTop="@dimen/big_padding"
+        android:background="@android:color/holo_green_light"
+        android:textColor="@android:color/holo_green_dark"
         app:layout_constraintStart_toStartOf="@+id/pick_date_button"
         app:layout_constraintTop_toBottomOf="@+id/pick_date_button"></Button>
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/description_hint"
-        app:layout_constraintStart_toStartOf="@+id/task_name"
-        app:layout_constraintTop_toBottomOf="@+id/task_name"></com.google.android.material.textfield.TextInputEditText>
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/task_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/task_name_hint"
-        app:layout_constraintTop_toBottomOf="@+id/templateLabel"
-        tools:layout_editor_absoluteX="24dp"></com.google.android.material.textfield.TextInputEditText>
 </androidx.constraintlayout.widget.ConstraintLayout>

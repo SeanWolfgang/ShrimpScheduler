@@ -20,8 +20,7 @@ import androidx.fragment.app.DialogFragment;
 
 import org.w3c.dom.Text;
 
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.util.Calendar;
 
@@ -113,12 +112,8 @@ public class CreateTask extends AppCompatActivity
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void onDateSet(DatePicker view, int year, int month, int day) {
         // Do something with the date chosen by the user
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.YEAR, year);
-        c.set(Calendar.MONTH, month);
-        c.set(Calendar.DAY_OF_MONTH, day);
+        LocalDate c = LocalDate.of(year, month + 1, day);
 
-        String currentDateString = java.text.DateFormat.getDateInstance(java.text.DateFormat.FULL).format(c.getTime());
         // dateText.setText("Y: " + year + " M: " + month + " D: " + day);
 
         pickedDate[0] = year;
@@ -127,8 +122,8 @@ public class CreateTask extends AppCompatActivity
 
         pickedDateBool = true;
 
-        dateButton = findViewById(R.id.pick_date_button);
+        dateText = findViewById(R.id.startDate);
 
-        dateButton.setText(currentDateString);
+        dateText.setText(c.toString());
     }
 }

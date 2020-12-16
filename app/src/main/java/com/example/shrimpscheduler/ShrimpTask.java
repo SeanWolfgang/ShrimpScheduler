@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
 
 @Entity
 public class ShrimpTask {
@@ -18,7 +18,7 @@ public class ShrimpTask {
     private String parentName;
 
     @ColumnInfo(name= "execute_time")
-    private OffsetDateTime executeTime;
+    private LocalDate executeTime;
 
     @ColumnInfo(name= "description")
     private String description;
@@ -26,7 +26,7 @@ public class ShrimpTask {
     @ColumnInfo(name= "done")
     private boolean done = false;
 
-    public ShrimpTask(String name, String parentName, OffsetDateTime executeTime, String description) {
+    public ShrimpTask(String name, String parentName, LocalDate executeTime, String description) {
         this.name = name;
         this.parentName = parentName;
         this.executeTime = executeTime;
@@ -45,11 +45,11 @@ public class ShrimpTask {
         this.name = name;
     }
 
-    public OffsetDateTime getExecuteTime() {
+    public LocalDate getExecuteTime() {
         return executeTime;
     }
 
-    public void setExecuteTime(OffsetDateTime executeTime) {
+    public void setExecuteTime(LocalDate executeTime) {
         this.executeTime = executeTime;
     }
 

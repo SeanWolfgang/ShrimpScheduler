@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import java.time.Clock;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -98,8 +99,7 @@ public class MainActivity extends AppCompatActivity
 
             // Log.w("myApp", dateArray.toString());
 
-            OffsetDateTime startDateTime = OffsetDateTime.of(LocalDateTime.of(dateArray[0], dateArray[1] + 1, dateArray[2], 00, 00),
-                    ZoneOffset.of("+12"));
+            LocalDate startDateTime = LocalDate.of(dateArray[0], dateArray[1] + 1, dateArray[2]);
 
             ShrimpTask shrimpTask = new ShrimpTask(data.getStringExtra(CreateTask.EXTRA_REPLY1), "parent", startDateTime, data.getStringExtra(CreateTask.EXTRA_REPLY3));
 

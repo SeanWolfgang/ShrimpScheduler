@@ -5,14 +5,13 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Database(entities = {ShrimpTask.class}, version = 1, exportSchema = false)
-@TypeConverters({OffsetDateTimeTypeCoverters.class})
+@TypeConverters({LocalDateTypeConverters.class})
 public abstract class ShrimpTaskDatabase extends RoomDatabase {
     public abstract ShrimpTaskDao shrimpTaskDao();
 
