@@ -25,7 +25,7 @@ public abstract class ShrimpTaskDatabase extends RoomDatabase {
             synchronized (ShrimpTaskDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            ShrimpTaskDatabase.class, "word_database")
+                            ShrimpTaskDatabase.class, "shrimp_task_database")
                             .build();
                 }
             }

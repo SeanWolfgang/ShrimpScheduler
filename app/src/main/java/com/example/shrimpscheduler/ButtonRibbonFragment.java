@@ -19,7 +19,8 @@ public class ButtonRibbonFragment extends Fragment {
 
     private ButtonRibbonFragmentListener listener;
 
-    private Button viewTasksButton;
+    private Button viewTodayTasksButton;
+    private Button viewAllTasksButton;
     private Button viewTemplatesButton;
     private Button manageTasksButton;
     private Button manageTemplatesButton;
@@ -35,17 +36,26 @@ public class ButtonRibbonFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.button_ribbon, container, false);
 
-        viewTasksButton = (Button) view.findViewById(R.id.view_tasks);
+        viewTodayTasksButton = (Button) view.findViewById(R.id.view_today_tasks);
+        viewAllTasksButton = (Button) view.findViewById(R.id.view__all_tasks);
         viewTemplatesButton = (Button) view.findViewById(R.id.view_templates);
         manageTasksButton = (Button) view.findViewById(R.id.manage_tasks);
         manageTemplatesButton = (Button) view.findViewById(R.id.manage_templates);
         newTaskTemplateButton = (Button) view.findViewById(R.id.new_template_button);
         dataHubButton = (Button) view.findViewById(R.id.data_hub);
 
-        viewTasksButton.setOnClickListener(new View.OnClickListener() {
+        viewTodayTasksButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String buttonTitle = "ViewTasks";
+                String buttonTitle = "ViewTodayTasks";
+                listener.onButtonClicked(buttonTitle);
+            }
+        });
+
+        viewAllTasksButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String buttonTitle = "ViewAllTasks";
                 listener.onButtonClicked(buttonTitle);
             }
         });

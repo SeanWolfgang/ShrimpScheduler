@@ -21,13 +21,25 @@ public class TaskTemplateViewHolder extends RecyclerView.ViewHolder {
     private final TextView repeatIntervalTextView;
     private final Button editButton;
 
-    private TaskTemplateViewHolder(View itemView) {
+    private TaskTemplateViewHolder(View itemView, TaskTemplateAdapter.OnTaskTemplateClickListener listener) {
         super(itemView);
         nameTextView = itemView.findViewById(R.id.template_name);
         descriptionTextView = itemView.findViewById(R.id.template_description);
         repeatTextView = itemView.findViewById(R.id.template_repeat);
         repeatIntervalTextView = itemView.findViewById(R.id.repeat_interval);
         editButton = itemView.findViewById(R.id.edit_button);
+
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onTaskTemplateEditClick(position);
+                    }
+                }
+            }
+        });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -43,9 +55,9 @@ public class TaskTemplateViewHolder extends RecyclerView.ViewHolder {
 
     }
 
-    static TaskTemplateViewHolder create(ViewGroup parent) {
+    static TaskTemplateViewHolder create(ViewGroup parent, TaskTemplateAdapter.OnTaskTemplateClickListener listener) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.task_template_recycler, parent, false);
-        return new TaskTemplateViewHolder(view);
+        return new TaskTemplateViewHolder(view, listener);
     }
 }

@@ -3,4 +3,11 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="buttonUnClickedBack">#D3D3D3</color>
+    <color name="buttonUnClickedText">#808080</color>
+    <color name="doneButtonClickedBack">@android:color/holo_green_light</color>
+    <color name="doneButtonClickedText">@android:color/holo_green_dark</color>
+    <color name="notDoneButtonClickedBack">@android:color/holo_red_light</color>
+    <color name="notDoneButtonClickedText">@android:color/holo_red_dark</color>
+
 </resources>

@@ -19,7 +19,7 @@ import java.time.LocalDate;
 public class MainActivity extends AppCompatActivity
     implements ButtonRibbonFragment.ButtonRibbonFragmentListener,
         DatabaseManagementFragment.DataBaseManagementFragmentListener,
-        TaskTemplateCreateNew.TaskTemplateFragmentListener{
+        TaskTemplateCreateNew.TaskTemplateFragmentListener {
 
     FloatingActionButton fab;
     private ShrimpTaskViewModel shrimpTaskViewModel;
@@ -44,6 +44,36 @@ public class MainActivity extends AppCompatActivity
         buttonRibbonFragment = new ButtonRibbonFragment();
         dataPreviewFragment = new DataPreviewFragment();
         newTaskTemplateFragment = new TaskTemplateCreateNew();
+
+        taskTemplateRecyclerFragment.getAdapter().setOnItemClickListener(new TaskTemplateAdapter.OnTaskTemplateClickListener() {
+            @Override
+            public void onTaskTemplateEditClick(int position) {
+                Toast.makeText(
+                        getApplicationContext(),
+                        "Clicked edit.",
+                        Toast.LENGTH_LONG).show();
+            }
+
+
+        });
+
+        shrimpTaskRecyclerFragment.getAdapter().setOnShrimpTaskClickListener(new ShrimpTaskAdapter.OnShrimpTaskClickListener() {
+            @Override
+            public void onDoneButtonClick(int position) {
+                ShrimpTask shrimpTask = shrimpTaskRecyclerFragment.getAdapter().getShrimpTask(position);
+                shrimpTask.setDisposed(true);
+                shrimpTask.setDone(true);
+                shrimpTaskRecyclerFragment.getShrimpTaskViewModel().updateShrimpTask(shrimpTask);
+            }
+
+            @Override
+            public void onNotDoneButtonClick(int position) {
+                ShrimpTask shrimpTask = shrimpTaskRecyclerFragment.getAdapter().getShrimpTask(position);
+                shrimpTask.setDisposed(true);
+                shrimpTask.setDone(false);
+                shrimpTaskRecyclerFragment.getShrimpTaskViewModel().updateShrimpTask(shrimpTask);
+            }
+        });
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.top_container, dataPreviewFragment)
@@ -108,10 +138,24 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onButtonClicked(String input) {
         switch (input) {
-            case "ViewTasks":
+            case "ViewTodayTasks":
+                shrimpTaskRecyclerFragment.getShrimpTaskViewModel().getShrimpTaskDate(LocalDate.now()).observe(shrimpTaskRecyclerFragment, dateShrimpTasks -> {
+                    // Update the cached copy of the words in the adapter.
+                    shrimpTaskRecyclerFragment.getAdapter().submitList(dateShrimpTasks);
+                });
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.middle_container, shrimpTaskRecyclerFragment)
+                        .commit();
+                break;
+            case "ViewAllTasks":
+                shrimpTaskRecyclerFragment.getShrimpTaskViewModel().getAllShrimpTasks().observe(shrimpTaskRecyclerFragment, shrimpTasks -> {
+                    // Update the cached copy of the words in the adapter.
+                    shrimpTaskRecyclerFragment.getAdapter().submitList(shrimpTasks);
+                });
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.middle_container, shrimpTaskRecyclerFragment)
                         .commit();

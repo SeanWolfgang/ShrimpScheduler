@@ -12,6 +12,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class ShrimpTaskAdapter extends ListAdapter<ShrimpTask, ShrimpTaskViewHolder> {
+    private OnShrimpTaskClickListener mListener;
+
+    public interface OnShrimpTaskClickListener {
+        void onDoneButtonClick(int position);
+        void onNotDoneButtonClick(int position);
+    }
+
+    public void setOnShrimpTaskClickListener(OnShrimpTaskClickListener listener) {
+        mListener = listener;
+    }
 
     public ShrimpTaskAdapter(@NonNull DiffUtil.ItemCallback<ShrimpTask> diffCallback) {
         super(diffCallback);
@@ -19,17 +29,17 @@ public class ShrimpTaskAdapter extends ListAdapter<ShrimpTask, ShrimpTaskViewHol
 
     @Override
     public ShrimpTaskViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return ShrimpTaskViewHolder.create(parent);
+        return ShrimpTaskViewHolder.create(parent, mListener);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(ShrimpTaskViewHolder holder, int position) {
         ShrimpTask current = getItem(position);
-        holder.bind(current.getName(), current.getExecuteTime(), current.getDescription());
+        holder.bind(current.getName(), current.getExecuteTime(), current.getDescription(), current.isDone(), current.isDisposed());
     }
 
-    static class ShrimpTaskDiff extends DiffUtil.ItemCallback<ShrimpTask> {
+    public static class ShrimpTaskDiff extends DiffUtil.ItemCallback<ShrimpTask> {
 
         @Override
         public boolean areItemsTheSame(@NonNull ShrimpTask oldItem, @NonNull ShrimpTask newItem) {
@@ -40,5 +50,13 @@ public class ShrimpTaskAdapter extends ListAdapter<ShrimpTask, ShrimpTaskViewHol
         public boolean areContentsTheSame(@NonNull ShrimpTask oldItem, @NonNull ShrimpTask newItem) {
             return oldItem.getId() == newItem.getId();
         }
+    }
+
+    public int getShrimpTaskID(int position) {
+        return getItem(position).getId();
+    }
+
+    public ShrimpTask getShrimpTask (int position) {
+        return getItem(position);
     }
 }

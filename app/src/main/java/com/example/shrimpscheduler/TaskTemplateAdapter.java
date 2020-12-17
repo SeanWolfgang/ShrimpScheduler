@@ -12,6 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class TaskTemplateAdapter extends ListAdapter<TaskTemplate, TaskTemplateViewHolder> {
+    private OnTaskTemplateClickListener mListener;
+
+    public interface OnTaskTemplateClickListener {
+        void onTaskTemplateEditClick(int position);
+    }
+
+    public void setOnItemClickListener(TaskTemplateAdapter.OnTaskTemplateClickListener listener) {
+        mListener = listener;
+    }
 
     public TaskTemplateAdapter(@NonNull DiffUtil.ItemCallback<TaskTemplate> diffCallback) {
         super(diffCallback);
@@ -19,7 +28,7 @@ public class TaskTemplateAdapter extends ListAdapter<TaskTemplate, TaskTemplateV
 
     @Override
     public TaskTemplateViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return TaskTemplateViewHolder.create(parent);
+        return TaskTemplateViewHolder.create(parent, mListener);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

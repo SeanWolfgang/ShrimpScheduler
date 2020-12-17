@@ -20,7 +20,8 @@
     <string name="default_start_time_text">Pick Start Time</string>
     <string name="default_start_date_text">Pick Start Date</string>
     <string name="task_template_label">Task Template</string>
-    <string name="view_tasks_button">Tasks</string>
+    <string name="view_today_tasks_button">Today Tasks</string>
+    <string name="view_all_tasks_button">All Tasks</string>
     <string name="view_templates_button">Templates</string>
     <string name="manage_tasks_button">Manage Tasks</string>
     <string name="manage_templates_button">Manage Templates</string>

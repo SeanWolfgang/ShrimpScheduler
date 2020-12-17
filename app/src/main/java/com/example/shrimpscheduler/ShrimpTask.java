@@ -26,6 +26,9 @@ public class ShrimpTask {
     @ColumnInfo(name= "done")
     private boolean done = false;
 
+    @ColumnInfo(name= "disposed")
+    private boolean disposed = false;
+
     public ShrimpTask(String name, String parentName, LocalDate executeTime, String description) {
         this.name = name;
         this.parentName = parentName;
@@ -79,5 +82,13 @@ public class ShrimpTask {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean isDisposed() {
+        return disposed;
+    }
+
+    public void setDisposed(boolean disposed) {
+        this.disposed = disposed;
     }
 }

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class TaskTemplateRecyclerFragment  extends Fragment {
     private RecyclerView recyclerView;
     private TaskTemplateViewModel taskTemplateViewModel;
+    private TaskTemplateAdapter adapter = new TaskTemplateAdapter(new TaskTemplateAdapter.TaskTemplateDiff());
 
     @Nullable
     @Override
@@ -22,7 +23,6 @@ public class TaskTemplateRecyclerFragment  extends Fragment {
         View view = inflater.inflate(R.layout.task_template_content_main, container, false);
 
         taskTemplateViewModel = new ViewModelProvider(this).get(TaskTemplateViewModel.class);
-        final TaskTemplateAdapter adapter = new TaskTemplateAdapter(new TaskTemplateAdapter.TaskTemplateDiff());
 
         recyclerView = view.findViewById(R.id.recycler_view_template);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
@@ -38,4 +38,14 @@ public class TaskTemplateRecyclerFragment  extends Fragment {
     }
 
     public TaskTemplateViewModel getTaskTemplateViewModel() {return taskTemplateViewModel;}
+
+    public TaskTemplateAdapter getAdapter() {
+        return adapter;
+    }
+
+    /*
+    public void setAdapter(TaskTemplateAdapter adapter) {
+        this.adapter = adapter;
+    }
+    */
 }

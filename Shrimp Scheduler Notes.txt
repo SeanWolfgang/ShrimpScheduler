@@ -45,3 +45,59 @@ https://developer.android.com/guide/fragments/create
 Misc.
 Fit view to height available: https://stackoverflow.com/questions/45854413/constraintlayout-take-height-of-another-view-android
 OffsetDateTime: https://www.boraji.com/java-8-offsetdatetime-example
+
+
+If you want to add a new query or database function or whatever, following files update:
+___Dao
+___Repository
+___ViewModel
+
+Room queries with dates
+https://androidkt.com/datetime-datatype-sqlite-using-room/
+
+Recycler view some items updating other items bugginess
+https://stackoverflow.com/questions/47979330/click-an-item-in-recyclerview-effect-every-seventh-items
+
+Getting context in recycler view
+https://stackoverflow.com/questions/32136973/how-to-get-a-context-in-a-recycler-view-adapter
+
+How to "correctly" get colors in Java
+https://stackoverflow.com/questions/43087128/when-to-use-contextcompat-class#:~:text=3%20Answers&text=ContextCompat%20is%20a%20class%20for%20replacing%20some%20work%20with%20base%20context.&text=ContextCompat%20class%20is%20used%20when,resources%20and%20provides%20backward%20compatibility.
+
+Updating row(s) in Room
+https://developer.android.com/reference/androidx/room/Update
+
+Clicking things in Recycler
+https://www.youtube.com/watch?v=bhhs4bwYyhc&t=305s&ab_channel=CodinginFlow
+https://www.youtube.com/watch?v=HMjI7cLsyfw&ab_channel=CodinginFlow
+
+Horizontal scrollview
+https://www.tutlane.com/tutorial/android/android-scrollview-horizontal-vertical-with-examples
+
+Only allow integers in EditText (and change what keyboard comes up)
+https://stackoverflow.com/questions/24160342/how-to-set-only-integer-numbers-for-edittext-android-without-comma/24160404
+
+Set up custom spinner
+https://stackoverflow.com/questions/38408984/how-to-set-spinner-text-in-center-and-set-divider-also
+
+Compare dates (Java)
+https://beginnersbook.com/2017/10/java-localdate-compareto-method-example/
+
+KEYBOARD SHORTCUTS
+https://developer.android.com/studio/intro/keyboard-shortcuts
+
+Switch Case
+https://stackoverflow.com/questions/4227539/android-how-to-create-switch-case-from-this/4227815
+
+getIntExtra
+https://www.codota.com/code/java/methods/android.content.Intent/getIntExtra
+
+Fragment Click Listener
+https://www.youtube.com/watch?v=i22INe14JUc&ab_channel=CodinginFlow
+
+Scrolling inside a RecyclerView fragment
+https://armanco.medium.com/how-to-use-vertical-recyclerview-inside-scrollview-in-android-b72337285517
+
+TimePicker
+https://www.tutlane.com/tutorial/android/android-timepicker-with-examples
+
