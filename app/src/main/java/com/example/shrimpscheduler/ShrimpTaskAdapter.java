@@ -25,6 +25,7 @@ public class ShrimpTaskAdapter extends ListAdapter<ShrimpTask, ShrimpTaskViewHol
 
     public ShrimpTaskAdapter(@NonNull DiffUtil.ItemCallback<ShrimpTask> diffCallback) {
         super(diffCallback);
+        this.setHasStableIds(true);
     }
 
     @Override

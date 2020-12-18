@@ -101,3 +101,38 @@ https://armanco.medium.com/how-to-use-vertical-recyclerview-inside-scrollview-in
 TimePicker
 https://www.tutlane.com/tutorial/android/android-timepicker-with-examples
 
+Spinner default value
+https://stackoverflow.com/questions/17063611/show-default-value-in-spinner-in-android
+
+Spinner with LiveData
+https://stackoverflow.com/questions/59350020/populate-spinner-from-livedata-room-database
+
+Spinner with ArrayList
+https://stackoverflow.com/questions/34798967/use-object-array-list-as-spinner-adapter
+
+Spinner itemchanged event
+https://stackoverflow.com/questions/1337424/android-spinner-get-the-selected-item-change-event
+
+Days between LocalDate Java
+https://beginnersbook.com/2017/10/java-8-calculate-days-between-two-dates/
+
+Add days to LocalDate
+https://beginnersbook.com/2017/11/java-8-adding-days-to-the-localdate/
+
+Mutable Query Android Room
+https://stackoverflow.com/questions/48966985/android-room-livedata-select-query-parameters
+1.) Dao has query like normal with LiveData object
+2.) Repository has method, but not LiveData object or initialization
+3.) ViewModel has LiveData object, MutableLiveData object, switchmap, and methods
+
+Switchmap examples
+https://www.programcreek.com/java-api-examples/?api=android.arch.lifecycle.Transformations
+https://www.programcreek.com/java-api-examples/?code=googlearchive%2Fleanback-showcase%2Fleanback-showcase-master%2Fapp%2Fsrc%2Fmain%2Fjava%2Fandroid%2Fsupport%2Fv17%2Fleanback%2Fsupportleanbackshowcase%2Fapp%2Froom%2Fviewmodel%2FVideosViewModel.java#
+https://developer.android.com/reference/androidx/lifecycle/Transformations
+
+EditText onTextChanged
+https://www.mysamplecode.com/2012/06/android-edittext-text-change-listener.html
+
+Room and architecture components link
+https://www.youtube.com/playlist?list=PLrnPJCHvNZuDihTpkRs6SpZhqgBqPU118
+

@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import java.time.LocalDate;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
 public class MainActivity extends AppCompatActivity
     implements ButtonRibbonFragment.ButtonRibbonFragmentListener,
         DatabaseManagementFragment.DataBaseManagementFragmentListener,
@@ -25,7 +27,8 @@ public class MainActivity extends AppCompatActivity
     private ShrimpTaskViewModel shrimpTaskViewModel;
     public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
 
-    private ShrimpTaskRecyclerFragment shrimpTaskRecyclerFragment;
+    private ShrimpTaskRecyclerFragmentAll shrimpTaskRecyclerFragmentAll;
+    private ShrimpTaskRecyclerFragmentDate shrimpTaskRecyclerFragmentDate;
     private TaskTemplateRecyclerFragment taskTemplateRecyclerFragment;
     private Fragment buttonRibbonFragment;
     private Fragment dataPreviewFragment;
@@ -33,13 +36,14 @@ public class MainActivity extends AppCompatActivity
     private Fragment databaseManagementFragment;
     private Fragment newTaskTemplateFragment;
 
-
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        shrimpTaskRecyclerFragment = new ShrimpTaskRecyclerFragment();
+        shrimpTaskRecyclerFragmentAll = new ShrimpTaskRecyclerFragmentAll();
+        shrimpTaskRecyclerFragmentDate = new ShrimpTaskRecyclerFragmentDate();
         taskTemplateRecyclerFragment = new TaskTemplateRecyclerFragment();
         buttonRibbonFragment = new ButtonRibbonFragment();
         dataPreviewFragment = new DataPreviewFragment();
@@ -50,28 +54,54 @@ public class MainActivity extends AppCompatActivity
             public void onTaskTemplateEditClick(int position) {
                 Toast.makeText(
                         getApplicationContext(),
-                        "Clicked edit.",
+                        taskTemplateRecyclerFragment.getAdapter().getTaskTemplate(  0).getName(),
                         Toast.LENGTH_LONG).show();
             }
-
-
         });
 
-        shrimpTaskRecyclerFragment.getAdapter().setOnShrimpTaskClickListener(new ShrimpTaskAdapter.OnShrimpTaskClickListener() {
+        shrimpTaskRecyclerFragmentAll.getAdapter().setOnShrimpTaskClickListener(new ShrimpTaskAdapter.OnShrimpTaskClickListener() {
             @Override
             public void onDoneButtonClick(int position) {
-                ShrimpTask shrimpTask = shrimpTaskRecyclerFragment.getAdapter().getShrimpTask(position);
+                ShrimpTask shrimpTask = shrimpTaskRecyclerFragmentAll.getAdapter().getShrimpTask(position);
                 shrimpTask.setDisposed(true);
                 shrimpTask.setDone(true);
-                shrimpTaskRecyclerFragment.getShrimpTaskViewModel().updateShrimpTask(shrimpTask);
+                shrimpTaskRecyclerFragmentAll.getShrimpTaskViewModel().updateShrimpTask(shrimpTask);
+                // Log.w("myApp", dateArray.toString());
+
+                /*
+                Toast.makeText(
+                        getApplicationContext(),
+                        shrimpTask.getName() + Integer.toString(shrimpTaskRecyclerFragmentAll.getTaskNameMatchCount()),
+                        Toast.LENGTH_LONG).show();
+
+                 */
             }
 
             @Override
             public void onNotDoneButtonClick(int position) {
-                ShrimpTask shrimpTask = shrimpTaskRecyclerFragment.getAdapter().getShrimpTask(position);
+                ShrimpTask shrimpTask = shrimpTaskRecyclerFragmentAll.getAdapter().getShrimpTask(position);
                 shrimpTask.setDisposed(true);
                 shrimpTask.setDone(false);
-                shrimpTaskRecyclerFragment.getShrimpTaskViewModel().updateShrimpTask(shrimpTask);
+                shrimpTaskRecyclerFragmentAll.getShrimpTaskViewModel().updateShrimpTask(shrimpTask);
+            }
+        });
+
+
+        shrimpTaskRecyclerFragmentDate.getAdapter().setOnShrimpTaskClickListener(new ShrimpTaskAdapter.OnShrimpTaskClickListener() {
+            @Override
+            public void onDoneButtonClick(int position) {
+                ShrimpTask shrimpTask = shrimpTaskRecyclerFragmentDate.getAdapter().getShrimpTask(position);
+                shrimpTask.setDisposed(true);
+                shrimpTask.setDone(true);
+                shrimpTaskRecyclerFragmentDate.getShrimpTaskViewModel().updateShrimpTask(shrimpTask);
+            }
+
+            @Override
+            public void onNotDoneButtonClick(int position) {
+                ShrimpTask shrimpTask = shrimpTaskRecyclerFragmentDate.getAdapter().getShrimpTask(position);
+                shrimpTask.setDisposed(true);
+                shrimpTask.setDone(false);
+                shrimpTaskRecyclerFragmentDate.getShrimpTaskViewModel().updateShrimpTask(shrimpTask);
             }
         });
 
@@ -82,12 +112,20 @@ public class MainActivity extends AppCompatActivity
                 .commit();
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.middle_container, shrimpTaskRecyclerFragment)
+                .replace(R.id.middle_container, shrimpTaskRecyclerFragmentAll)
+                .commit();
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.middle_container, shrimpTaskRecyclerFragmentDate)
                 .commit();
 
         fab = findViewById(R.id.fab);
 
         fab.setOnClickListener( view -> {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.middle_container, taskTemplateRecyclerFragment)
+                    .commit();
+
             Intent intent = new Intent(MainActivity.this, ShrimpTaskCreateNew.class);
             startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
         });
@@ -120,16 +158,44 @@ public class MainActivity extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+
             //ShrimpTask shrimpTask = new ShrimpTask("je", "parent", OffsetDateTime.now(Clock.systemDefaultZone()), "je");
             int[] dateArray = data.getIntArrayExtra(ShrimpTaskCreateNew.EXTRA_REPLY2);
+            int templatePosition = data.getIntExtra(ShrimpTaskCreateNew.EXTRA_REPLY4, -1);
+
+            TaskTemplate taskTemplate = taskTemplateRecyclerFragment.getAdapter().getTaskTemplate(templatePosition);
+
+            String proposedName = data.getStringExtra(ShrimpTaskCreateNew.EXTRA_REPLY1);
+
+            shrimpTaskRecyclerFragmentAll.getShrimpTaskViewModel().setFilter(proposedName);
 
             // Log.w("myApp", dateArray.toString());
 
-            LocalDate startDateTime = LocalDate.of(dateArray[0], dateArray[1] + 1, dateArray[2]);
+            /*
+            Toast.makeText(
+                    getApplicationContext(),
+                    proposedName + Integer.toString(shrimpTaskRecyclerFragmentAll.getTaskNameMatchCount()),
+                    Toast.LENGTH_LONG).show();
 
-            ShrimpTask shrimpTask = new ShrimpTask(data.getStringExtra(ShrimpTaskCreateNew.EXTRA_REPLY1), "parent", startDateTime, data.getStringExtra(ShrimpTaskCreateNew.EXTRA_REPLY3));
+             */
 
-            shrimpTaskRecyclerFragment.getShrimpTaskViewModel().insert(shrimpTask);
+            LocalDate startDate = LocalDate.of(dateArray[0], dateArray[1] + 1, dateArray[2]);
+            LocalDate endDate = LocalDate.of(dateArray[0] + 1, dateArray[1] + 1, dateArray[2]);
+            int daysInterval = taskTemplate.getDaysBetweenRepeat();
+            long repeatTimes = (DAYS.between(startDate, endDate)) / daysInterval;
+
+            for (int i = 0; i < repeatTimes; i++) {
+                ShrimpTask shrimpTask = new ShrimpTask(proposedName, taskTemplate.getName(), startDate, data.getStringExtra(ShrimpTaskCreateNew.EXTRA_REPLY3));
+
+                shrimpTaskRecyclerFragmentAll.getShrimpTaskViewModel().insert(shrimpTask);
+
+                startDate = startDate.plusDays(daysInterval);
+            }
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.middle_container, shrimpTaskRecyclerFragmentDate)
+                    .commit();
+
         } else {
             Toast.makeText(
                     getApplicationContext(),
@@ -143,21 +209,13 @@ public class MainActivity extends AppCompatActivity
     public void onButtonClicked(String input) {
         switch (input) {
             case "ViewTodayTasks":
-                shrimpTaskRecyclerFragment.getShrimpTaskViewModel().getShrimpTaskDate(LocalDate.now()).observe(shrimpTaskRecyclerFragment, dateShrimpTasks -> {
-                    // Update the cached copy of the words in the adapter.
-                    shrimpTaskRecyclerFragment.getAdapter().submitList(dateShrimpTasks);
-                });
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.middle_container, shrimpTaskRecyclerFragment)
+                        .replace(R.id.middle_container, shrimpTaskRecyclerFragmentDate)
                         .commit();
                 break;
             case "ViewAllTasks":
-                shrimpTaskRecyclerFragment.getShrimpTaskViewModel().getAllShrimpTasks().observe(shrimpTaskRecyclerFragment, shrimpTasks -> {
-                    // Update the cached copy of the words in the adapter.
-                    shrimpTaskRecyclerFragment.getAdapter().submitList(shrimpTasks);
-                });
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.middle_container, shrimpTaskRecyclerFragment)
+                        .replace(R.id.middle_container, shrimpTaskRecyclerFragmentAll)
                         .commit();
                 break;
             case "ViewTemplates":
@@ -186,30 +244,31 @@ public class MainActivity extends AppCompatActivity
                 break;
             case "DataHub":
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.middle_container, shrimpTaskRecyclerFragment)
+                        .replace(R.id.middle_container, shrimpTaskRecyclerFragmentAll)
                         .commit();
                 break;
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onDBManageButtonClicked(String input) {
         switch (input) {
             case "DeleteAll":
-                shrimpTaskRecyclerFragment.getShrimpTaskViewModel().deleteAll();
+                shrimpTaskRecyclerFragmentAll.getShrimpTaskViewModel().deleteAll();
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.middle_container, shrimpTaskRecyclerFragment)
+                        .replace(R.id.middle_container, shrimpTaskRecyclerFragmentAll)
                         .commit();
                 break;
             case "DeleteFuture":
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.middle_container, shrimpTaskRecyclerFragment)
+                        .replace(R.id.middle_container, shrimpTaskRecyclerFragmentAll)
                         .commit();
                 break;
             case "DeleteTemplates":
                 taskTemplateRecyclerFragment.getTaskTemplateViewModel().deleteAll();
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.middle_container, shrimpTaskRecyclerFragment)
+                        .replace(R.id.middle_container, taskTemplateRecyclerFragment)
                         .commit();
                 break;
         }

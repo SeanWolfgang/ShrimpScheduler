@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import java.time.LocalDate;
 
@@ -20,6 +21,7 @@ public class ShrimpTaskRecyclerFragment extends Fragment {
     private RecyclerView recyclerView;
     private ShrimpTaskViewModel shrimpTaskViewModel;
     public ShrimpTaskAdapter adapter = new ShrimpTaskAdapter(new ShrimpTaskAdapter.ShrimpTaskDiff());
+    private int taskNameMatchCount;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Nullable
@@ -35,9 +37,9 @@ public class ShrimpTaskRecyclerFragment extends Fragment {
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setItemViewCacheSize(100);
 
-        shrimpTaskViewModel.getShrimpTaskDate(LocalDate.now()).observe(this, dateShrimpTasks -> {
+        shrimpTaskViewModel.getShrimpTasksNameMatch().observe(this, shrimpTaskNameCountDBMatch -> {
             // Update the cached copy of the words in the adapter.
-            adapter.submitList(dateShrimpTasks);
+            taskNameMatchCount = shrimpTaskNameCountDBMatch;
         });
 
         return view;
@@ -54,6 +56,10 @@ public class ShrimpTaskRecyclerFragment extends Fragment {
             // Update the cached copy of the words in the adapter.
             adapter.submitList(shrimpTasks);
         });
+    }
+
+    public int getTaskNameMatchCount() {
+        return taskNameMatchCount;
     }
 
     /*

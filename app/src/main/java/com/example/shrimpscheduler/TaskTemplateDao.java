@@ -13,6 +13,9 @@ public interface TaskTemplateDao {
     @Query("SELECT * FROM tasktemplate")
     LiveData<List<TaskTemplate>> getAllTaskTemplates();
 
+    @Query("SELECT name FROM tasktemplate WHERE name = :name")
+    String pullName(String name);
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(TaskTemplate taskTemplate);
 

@@ -22,4 +22,5 @@ public class TaskTemplateViewModel  extends AndroidViewModel {
     public void insert(TaskTemplate taskTemplate) { taskTemplateRepository.insert(taskTemplate); }
 
     public void deleteAll() {taskTemplateRepository.deleteAll();}
+
 }

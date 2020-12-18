@@ -39,4 +39,10 @@
     <string name="need_description">Description cannot be empty</string>
     <string name="need_repeat_interval">Repeat interval cannot be empty if set to repeat</string>
 
+    <string name="name_empty">Name empty</string>
+    <string name="description_empty">Description empty</string>
+    <string name="date_empty">Date empty</string>
+    <string name="no_template_selected">No template selected</string>
+    <string name="repeat_name">Name already exists in database</string>
+
 </resources>

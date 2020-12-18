@@ -24,6 +24,7 @@ public class TaskTemplateAdapter extends ListAdapter<TaskTemplate, TaskTemplateV
 
     public TaskTemplateAdapter(@NonNull DiffUtil.ItemCallback<TaskTemplate> diffCallback) {
         super(diffCallback);
+        this.setHasStableIds(true);
     }
 
     @Override
@@ -50,4 +51,6 @@ public class TaskTemplateAdapter extends ListAdapter<TaskTemplate, TaskTemplateV
             return oldItem.getId() == newItem.getId();
         }
     }
+
+    public TaskTemplate getTaskTemplate (int position) { return getItem(position); }
 }

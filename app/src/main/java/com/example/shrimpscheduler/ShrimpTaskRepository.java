@@ -9,11 +9,15 @@ import androidx.lifecycle.LiveData;
 import java.time.LocalDate;
 import java.util.List;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class ShrimpTaskRepository {
 
     private ShrimpTaskDao shrimpTaskDao;
     private LiveData<List<ShrimpTask>> allShrimpTasks;
     private LiveData<List<ShrimpTask>> dateShrimpTasks;
+    private LiveData<Integer> totalCount;
+
+    private LocalDate queryDate = LocalDate.now();
 
     // Note that in order to unit test the ShrimpTaskRepository, you have to remove the Application
     // dependency. This adds complexity and much more code, and this sample is not about testing.
@@ -24,7 +28,8 @@ public class ShrimpTaskRepository {
         ShrimpTaskDatabase db = ShrimpTaskDatabase.getDatabase(application);
         shrimpTaskDao = db.shrimpTaskDao();
         allShrimpTasks = shrimpTaskDao.getAllShrimpTasks();
-        dateShrimpTasks = shrimpTaskDao.getShrimpTaskDate(LocalDate.now());
+        dateShrimpTasks = shrimpTaskDao.getShrimpTaskDate(queryDate);
+        totalCount = shrimpTaskDao.getCountShrimpTask();
     }
 
     // Room executes all queries on a separate thread.
@@ -34,6 +39,10 @@ public class ShrimpTaskRepository {
     }
 
     LiveData<List<ShrimpTask>> getShrimpTaskDate(LocalDate date) { return dateShrimpTasks; }
+
+    LiveData<Integer> getShrimpTasksNameMatch(String name) { return shrimpTaskDao.getShrimpTasksNameMatch(name); }
+
+    LiveData<Integer> getCountShrimpTask() { return totalCount; }
 
     // You must call this on a non-UI thread or your app will throw an exception. Room ensures
     // that you're not doing any long running operations on the main thread, blocking the UI.
@@ -55,4 +64,11 @@ public class ShrimpTaskRepository {
         });
     }
 
+    public void setQueryDate(LocalDate queryDate) {
+        this.queryDate = queryDate;
+    }
+
+    public LocalDate getQueryDate() {
+        return queryDate;
+    }
 }
