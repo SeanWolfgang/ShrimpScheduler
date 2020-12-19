@@ -33,6 +33,7 @@ public class ButtonRibbonFragment extends Fragment {
     private Button viewTodayTasksButton;
     private Button viewAllTasksButton;
     private Button viewDateTasksButton;
+    private Button viewPagedTasksButton;
     private Button viewTemplatesButton;
     private Button manageTasksButton;
     private Button manageTemplatesButton;
@@ -53,6 +54,7 @@ public class ButtonRibbonFragment extends Fragment {
         viewTodayTasksButton = (Button) view.findViewById(R.id.view_today_tasks);
         viewAllTasksButton = (Button) view.findViewById(R.id.view__all_tasks);
         viewDateTasksButton = (Button) view.findViewById(R.id.view__date_tasks);
+        viewPagedTasksButton = (Button) view.findViewById(R.id.view__paged_tasks);
         viewTemplatesButton = (Button) view.findViewById(R.id.view_templates);
         manageTasksButton = (Button) view.findViewById(R.id.manage_tasks);
         manageTemplatesButton = (Button) view.findViewById(R.id.manage_templates);
@@ -71,6 +73,14 @@ public class ButtonRibbonFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String buttonTitle = "ViewAllTasks";
+                listener.onButtonClicked(buttonTitle);
+            }
+        });
+
+        viewPagedTasksButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String buttonTitle = "ViewPagedTasks";
                 listener.onButtonClicked(buttonTitle);
             }
         });

@@ -29,12 +29,15 @@ public class MainActivity extends AppCompatActivity
     private ShrimpTaskRecyclerFragmentAll shrimpTaskRecyclerFragmentAll;
     private ShrimpTaskRecyclerFragmentDate shrimpTaskRecyclerFragmentToday;
     private ShrimpTaskRecyclerFragmentDate shrimpTaskRecyclerFragmentDate;
+    private ShrimpTaskPagedListRecyclerFragment shrimpTaskPagedListRecyclerFragment;
     private TaskTemplateRecyclerFragment taskTemplateRecyclerFragment;
     private Fragment buttonRibbonFragment;
     private Fragment dataPreviewFragment;
 
     private Fragment databaseManagementFragment;
     private Fragment newTaskTemplateFragment;
+
+    private int yearsAdded = 20;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -45,6 +48,7 @@ public class MainActivity extends AppCompatActivity
         shrimpTaskRecyclerFragmentAll = new ShrimpTaskRecyclerFragmentAll();
         shrimpTaskRecyclerFragmentToday = new ShrimpTaskRecyclerFragmentDate();
         shrimpTaskRecyclerFragmentDate = new ShrimpTaskRecyclerFragmentDate();
+        shrimpTaskPagedListRecyclerFragment = new ShrimpTaskPagedListRecyclerFragment();
         taskTemplateRecyclerFragment = new TaskTemplateRecyclerFragment();
         buttonRibbonFragment = new ButtonRibbonFragment();
         dataPreviewFragment = new DataPreviewFragment();
@@ -143,6 +147,9 @@ public class MainActivity extends AppCompatActivity
                 .replace(R.id.middle_container, shrimpTaskRecyclerFragmentAll)
                 .commit();
 
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.middle_container, shrimpTaskPagedListRecyclerFragment)
+                .commit();
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.middle_container, shrimpTaskRecyclerFragmentDate)
@@ -213,7 +220,7 @@ public class MainActivity extends AppCompatActivity
              */
 
             LocalDate startDate = LocalDate.of(dateArray[0], dateArray[1] + 1, dateArray[2]);
-            LocalDate endDate = LocalDate.of(dateArray[0] + 1, dateArray[1] + 1, dateArray[2]);
+            LocalDate endDate = LocalDate.of(dateArray[0] + yearsAdded, dateArray[1] + 1, dateArray[2]);
             int daysInterval = taskTemplate.getDaysBetweenRepeat();
             long repeatTimes = (DAYS.between(startDate, endDate)) / daysInterval;
 
@@ -287,6 +294,11 @@ public class MainActivity extends AppCompatActivity
                         .replace(R.id.middle_container, shrimpTaskRecyclerFragmentAll)
                         .commit();
                 break;
+            case "ViewPagedTasks":
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.middle_container, shrimpTaskPagedListRecyclerFragment)
+                        .commit();
+                break;
             case "ViewTemplates":
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.middle_container, taskTemplateRecyclerFragment)
@@ -318,6 +330,8 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
     }
+
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override

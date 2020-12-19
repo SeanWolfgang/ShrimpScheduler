@@ -136,3 +136,4 @@ https://www.mysamplecode.com/2012/06/android-edittext-text-change-listener.html
 Room and architecture components link
 https://www.youtube.com/playlist?list=PLrnPJCHvNZuDihTpkRs6SpZhqgBqPU118
 
+shrimpRepository.getAllShrimpTasks();

@@ -8,6 +8,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
+import androidx.paging.LivePagedListBuilder;
+import androidx.paging.PagedList;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -16,15 +18,19 @@ import java.util.List;
 public class ShrimpTaskViewModel extends AndroidViewModel {
     private ShrimpTaskRepository shrimpRepository;
     private final LiveData<List<ShrimpTask>> allShrimpTasks;
+    private LiveData<PagedList<ShrimpTask>> allPagedShrimpTasks;
     private final LiveData<List<ShrimpTask>> todayShrimpTasks;
     private final LiveData<Integer> totalCount;
     private LiveData<List<ShrimpTask>> dateShrimpTasks;
     private LiveData<Integer> nameCountList;
 
+    private ShrimpTaskDao shrimpTaskDao;
+
     private LocalDate today = LocalDate.now();
 
     MutableLiveData<String> nameCountSearchName = new MutableLiveData<>();
     MutableLiveData<LocalDate> dateFilter = new MutableLiveData<>();
+    MutableLiveData<String> filterTaskNameSearch = new MutableLiveData<>();
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public ShrimpTaskViewModel (Application application) {
@@ -71,4 +77,35 @@ public class ShrimpTaskViewModel extends AndroidViewModel {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void updateShrimpTask(ShrimpTask shrimpTask) {shrimpRepository.updateShrimpTask(shrimpTask);}
 
+    public void initAllTasks() {
+
+        shrimpTaskDao = shrimpRepository.getShrimpTaskDao();
+
+        PagedList.Config config = (new PagedList.Config.Builder())
+                .setPageSize(10)
+                .build();
+
+        allPagedShrimpTasks = new LivePagedListBuilder<>(shrimpTaskDao.getPagedAllShrimpTasks(), config)
+                        .build();
+
+/*
+        this.shrimpTaskDao = shrimpTaskDao;
+
+        allPagedShrimpTasks = Transformations.switchMap(filterTaskNameSearch, input -> {
+            if (input == null || input.equals("") || input.equals("%%")) {
+                return new LivePagedListBuilder<>(shrimpTaskDao.getPagedAllShrimpTasks(), config)
+                        .build();
+            } else {
+                return new LivePagedListBuilder<>(shrimpTaskDao.getNameShrimpTasks(input), config)
+                        .build();
+            }
+        });
+
+ */
+
+    }
+
+    public LiveData<PagedList<ShrimpTask>> getAllPagedShrimpTasks() {
+        return allPagedShrimpTasks;
+    }
 }

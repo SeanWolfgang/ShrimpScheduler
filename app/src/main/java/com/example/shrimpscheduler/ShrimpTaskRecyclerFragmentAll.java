@@ -13,10 +13,8 @@ import androidx.annotation.RequiresApi;
 
 import java.time.LocalDate;
 
-@RequiresApi(api = Build.VERSION_CODES.O)
 public class ShrimpTaskRecyclerFragmentAll extends ShrimpTaskRecyclerFragment {
     private ShrimpTaskViewModel allShrimpTaskViewModel;
-    private LocalDate filterDate = LocalDate.now();
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Nullable
@@ -26,16 +24,10 @@ public class ShrimpTaskRecyclerFragmentAll extends ShrimpTaskRecyclerFragment {
 
         allShrimpTaskViewModel = super.getShrimpTaskViewModel();
 
-        allShrimpTaskViewModel.getAllShrimpTasks().observe(this, allTasks -> {
-            adapter.submitList(allTasks);
-        });
-
-        /*
         allShrimpTaskViewModel.getAllShrimpTasks().observe(this, shrimpTasks -> {
             // Update the cached copy of the words in the adapter.
             adapter.submitList(shrimpTasks);
         });
-        */
 
         return view;
     }
@@ -43,7 +35,4 @@ public class ShrimpTaskRecyclerFragmentAll extends ShrimpTaskRecyclerFragment {
     @Override
     public ShrimpTaskViewModel getShrimpTaskViewModel() {return allShrimpTaskViewModel; }
 
-    public void setFilterDate(LocalDate filterDate) {
-        this.filterDate = filterDate;
-    }
 }

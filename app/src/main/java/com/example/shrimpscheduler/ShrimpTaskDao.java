@@ -1,6 +1,7 @@
 package com.example.shrimpscheduler;
 
 import androidx.lifecycle.LiveData;
+import androidx.paging.DataSource;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -14,6 +15,12 @@ import java.util.List;
 public interface ShrimpTaskDao {
     @Query("SELECT * FROM shrimptask ORDER BY execute_time asc, id")
     LiveData<List<ShrimpTask>> getAllShrimpTasks();
+
+    @Query("SELECT * FROM shrimptask ORDER BY execute_time asc, id")
+    DataSource.Factory<Integer, ShrimpTask> getPagedAllShrimpTasks();
+
+    @Query("SELECT * FROM shrimptask WHERE name LIKE :name ORDER BY execute_time asc, id")
+    DataSource.Factory<Integer, ShrimpTask> getNameShrimpTasks(String name);
 
     @Query("SELECT * FROM shrimptask WHERE execute_time = :date ORDER BY id")
     LiveData<List<ShrimpTask>> getShrimpTaskDate(LocalDate date);

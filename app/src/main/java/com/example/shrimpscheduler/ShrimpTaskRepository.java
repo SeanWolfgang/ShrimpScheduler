@@ -5,6 +5,8 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
+import androidx.paging.LivePagedListBuilder;
+import androidx.paging.PagedList;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -14,6 +16,7 @@ public class ShrimpTaskRepository {
 
     private ShrimpTaskDao shrimpTaskDao;
     private LiveData<List<ShrimpTask>> allShrimpTasks;
+    //private LiveData<PagedList<ShrimpTask>> allPagedShrimpTasks;
     private LiveData<List<ShrimpTask>> todayShrimpTasks;
     private LiveData<Integer> totalCount;
 
@@ -35,9 +38,7 @@ public class ShrimpTaskRepository {
 
     // Room executes all queries on a separate thread.
     // Observed LiveData will notify the observer when the data has changed.
-    LiveData<List<ShrimpTask>> getAllShrimpTasks() {
-        return allShrimpTasks;
-    }
+    LiveData<List<ShrimpTask>> getAllShrimpTasks() { return allShrimpTasks; }
 
     LiveData<List<ShrimpTask>> getShrimpTaskDate(LocalDate date) { return shrimpTaskDao.getShrimpTaskDate(date); }
 
@@ -73,5 +74,9 @@ public class ShrimpTaskRepository {
 
     public LocalDate getQueryDate() {
         return queryDate;
+    }
+
+    public ShrimpTaskDao getShrimpTaskDao() {
+        return shrimpTaskDao;
     }
 }

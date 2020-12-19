@@ -23,6 +23,7 @@
     <string name="view_today_tasks_button">Today Tasks</string>
     <string name="view_all_tasks_button">All Tasks</string>
     <string name="view_date_tasks_button">Date Tasks</string>
+    <string name="view_paged_tasks_button">Paged Tasks</string>
     <string name="view_templates_button">Templates</string>
     <string name="manage_tasks_button">Manage Tasks</string>
     <string name="manage_templates_button">Manage Templates</string>
