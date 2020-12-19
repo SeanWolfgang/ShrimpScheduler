@@ -18,6 +18,9 @@ public interface ShrimpTaskDao {
     @Query("SELECT * FROM shrimptask WHERE execute_time = :date ORDER BY id")
     LiveData<List<ShrimpTask>> getShrimpTaskDate(LocalDate date);
 
+    @Query("SELECT * FROM shrimptask WHERE execute_time = :date ORDER BY id")
+    LiveData<List<ShrimpTask>> getShrimpTaskToday(LocalDate date);
+
     @Query("SELECT COUNT(id) FROM shrimptask WHERE name = :name")
     LiveData<Integer> getShrimpTasksNameMatch(String name);
 

@@ -30,6 +30,16 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/view__date_tasks"
+            android:text="@string/view_date_tasks_button"
+            android:minWidth="@dimen/button_ribbon_min_width"
+            android:onClick="showDatePickerDialog"
+            android:minHeight="@dimen/button_ribbon_min_height"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/view_templates"
             android:text="@string/view_templates_button"
             android:minWidth="@dimen/button_ribbon_min_width"

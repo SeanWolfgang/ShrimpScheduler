@@ -14,7 +14,8 @@ import java.time.LocalDate;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class ShrimpTaskRecyclerFragmentDate extends ShrimpTaskRecyclerFragment {
-    private LocalDate date = LocalDate.now();
+    private ShrimpTaskViewModel dateShrimpTaskViewModel;
+    private LocalDate filterDate = LocalDate.now();
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Nullable
@@ -22,19 +23,29 @@ public class ShrimpTaskRecyclerFragmentDate extends ShrimpTaskRecyclerFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        this.getShrimpTaskViewModel().getShrimpTaskDate(date).observe(this, dateShrimpTasks -> {
-            // Update the cached copy of the words in the adapter.
-            adapter.submitList(dateShrimpTasks);
+        dateShrimpTaskViewModel = super.getShrimpTaskViewModel();
+
+        dateShrimpTaskViewModel.setDate(filterDate);
+
+        dateShrimpTaskViewModel.getShrimpTaskDate().observe(this, dateTasks -> {
+            dateShrimpTaskViewModel.setDate(filterDate);
+            adapter.submitList(dateTasks);
         });
+
+        /*
+        allShrimpTaskViewModel.getAllShrimpTasks().observe(this, shrimpTasks -> {
+            // Update the cached copy of the words in the adapter.
+            adapter.submitList(shrimpTasks);
+        });
+        */
 
         return view;
     }
 
-    public LocalDate getDate() {
-        return date;
-    }
+    @Override
+    public ShrimpTaskViewModel getShrimpTaskViewModel() {return dateShrimpTaskViewModel; }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setFilterDate(LocalDate filterDate) {
+        this.filterDate = filterDate;
     }
 }

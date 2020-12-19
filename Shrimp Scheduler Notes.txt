@@ -122,7 +122,7 @@ https://beginnersbook.com/2017/11/java-8-adding-days-to-the-localdate/
 Mutable Query Android Room
 https://stackoverflow.com/questions/48966985/android-room-livedata-select-query-parameters
 1.) Dao has query like normal with LiveData object
-2.) Repository has method, but not LiveData object or initialization
+2.) Repository has method, but not LiveData object or initialization. Returns method call of Dao object.
 3.) ViewModel has LiveData object, MutableLiveData object, switchmap, and methods
 
 Switchmap examples

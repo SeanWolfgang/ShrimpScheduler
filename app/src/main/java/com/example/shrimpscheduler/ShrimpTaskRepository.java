@@ -14,9 +14,10 @@ public class ShrimpTaskRepository {
 
     private ShrimpTaskDao shrimpTaskDao;
     private LiveData<List<ShrimpTask>> allShrimpTasks;
-    private LiveData<List<ShrimpTask>> dateShrimpTasks;
+    private LiveData<List<ShrimpTask>> todayShrimpTasks;
     private LiveData<Integer> totalCount;
 
+    private LocalDate today = LocalDate.now();
     private LocalDate queryDate = LocalDate.now();
 
     // Note that in order to unit test the ShrimpTaskRepository, you have to remove the Application
@@ -28,7 +29,7 @@ public class ShrimpTaskRepository {
         ShrimpTaskDatabase db = ShrimpTaskDatabase.getDatabase(application);
         shrimpTaskDao = db.shrimpTaskDao();
         allShrimpTasks = shrimpTaskDao.getAllShrimpTasks();
-        dateShrimpTasks = shrimpTaskDao.getShrimpTaskDate(queryDate);
+        todayShrimpTasks = shrimpTaskDao.getShrimpTaskToday(today);
         totalCount = shrimpTaskDao.getCountShrimpTask();
     }
 
@@ -38,7 +39,9 @@ public class ShrimpTaskRepository {
         return allShrimpTasks;
     }
 
-    LiveData<List<ShrimpTask>> getShrimpTaskDate(LocalDate date) { return dateShrimpTasks; }
+    LiveData<List<ShrimpTask>> getShrimpTaskDate(LocalDate date) { return shrimpTaskDao.getShrimpTaskDate(date); }
+
+    LiveData<List<ShrimpTask>> getShrimpTaskToday(LocalDate date) { return shrimpTaskDao.getShrimpTaskToday(date); }
 
     LiveData<Integer> getShrimpTasksNameMatch(String name) { return shrimpTaskDao.getShrimpTasksNameMatch(name); }
 
