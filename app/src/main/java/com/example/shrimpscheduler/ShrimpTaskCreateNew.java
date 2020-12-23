@@ -1,6 +1,8 @@
 package com.example.shrimpscheduler;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,6 +27,8 @@ import androidx.lifecycle.ViewModelProvider;
 import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 public class ShrimpTaskCreateNew extends AppCompatActivity
     implements DatePickerDialog.OnDateSetListener {
@@ -34,11 +38,13 @@ public class ShrimpTaskCreateNew extends AppCompatActivity
     public static final String EXTRA_REPLY2 = "REPLY2";
     public static final String EXTRA_REPLY3 = "REPLY3";
     public static final String EXTRA_REPLY4 = "REPLY4";
+    public static final String EXTRA_REPLY5 = "REPLY5";
 
     private EditText nameEditText;
     private EditText descriptionEditText;
     private Button timeButton;
     private Button dateButton;
+    private Button batchButton;
     private TextView dateText;
 
     private int[] pickedDate = new int[3];
@@ -47,12 +53,16 @@ public class ShrimpTaskCreateNew extends AppCompatActivity
     private TaskTemplateAdapter adapter = new TaskTemplateAdapter(new TaskTemplateAdapter.TaskTemplateDiff());
     private TaskTemplateViewModel taskTemplateViewModel;
     private ShrimpTaskViewModel shrimpTaskViewModel;
+    private GroupViewModel groupViewModel;
     private Spinner templateSpinner;
     private ArrayList<String> spinnerStrings = new ArrayList<>();
+    private ArrayList<String> groupStrings = new ArrayList<>();
+    private ArrayList<String> selectedGroupStrings = new ArrayList<>();
     private ArrayList<String> templateNameStrings = new ArrayList<>();
     private ArrayList<String> templateDescriptionStrings = new ArrayList<>();
     private int selectedSpinnerItem;
     private int numberOfMatchedItems;
+    private int finalMatchedItems;
     private int numberOfItems;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -67,10 +77,12 @@ public class ShrimpTaskCreateNew extends AppCompatActivity
         dateButton = findViewById(R.id.pick_date_button);
         dateText = findViewById(R.id.startDate);
         templateSpinner = findViewById(R.id.parent_name);
+        batchButton = findViewById(R.id.batch_task_button);
         final Button saveButton = findViewById(R.id.save_user_button);
 
         taskTemplateViewModel = new ViewModelProvider(this).get(TaskTemplateViewModel.class);
         shrimpTaskViewModel = new ViewModelProvider(this).get(ShrimpTaskViewModel.class);
+        groupViewModel = new ViewModelProvider(this).get(GroupViewModel.class);
 
         spinnerStrings.add("Select Template");
         templateNameStrings.add("first empty");
@@ -90,6 +102,12 @@ public class ShrimpTaskCreateNew extends AppCompatActivity
             @Override
             public void afterTextChanged(Editable s) {
 
+            }
+        });
+
+        groupViewModel.getAllGroups().observe(this, groups -> {
+            for (Group group : groups) {
+                groupStrings.add(group.getName());
             }
         });
 
@@ -162,6 +180,10 @@ public class ShrimpTaskCreateNew extends AppCompatActivity
             }
         });
 
+        batchButton.setOnClickListener(view -> {
+            showGroupPickerDialog(view);
+        });
+
         saveButton.setOnClickListener(view -> {
             Intent replyIntent = new Intent();
 
@@ -202,6 +224,9 @@ public class ShrimpTaskCreateNew extends AppCompatActivity
                 replyIntent.putExtra(EXTRA_REPLY2, pickedDate);
                 replyIntent.putExtra(EXTRA_REPLY3, description);
                 replyIntent.putExtra(EXTRA_REPLY4, selectedSpinnerItem - 1);
+                if (selectedGroupStrings.size() > 0) {
+                    replyIntent.putExtra(EXTRA_REPLY5, selectedGroupStrings);
+                }
                 setResult(RESULT_OK, replyIntent);
                 finish();
             }
@@ -219,6 +244,52 @@ public class ShrimpTaskCreateNew extends AppCompatActivity
     public void showDatePickerDialog(View v) {
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
+    }
+
+    public void showGroupPickerDialog(View v) {
+        String[] groupArray = new String[groupStrings.size()];
+        boolean[] checkedGroupArray = new boolean[groupStrings.size()];
+
+        for(int i=0 ; i< groupStrings.size();i++){
+            groupArray[i] = groupStrings.get(i);
+            checkedGroupArray[i] = false;
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        //setTitle
+        builder.setTitle("Select groups");
+        //set multichoice
+        builder.setMultiChoiceItems(groupArray, checkedGroupArray, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                // Update the current focused item's checked status
+                checkedGroupArray[which] = isChecked;
+            }
+        });
+        // Set the positive/yes button click listener
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                selectedGroupStrings.clear();
+
+                for (int i = 0; i<checkedGroupArray.length; i++){
+                    if (checkedGroupArray[i]) {
+                        selectedGroupStrings.add(groupArray[i]);
+                    }
+                }
+            }
+        });
+        // Set the neutral/cancel button click listener
+        builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Do something when click the neutral button
+            }
+        });
+        AlertDialog dialog = builder.create();
+        // Display the alert dialog on interface
+        dialog.show();
     }
 
     /*

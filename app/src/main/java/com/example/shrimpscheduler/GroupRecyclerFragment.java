@@ -12,34 +12,33 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class TaskTemplateRecyclerFragment extends Fragment {
+public class GroupRecyclerFragment extends Fragment {
     private RecyclerView recyclerView;
-    private TaskTemplateViewModel taskTemplateViewModel;
-    private TaskTemplateAdapter adapter = new TaskTemplateAdapter(new TaskTemplateAdapter.TaskTemplateDiff());
+    private GroupViewModel groupViewModel;
+    private GroupAdapter adapter = new GroupAdapter(new GroupAdapter.GroupDiff());
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.task_template_content_main, container, false);
+        View view = inflater.inflate(R.layout.group_content_main, container, false);
 
-        taskTemplateViewModel = new ViewModelProvider(this).get(TaskTemplateViewModel.class);
+        groupViewModel = new ViewModelProvider(this).get(GroupViewModel.class);
 
         recyclerView = view.findViewById(R.id.recycler_view_template);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(adapter);
         recyclerView.setNestedScrollingEnabled(false);
 
-        taskTemplateViewModel.getAllTaskTemplates().observe(this, taskTemplates -> {
-            // Update the cached copy of the words in the adapter.
-            adapter.submitList(taskTemplates);
+        groupViewModel.getAllGroups().observe(this, groups -> {
+            adapter.submitList(groups);
         });
 
         return view;
     }
 
-    public TaskTemplateViewModel getTaskTemplateViewModel() {return taskTemplateViewModel;}
+    public GroupViewModel getGroupViewModel() {return groupViewModel;}
 
-    public TaskTemplateAdapter getAdapter() {
+    public GroupAdapter getAdapter() {
         return adapter;
     }
 

@@ -15,6 +15,7 @@ public class DatabaseManagementFragment extends Fragment {
     private Button deleteAllButton;
     private Button deleteFutureButton;
     private Button deleteTemplatesButton;
+    private Button deleteAllGroups;
 
     private DataBaseManagementFragmentListener listener;
 
@@ -30,6 +31,7 @@ public class DatabaseManagementFragment extends Fragment {
         deleteAllButton = view.findViewById(R.id.delete_everything);
         deleteFutureButton = view.findViewById(R.id.delete_future);
         deleteTemplatesButton = view.findViewById(R.id.delete_templates);
+        deleteAllGroups = view.findViewById(R.id.delete_groups);
 
         deleteAllButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +53,14 @@ public class DatabaseManagementFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String buttonTitle = "DeleteTemplates";
+                listener.onDBManageButtonClicked(buttonTitle);
+            }
+        });
+
+        deleteAllGroups.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String buttonTitle = "DeleteGroups";
                 listener.onDBManageButtonClicked(buttonTitle);
             }
         });

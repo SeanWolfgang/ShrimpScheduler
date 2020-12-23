@@ -14,13 +14,15 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
 public class MainActivity extends AppCompatActivity
     implements ButtonRibbonFragment.ButtonRibbonFragmentListener,
         DatabaseManagementFragment.DataBaseManagementFragmentListener,
-        TaskTemplateCreateNew.TaskTemplateFragmentListener {
+        TaskTemplateCreateNew.TaskTemplateFragmentListener,
+        GroupCreateNew.GroupCreateNewFragmentListener {
 
     FloatingActionButton fab;
     private ShrimpTaskViewModel shrimpTaskViewModel;
@@ -31,11 +33,13 @@ public class MainActivity extends AppCompatActivity
     private ShrimpTaskRecyclerFragmentDate shrimpTaskRecyclerFragmentDate;
     private ShrimpTaskPagedListRecyclerFragment shrimpTaskPagedListRecyclerFragment;
     private TaskTemplateRecyclerFragment taskTemplateRecyclerFragment;
+    private GroupRecyclerFragment groupRecyclerFragment;
     private Fragment buttonRibbonFragment;
     private Fragment dataPreviewFragment;
 
     private Fragment databaseManagementFragment;
     private Fragment newTaskTemplateFragment;
+    private Fragment newGroupFragment;
 
     private int yearsAdded = 20;
 
@@ -50,9 +54,11 @@ public class MainActivity extends AppCompatActivity
         shrimpTaskRecyclerFragmentDate = new ShrimpTaskRecyclerFragmentDate();
         shrimpTaskPagedListRecyclerFragment = new ShrimpTaskPagedListRecyclerFragment();
         taskTemplateRecyclerFragment = new TaskTemplateRecyclerFragment();
+        groupRecyclerFragment = new GroupRecyclerFragment();
         buttonRibbonFragment = new ButtonRibbonFragment();
         dataPreviewFragment = new DataPreviewFragment();
         newTaskTemplateFragment = new TaskTemplateCreateNew();
+        newGroupFragment = new GroupCreateNew();
 
         taskTemplateRecyclerFragment.getAdapter().setOnItemClickListener(new TaskTemplateAdapter.OnTaskTemplateClickListener() {
             @Override
@@ -61,6 +67,14 @@ public class MainActivity extends AppCompatActivity
                         getApplicationContext(),
                         taskTemplateRecyclerFragment.getAdapter().getTaskTemplate(  0).getName(),
                         Toast.LENGTH_LONG).show();
+            }
+        });
+
+        groupRecyclerFragment.getAdapter().setOnItemClickListener(new GroupAdapter.OnGroupTaskClickListener() {
+            @Override
+            public void onGroupDeleteClick(int position) {
+                Group group = groupRecyclerFragment.getAdapter().getGroup(position);
+                groupRecyclerFragment.getGroupViewModel().deleteItem(group.getId());
             }
         });
 
@@ -143,6 +157,7 @@ public class MainActivity extends AppCompatActivity
                 .replace(R.id.bottom_container, buttonRibbonFragment)
                 .commit();
 
+
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.middle_container, shrimpTaskRecyclerFragmentAll)
                 .commit();
@@ -153,6 +168,10 @@ public class MainActivity extends AppCompatActivity
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.middle_container, shrimpTaskRecyclerFragmentDate)
+                .commit();
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.middle_container, groupRecyclerFragment)
                 .commit();
 
         getSupportFragmentManager().beginTransaction()
@@ -202,6 +221,7 @@ public class MainActivity extends AppCompatActivity
             //ShrimpTask shrimpTask = new ShrimpTask("je", "parent", OffsetDateTime.now(Clock.systemDefaultZone()), "je");
             int[] dateArray = data.getIntArrayExtra(ShrimpTaskCreateNew.EXTRA_REPLY2);
             int templatePosition = data.getIntExtra(ShrimpTaskCreateNew.EXTRA_REPLY4, -1);
+            ArrayList<String> batchSelectedGroups = (ArrayList<String>) data.getSerializableExtra(ShrimpTaskCreateNew.EXTRA_REPLY5);
 
             TaskTemplate taskTemplate = taskTemplateRecyclerFragment.getAdapter().getTaskTemplate(templatePosition);
 
@@ -219,17 +239,34 @@ public class MainActivity extends AppCompatActivity
 
              */
 
+
+
             LocalDate startDate = LocalDate.of(dateArray[0], dateArray[1] + 1, dateArray[2]);
             LocalDate endDate = LocalDate.of(dateArray[0] + yearsAdded, dateArray[1] + 1, dateArray[2]);
             int daysInterval = taskTemplate.getDaysBetweenRepeat();
             long repeatTimes = (DAYS.between(startDate, endDate)) / daysInterval;
 
-            for (int i = 0; i < repeatTimes; i++) {
-                ShrimpTask shrimpTask = new ShrimpTask(proposedName, taskTemplate.getName(), startDate, data.getStringExtra(ShrimpTaskCreateNew.EXTRA_REPLY3));
+            if (batchSelectedGroups == null) {
+                for (int i = 0; i < repeatTimes; i++) {
+                    ShrimpTask shrimpTask = new ShrimpTask(proposedName, taskTemplate.getName(), startDate, data.getStringExtra(ShrimpTaskCreateNew.EXTRA_REPLY3));
 
-                shrimpTaskRecyclerFragmentAll.getShrimpTaskViewModel().insert(shrimpTask);
+                    shrimpTaskRecyclerFragmentAll.getShrimpTaskViewModel().insert(shrimpTask);
 
-                startDate = startDate.plusDays(daysInterval);
+                    startDate = startDate.plusDays(daysInterval);
+                }
+            } else {
+                for (int j = 0; j < batchSelectedGroups.size(); j++) {
+                    String inBatchName = proposedName + " " + batchSelectedGroups.get(j);
+                    LocalDate inBatchStartDate = startDate;
+
+                    for (int i = 0; i < repeatTimes; i++) {
+                        ShrimpTask shrimpTask = new ShrimpTask(inBatchName, taskTemplate.getName(), inBatchStartDate, data.getStringExtra(ShrimpTaskCreateNew.EXTRA_REPLY3));
+
+                        shrimpTaskRecyclerFragmentAll.getShrimpTaskViewModel().insert(shrimpTask);
+
+                        inBatchStartDate = inBatchStartDate.plusDays(daysInterval);
+                    }
+                }
             }
 
             getSupportFragmentManager().beginTransaction()
@@ -265,6 +302,12 @@ public class MainActivity extends AppCompatActivity
                 taskTemplateRecyclerFragment.getTaskTemplateViewModel().deleteAll();
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.middle_container, taskTemplateRecyclerFragment)
+                        .commit();
+                break;
+            case "DeleteGroups":
+                groupRecyclerFragment.getGroupViewModel().deleteAll();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.middle_container, shrimpTaskRecyclerFragmentToday)
                         .commit();
                 break;
         }
@@ -323,15 +366,23 @@ public class MainActivity extends AppCompatActivity
                         .replace(R.id.middle_container, newTaskTemplateFragment)
                         .commit();
                 break;
+            case "NewGroup":
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.middle_container, newGroupFragment)
+                        .commit();
+                break;
             case "DataHub":
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.middle_container, shrimpTaskRecyclerFragmentAll)
                         .commit();
                 break;
+             case "ViewGroups":
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.middle_container, groupRecyclerFragment)
+                        .commit();
+                break;
         }
     }
-
-
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -347,4 +398,19 @@ public class MainActivity extends AppCompatActivity
                 date.toString(),
                 Toast.LENGTH_LONG).show();
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public void onGroupCreateNewButtonClicked(String name) {
+        groupRecyclerFragment.getGroupViewModel().insert(new Group(name, "0"));
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.middle_container, groupRecyclerFragment)
+                .commit();
+    }
+
+
+
 }
+
+

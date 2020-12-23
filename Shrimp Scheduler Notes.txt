@@ -137,3 +137,26 @@ Room and architecture components link
 https://www.youtube.com/playlist?list=PLrnPJCHvNZuDihTpkRs6SpZhqgBqPU118
 
 shrimpRepository.getAllShrimpTasks();
+
+PagedList examples
+https://www.programcreek.com/java-api-examples/?code=Docile-Alligator%2FInfinity-For-Reddit%2FInfinity-For-Reddit-master%2Fapp%2Fsrc%2Fmain%2Fjava%2Fml%2Fdocilealligator%2Finfinityforreddit%2FUserListingViewModel.java#
+https://www.programcreek.com/java-api-examples/?code=airbnb%2Fepoxy%2Fepoxy-master%2Fepoxy-integrationtest%2Fsrc%2Ftest%2Fjava%2Fcom%2Fairbnb%2Fepoxy%2FPagingIntegrationTest_List.java
+https://blog.usejournal.com/how-to-use-viewmodel-livedata-pagination-searchview-room-database-5b8bc3631ac7
+https://medium.com/@b.chandrasaimohan/mvvm-android-step-by-step-implementation-java-and-kotlin-bc0ddff95470
+
+Kotlin Paging
+https://medium.com/@shashankmohabia/android-paging-efficient-way-to-populate-recycler-view-dynamically-31f39f35cdf9
+
+Multi-selection list (good)
+https://www.jigopost.com/multichoice-alertdialog-in-android/
+
+Multi-selection list (backup)
+https://stackoverflow.com/questions/20017329/android-select-items-in-a-multi-select-listview-inside-alertdialog
+https://stackoverflow.com/questions/47089167/pass-arraylist-to-setmultichoiceitems-in-dialog
+https://developer.android.com/guide/topics/ui/dialogs
+
+ArrayList putExtra
+https://www.tutorialspoint.com/how-to-pass-an-arraylist-to-another-activity-using-intents-in-android
+
+Select distinct Java
+https://stackoverflow.com/questions/47815148/how-to-use-distinct-in-android-room

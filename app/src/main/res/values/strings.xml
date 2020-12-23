@@ -27,6 +27,7 @@
     <string name="view_templates_button">Templates</string>
     <string name="manage_tasks_button">Manage Tasks</string>
     <string name="manage_templates_button">Manage Templates</string>
+    <string name="new_group_bottom_button">New group</string>
     <string name="data_hub_button">Data Hub</string>
     <string name="new_template_button">New Template</string>
     <string name="check_mark">\u2713</string>
@@ -46,5 +47,14 @@
     <string name="date_empty">Date empty</string>
     <string name="no_template_selected">No template selected</string>
     <string name="repeat_name">Name already exists in database</string>
+
+
+    <string name="save_new_group_button">Save</string>
+    <string name="add_new_group">Add new item</string>
+    <string name="new_group_label">Add new group</string>
+    <string name="view_groups_bottom_button">View Groups</string>
+    <string name="delete_groups">Delete all groups</string>
+    <string name="batch_task_button_string">Batch Save</string>
+    <string name="batch_task_bottom_button">Make Batch Task</string>
 
 </resources>

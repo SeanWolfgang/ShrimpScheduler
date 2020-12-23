@@ -91,5 +91,32 @@
             android:minHeight="@dimen/button_ribbon_min_height"
             />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/new_group_bottom_button"
+            android:text="@string/new_group_bottom_button"
+            android:minWidth="@dimen/button_ribbon_min_width"
+            android:minHeight="@dimen/button_ribbon_min_height"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/view_groups_bottom_button"
+            android:text="@string/view_groups_bottom_button"
+            android:minWidth="@dimen/button_ribbon_min_width"
+            android:minHeight="@dimen/button_ribbon_min_height"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/batch_task_bottom_button"
+            android:text="@string/batch_task_bottom_button"
+            android:minWidth="@dimen/button_ribbon_min_width"
+            android:minHeight="@dimen/button_ribbon_min_height"
+            />
+
     </LinearLayout>
 </HorizontalScrollView >

@@ -7,9 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
-import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.List;
 
 public class TaskTemplateAdapter extends ListAdapter<TaskTemplate, TaskTemplateViewHolder> {
     private OnTaskTemplateClickListener mListener;

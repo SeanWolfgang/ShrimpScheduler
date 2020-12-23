@@ -38,7 +38,10 @@ public class ButtonRibbonFragment extends Fragment {
     private Button manageTasksButton;
     private Button manageTemplatesButton;
     private Button newTaskTemplateButton;
+    private Button newGroupButton;
     private Button dataHubButton;
+    private Button viewGroupsButton;
+    private Button batchCreateTask;
     private LocalDate pickedDate;
 
     public interface ButtonRibbonFragmentListener{
@@ -59,7 +62,10 @@ public class ButtonRibbonFragment extends Fragment {
         manageTasksButton = (Button) view.findViewById(R.id.manage_tasks);
         manageTemplatesButton = (Button) view.findViewById(R.id.manage_templates);
         newTaskTemplateButton = (Button) view.findViewById(R.id.new_template_button);
+        newGroupButton = (Button) view.findViewById(R.id.new_group_bottom_button);
         dataHubButton = (Button) view.findViewById(R.id.data_hub);
+        viewGroupsButton = (Button) view.findViewById(R.id.view_groups_bottom_button);
+        batchCreateTask = (Button) view.findViewById(R.id.batch_task_bottom_button);
 
         viewTodayTasksButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +95,7 @@ public class ButtonRibbonFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
+
                 final Calendar c = Calendar.getInstance();
                 int mYear = c.get(Calendar.YEAR);
                 int mMonth = c.get(Calendar.MONTH);
@@ -109,7 +116,7 @@ public class ButtonRibbonFragment extends Fragment {
                             }
                         }, mYear, mMonth, mDay);
 
-                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+                //datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
                 datePickerDialog.show();
 
                 String buttonTitle = "ViewAllTasks";
@@ -148,10 +155,34 @@ public class ButtonRibbonFragment extends Fragment {
             }
         });
 
+        newGroupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String buttonTitle = "NewGroup";
+                listener.onButtonClicked(buttonTitle);
+            }
+        });
+
         dataHubButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String buttonTitle = "DataHub";
+                listener.onButtonClicked(buttonTitle);
+            }
+        });
+
+        viewGroupsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String buttonTitle = "ViewGroups";
+                listener.onButtonClicked(buttonTitle);
+            }
+        });
+
+        batchCreateTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String buttonTitle = "BatchTask";
                 listener.onButtonClicked(buttonTitle);
             }
         });
