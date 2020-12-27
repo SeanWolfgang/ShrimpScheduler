@@ -31,6 +31,7 @@ public class GroupCreateNew  extends Fragment {
 
     private GroupCreateNew.GroupCreateNewFragmentListener listener;
 
+
     public interface GroupCreateNewFragmentListener{
         void onGroupCreateNewButtonClicked(String name);
     }
@@ -44,7 +45,6 @@ public class GroupCreateNew  extends Fragment {
 
         groupName = view.findViewById(R.id.new_group_name);
         saveButton = view.findViewById(R.id.save_new_group);
-
 
         groupName.addTextChangedListener(new TextWatcher() {
             @Override

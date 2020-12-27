@@ -182,3 +182,20 @@ Three models
 2.) ShrimpTaskViewModel
 3.) TaskTemplateViewModel
 
+Accessing models stored in activity from fragments
+https://stackoverflow.com/questions/13067033/how-to-access-activity-variables-from-a-fragment-android
+
+DialogFragment implementations
+https://guides.codepath.com/android/using-dialogfragment
+
+Using string resource as string
+https://stackoverflow.com/questions/28649154/concatenating-an-androids-string-resource-with-a-hard-coded-string
+
+Check if ArrayList is empty
+https://www.geeksforgeeks.org/arraylist-isempty-java-example/#:~:text=The%20isEmpty()%20method%20of,the%20list%20contains%20any%20element.&text=Parameter%3A%20It%20does%20not%20accepts%20any%20parameter.
+
+ArrayList contains item
+https://www.geeksforgeeks.org/arraylist-isempty-java-example/#:~:text=The%20isEmpty()%20method%20of,the%20list%20contains%20any%20element.&text=Parameter%3A%20It%20does%20not%20accepts%20any%20parameter.
+
+SQL or Room distinct - check for unique occurences
+https://stackoverflow.com/questions/47815148/how-to-use-distinct-in-android-room

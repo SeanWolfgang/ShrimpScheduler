@@ -18,6 +18,9 @@ public interface GroupDao {
     @Query("SELECT COUNT(id) FROM `group` WHERE name = :name")
     LiveData<Integer> getGroupNameMatch(String name);
 
+    @Query("SELECT * FROM `group` WHERE id = :id")
+    public Group getGroup(int id);
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     public void insert(Group group);
 

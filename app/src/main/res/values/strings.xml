@@ -56,5 +56,11 @@
     <string name="delete_groups">Delete all groups</string>
     <string name="batch_task_button_string">Batch Save</string>
     <string name="batch_task_bottom_button">Make Batch Task</string>
+    <string name="bottom_button_create_task_dialog_string">Create Task Fragment</string>
+
+    <string name="create_task_dialog_batch_checkbox_string">Batch Create for Groups</string>
+    <string name="create_task_dialog_title">New Task</string>
+    <string name="create_task_dialog_negative_button">Cancel</string>
+    <string name="create_task_dialog_positive_button">OK</string>
 
 </resources>

@@ -17,11 +17,10 @@ import androidx.fragment.app.Fragment;
 
 public class TaskTemplateCreateNew extends Fragment {
     private EditText taskTemplateNameEditText;
-    private EditText defaultDescritpionEditText;
+    private EditText defaultDescriptionEditText;
     private EditText daysBetweenRepeatEditText;
     private CheckBox repeatCheckbox;
     private Button saveTaskTemplateButton;
-
 
     private TaskTemplateCreateNew.TaskTemplateFragmentListener listener;
 
@@ -35,7 +34,7 @@ public class TaskTemplateCreateNew extends Fragment {
         View view = inflater.inflate(R.layout.create_template_fragment, container, false);
 
         taskTemplateNameEditText = view.findViewById(R.id.task_template_name);
-        defaultDescritpionEditText = view.findViewById(R.id.task_template_description);
+        defaultDescriptionEditText = view.findViewById(R.id.task_template_description);
         daysBetweenRepeatEditText = view.findViewById(R.id.task_template_days_repeat);
         repeatCheckbox = view.findViewById(R.id.task_repeat_setting);
         saveTaskTemplateButton = (Button) view.findViewById(R.id.save_task_template_button);
@@ -55,7 +54,7 @@ public class TaskTemplateCreateNew extends Fragment {
                             getContext(),
                             R.string.need_name,
                             Toast.LENGTH_LONG).show();
-                } else if (TextUtils.isEmpty(defaultDescritpionEditText.getText())) {
+                } else if (TextUtils.isEmpty(defaultDescriptionEditText.getText())) {
                     Toast.makeText(
                             getContext(),
                             R.string.need_description,
@@ -67,7 +66,7 @@ public class TaskTemplateCreateNew extends Fragment {
                             Toast.LENGTH_LONG).show();
                 } else {
                     listener.onTaskTemplateButtonClicked(taskTemplateNameEditText.getText().toString(),
-                            defaultDescritpionEditText.getText().toString(),
+                            defaultDescriptionEditText.getText().toString(),
                             daysBetweenRepeat,
                             repeatCheckbox.isChecked());
 
@@ -99,7 +98,7 @@ public class TaskTemplateCreateNew extends Fragment {
 
     private void resetForm() {
         taskTemplateNameEditText.getText().clear();
-        defaultDescritpionEditText.getText().clear();
+        defaultDescriptionEditText.getText().clear();
         daysBetweenRepeatEditText.getText().clear();
         repeatCheckbox.setChecked(false);
     }

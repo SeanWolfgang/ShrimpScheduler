@@ -23,10 +23,10 @@ public class MainActivity extends AppCompatActivity
     implements ButtonRibbonFragment.ButtonRibbonFragmentListener,
         DatabaseManagementFragment.DataBaseManagementFragmentListener,
         TaskTemplateCreateNew.TaskTemplateFragmentListener,
-        GroupCreateNew.GroupCreateNewFragmentListener {
+        GroupCreateNew.GroupCreateNewFragmentListener,
+        ShrimpTaskCreateDialog.ShrimpTaskCreateDialogListener {
 
     FloatingActionButton fab;
-    private ShrimpTaskViewModel shrimpTaskViewModel;
     public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
 
     private ShrimpTaskRecyclerFragmentAll shrimpTaskRecyclerFragmentAll;
@@ -44,7 +44,10 @@ public class MainActivity extends AppCompatActivity
 
     private int yearsAdded = 20;
 
+    private ShrimpTaskViewModel shrimpTaskViewModel;
+    private TaskTemplateViewModel taskTemplateViewModel;
     private GroupViewModel groupViewModel;
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -53,6 +56,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         // Assign all groups
+        shrimpTaskViewModel = new ViewModelProvider(this).get(ShrimpTaskViewModel.class);
+        taskTemplateViewModel = new ViewModelProvider(this).get(TaskTemplateViewModel.class);
         groupViewModel = new ViewModelProvider(this).get(GroupViewModel.class);
 
         shrimpTaskRecyclerFragmentAll = new ShrimpTaskRecyclerFragmentAll();
@@ -73,6 +78,7 @@ public class MainActivity extends AppCompatActivity
                         getApplicationContext(),
                         taskTemplateRecyclerFragment.getAdapter().getTaskTemplate(  0).getName(),
                         Toast.LENGTH_LONG).show();
+
             }
         });
 
@@ -387,6 +393,9 @@ public class MainActivity extends AppCompatActivity
                         .replace(R.id.middle_container, groupRecyclerFragment)
                         .commit();
                 break;
+            case "CreateTaskFragment":
+                openCreateTaskDialog();
+                break;
         }
     }
 
@@ -421,6 +430,34 @@ public class MainActivity extends AppCompatActivity
 
     public void setGroupViewModel(GroupViewModel groupViewModel) {
         this.groupViewModel = groupViewModel;
+    }
+
+
+    public ShrimpTaskViewModel getShrimpTaskViewModel() {
+        return shrimpTaskViewModel;
+    }
+
+    public void setShrimpTaskViewModel(ShrimpTaskViewModel shrimpTaskViewModel) {
+        this.shrimpTaskViewModel = shrimpTaskViewModel;
+    }
+
+    public TaskTemplateViewModel getTaskTemplateViewModel() {
+        return taskTemplateViewModel;
+    }
+
+    public void setTaskTemplateViewModel(TaskTemplateViewModel taskTemplateViewModel) {
+        this.taskTemplateViewModel = taskTemplateViewModel;
+    }
+
+    public void openCreateTaskDialog() {
+        ShrimpTaskCreateDialog createTaskDialog = new ShrimpTaskCreateDialog();
+        createTaskDialog.show(getSupportFragmentManager(), "create task dialog");
+    }
+
+
+    @Override
+    public void makeShrimpTask(String name, String description, LocalDate startDate, String templateName, String[] groupNames) {
+
     }
 }
 

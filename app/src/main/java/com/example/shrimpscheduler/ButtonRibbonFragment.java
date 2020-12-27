@@ -42,6 +42,7 @@ public class ButtonRibbonFragment extends Fragment {
     private Button dataHubButton;
     private Button viewGroupsButton;
     private Button batchCreateTask;
+    private Button createTaskFragment;
     private LocalDate pickedDate;
 
     public interface ButtonRibbonFragmentListener{
@@ -66,6 +67,7 @@ public class ButtonRibbonFragment extends Fragment {
         dataHubButton = (Button) view.findViewById(R.id.data_hub);
         viewGroupsButton = (Button) view.findViewById(R.id.view_groups_bottom_button);
         batchCreateTask = (Button) view.findViewById(R.id.batch_task_bottom_button);
+        createTaskFragment = (Button) view.findViewById(R.id.bottom_button_create_task_dialog);
 
         viewTodayTasksButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,6 +185,14 @@ public class ButtonRibbonFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 String buttonTitle = "BatchTask";
+                listener.onButtonClicked(buttonTitle);
+            }
+        });
+
+        createTaskFragment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String buttonTitle = "CreateTaskFragment";
                 listener.onButtonClicked(buttonTitle);
             }
         });
