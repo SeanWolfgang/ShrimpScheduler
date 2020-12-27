@@ -58,12 +58,16 @@ public class ShrimpTaskCreateNew extends AppCompatActivity
     private ArrayList<String> spinnerStrings = new ArrayList<>();
     private ArrayList<String> groupStrings = new ArrayList<>();
     private ArrayList<String> selectedGroupStrings = new ArrayList<>();
+    private ArrayList<Boolean> itemCheckedState = new ArrayList<>();
     private ArrayList<String> templateNameStrings = new ArrayList<>();
     private ArrayList<String> templateDescriptionStrings = new ArrayList<>();
+    private ArrayList<String> distinctShrimpTaskNames = new ArrayList<>();
     private int selectedSpinnerItem;
     private int numberOfMatchedItems;
     private int finalMatchedItems;
     private int numberOfItems;
+
+    public MainActivity mainActivity;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -124,6 +128,13 @@ public class ShrimpTaskCreateNew extends AppCompatActivity
         shrimpTaskViewModel.getCountShrimpTask().observe(this, shrimpTaskNameCountDB -> {
             // Update the cached copy of the words in the adapter.
             numberOfItems = shrimpTaskNameCountDB;
+        });
+
+        shrimpTaskViewModel.getDistinctShrimpTaskNames().observe(this, distinctShrimpNames -> {
+            // Update the cached copy of the words in the adapter.
+            for (String name : distinctShrimpNames) {
+                distinctShrimpTaskNames.add(name);
+            }
         });
 
         shrimpTaskViewModel.getShrimpTasksNameMatch().observe(this, shrimpTaskNameCountDBMatch -> {
@@ -211,24 +222,44 @@ public class ShrimpTaskCreateNew extends AppCompatActivity
                         getApplicationContext(),
                         R.string.no_template_selected,
                         Toast.LENGTH_LONG).show();
-            } else if (numberOfMatchedItems > 0) {
+            } else if (numberOfMatchedItems > 0 && selectedGroupStrings.isEmpty()) {
                 //setResult(RESULT_CANCELED, replyIntent);
                 Toast.makeText(
                         getApplicationContext(),
-                        R.string.repeat_name,
+                        nameEditText.getText().toString() + " " + R.string.repeat_name,
                         Toast.LENGTH_LONG).show();
             } else {
+
+
                 String name = nameEditText.getText().toString();
                 String description = descriptionEditText.getText().toString();
-                replyIntent.putExtra(EXTRA_REPLY1, name);
-                replyIntent.putExtra(EXTRA_REPLY2, pickedDate);
-                replyIntent.putExtra(EXTRA_REPLY3, description);
-                replyIntent.putExtra(EXTRA_REPLY4, selectedSpinnerItem - 1);
+                boolean passedRepeatCheck = true;
+
                 if (selectedGroupStrings.size() > 0) {
-                    replyIntent.putExtra(EXTRA_REPLY5, selectedGroupStrings);
+                    for (String groupString : selectedGroupStrings) {
+                        String proposedBatchName = name + " " + groupString;
+                        if (distinctShrimpTaskNames.contains(proposedBatchName)) {
+                            //setResult(RESULT_CANCELED, replyIntent);
+                            Toast.makeText(
+                                    getApplicationContext(),
+                                    proposedBatchName + " " + getString(R.string.repeat_name),
+                                    Toast.LENGTH_LONG).show();
+                            passedRepeatCheck = false;
+                        }
+                    }
                 }
-                setResult(RESULT_OK, replyIntent);
-                finish();
+
+                if (passedRepeatCheck) {
+                    replyIntent.putExtra(EXTRA_REPLY1, name);
+                    replyIntent.putExtra(EXTRA_REPLY2, pickedDate);
+                    replyIntent.putExtra(EXTRA_REPLY3, description);
+                    replyIntent.putExtra(EXTRA_REPLY4, selectedSpinnerItem - 1);
+                    if (selectedGroupStrings.size() > 0) {
+                        replyIntent.putExtra(EXTRA_REPLY5, selectedGroupStrings);
+                    }
+                    setResult(RESULT_OK, replyIntent);
+                    finish();
+                }
             }
         });
     }
@@ -250,11 +281,18 @@ public class ShrimpTaskCreateNew extends AppCompatActivity
         String[] groupArray = new String[groupStrings.size()];
         boolean[] checkedGroupArray = new boolean[groupStrings.size()];
 
-        for(int i=0 ; i< groupStrings.size();i++){
-            groupArray[i] = groupStrings.get(i);
-            checkedGroupArray[i] = false;
-        }
 
+        if (selectedGroupStrings.isEmpty()) {
+            for (int i = 0; i < groupStrings.size(); i++) {
+                groupArray[i] = groupStrings.get(i);
+                checkedGroupArray[i] = false;
+            }
+        } else {
+            for (int i = 0; i < groupStrings.size(); i++) {
+                groupArray[i] = groupStrings.get(i);
+                checkedGroupArray[i] = itemCheckedState.get(i);
+            }
+        }
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         //setTitle
@@ -272,10 +310,14 @@ public class ShrimpTaskCreateNew extends AppCompatActivity
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 selectedGroupStrings.clear();
+                itemCheckedState.clear();
 
                 for (int i = 0; i<checkedGroupArray.length; i++){
                     if (checkedGroupArray[i]) {
                         selectedGroupStrings.add(groupArray[i]);
+                        itemCheckedState.add(true);
+                    } else {
+                        itemCheckedState.add(false);
                     }
                 }
             }

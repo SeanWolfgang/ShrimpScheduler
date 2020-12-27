@@ -18,6 +18,7 @@ public class ShrimpTaskRepository {
     private LiveData<List<ShrimpTask>> allShrimpTasks;
     //private LiveData<PagedList<ShrimpTask>> allPagedShrimpTasks;
     private LiveData<List<ShrimpTask>> todayShrimpTasks;
+    private LiveData<List<String>> distinctShrimpTaskNames;
     private LiveData<Integer> totalCount;
 
     private LocalDate today = LocalDate.now();
@@ -33,6 +34,7 @@ public class ShrimpTaskRepository {
         shrimpTaskDao = db.shrimpTaskDao();
         allShrimpTasks = shrimpTaskDao.getAllShrimpTasks();
         todayShrimpTasks = shrimpTaskDao.getShrimpTaskToday(today);
+        distinctShrimpTaskNames = shrimpTaskDao.getDistinctShrimpTaskNames();
         totalCount = shrimpTaskDao.getCountShrimpTask();
     }
 
@@ -43,6 +45,8 @@ public class ShrimpTaskRepository {
     LiveData<List<ShrimpTask>> getShrimpTaskDate(LocalDate date) { return shrimpTaskDao.getShrimpTaskDate(date); }
 
     LiveData<List<ShrimpTask>> getShrimpTaskToday(LocalDate date) { return shrimpTaskDao.getShrimpTaskToday(date); }
+
+    LiveData<List<String>> getDistinctShrimpTaskNames() { return shrimpTaskDao.getDistinctShrimpTaskNames(); }
 
     LiveData<Integer> getShrimpTasksNameMatch(String name) { return shrimpTaskDao.getShrimpTasksNameMatch(name); }
 

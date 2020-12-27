@@ -17,12 +17,15 @@ public class GroupRecyclerFragment extends Fragment {
     private GroupViewModel groupViewModel;
     private GroupAdapter adapter = new GroupAdapter(new GroupAdapter.GroupDiff());
 
+    public MainActivity mainActivity;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.group_content_main, container, false);
 
-        groupViewModel = new ViewModelProvider(this).get(GroupViewModel.class);
+        mainActivity = (MainActivity) getActivity();
+        groupViewModel = mainActivity.getGroupViewModel();
 
         recyclerView = view.findViewById(R.id.recycler_view_template);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));

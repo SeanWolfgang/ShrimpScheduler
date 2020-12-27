@@ -160,3 +160,25 @@ https://www.tutorialspoint.com/how-to-pass-an-arraylist-to-another-activity-usin
 
 Select distinct Java
 https://stackoverflow.com/questions/47815148/how-to-use-distinct-in-android-room
+
+
+To get model from provider rather than make a new variable each time...
+groupViewModel = new ViewModelProvider(this).get(GroupViewModel.class);
+
+
+
+private GroupViewModel groupViewModel;
+    
+
+    groupViewModel = new ViewModelProvider(this).get(GroupViewModel.class);
+
+public MainActivity mainActivity;
+    mainActivity = (MainActivity) getActivity();
+groupViewModel = mainActivity.getGroupViewModel();
+
+
+Three models
+1.) GroupViewModel
+2.) ShrimpTaskViewModel
+3.) TaskTemplateViewModel
+

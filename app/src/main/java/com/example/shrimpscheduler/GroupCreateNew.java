@@ -25,6 +25,7 @@ public class GroupCreateNew  extends Fragment {
     private EditText groupName;
     private Button saveButton;
 
+    public MainActivity mainActivity;
     private GroupViewModel groupViewModel;
     private int numberOfMatchedItems;
 
@@ -38,10 +39,12 @@ public class GroupCreateNew  extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.create_group_fragment, container, false);
 
+        mainActivity = (MainActivity) getActivity();
+        groupViewModel = mainActivity.getGroupViewModel();
+
         groupName = view.findViewById(R.id.new_group_name);
         saveButton = view.findViewById(R.id.save_new_group);
 
-        groupViewModel = new ViewModelProvider(this).get(GroupViewModel.class);
 
         groupName.addTextChangedListener(new TextWatcher() {
             @Override

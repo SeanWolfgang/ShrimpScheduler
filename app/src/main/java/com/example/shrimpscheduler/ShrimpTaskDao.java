@@ -16,6 +16,9 @@ public interface ShrimpTaskDao {
     @Query("SELECT * FROM shrimptask ORDER BY execute_time asc, id")
     LiveData<List<ShrimpTask>> getAllShrimpTasks();
 
+    @Query("SELECT DISTINCT name FROM shrimptask ORDER BY execute_time asc, id")
+    LiveData<List<String>> getDistinctShrimpTaskNames();
+
     @Query("SELECT * FROM shrimptask ORDER BY execute_time asc, id")
     DataSource.Factory<Integer, ShrimpTask> getPagedAllShrimpTasks();
 

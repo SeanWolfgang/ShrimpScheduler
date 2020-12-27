@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -43,11 +44,16 @@ public class MainActivity extends AppCompatActivity
 
     private int yearsAdded = 20;
 
+    private GroupViewModel groupViewModel;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Assign all groups
+        groupViewModel = new ViewModelProvider(this).get(GroupViewModel.class);
 
         shrimpTaskRecyclerFragmentAll = new ShrimpTaskRecyclerFragmentAll();
         shrimpTaskRecyclerFragmentToday = new ShrimpTaskRecyclerFragmentDate();
@@ -409,8 +415,13 @@ public class MainActivity extends AppCompatActivity
                 .commit();
     }
 
+    public GroupViewModel getGroupViewModel() {
+        return groupViewModel;
+    }
 
-
+    public void setGroupViewModel(GroupViewModel groupViewModel) {
+        this.groupViewModel = groupViewModel;
+    }
 }
 
 
