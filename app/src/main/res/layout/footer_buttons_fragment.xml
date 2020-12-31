@@ -1,6 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-</LinearLayout>
+    <ImageButton
+        android:id="@+id/footer_buttons_task"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_task_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/footer_buttons_template"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/footer_textview_task"
+        android:text="@string/footer_task"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/footer_buttons_task"
+        app:layout_constraintStart_toStartOf="@+id/footer_buttons_task"
+        app:layout_constraintEnd_toEndOf="@+id/footer_buttons_task"
+        />
+
+    <ImageButton
+        android:id="@+id/footer_buttons_template"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_format_icon"
+        app:layout_constraintStart_toEndOf="@+id/footer_buttons_task"
+        app:layout_constraintEnd_toStartOf="@+id/footer_buttons_settings"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/footer_textview_template"
+        android:text="@string/footer_template"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/footer_buttons_template"
+        app:layout_constraintStart_toStartOf="@+id/footer_buttons_template"
+        app:layout_constraintEnd_toEndOf="@+id/footer_buttons_template"
+        />
+
+    <ImageButton
+        android:id="@+id/footer_buttons_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_settings_icon"
+        app:layout_constraintStart_toEndOf="@+id/footer_buttons_template"
+        app:layout_constraintEnd_toStartOf="@+id/footer_buttons_group"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/footer_textview_settings"
+        android:text="@string/footer_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/footer_buttons_settings"
+        app:layout_constraintStart_toStartOf="@+id/footer_buttons_settings"
+        app:layout_constraintEnd_toEndOf="@+id/footer_buttons_settings"
+        />
+
+    <ImageButton
+        android:id="@+id/footer_buttons_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_group_icon"
+        app:layout_constraintStart_toEndOf="@+id/footer_buttons_settings"
+        app:layout_constraintEnd_toStartOf="@+id/footer_buttons_data"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/footer_textview_group"
+        android:text="@string/footer_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/footer_buttons_group"
+        app:layout_constraintStart_toStartOf="@+id/footer_buttons_group"
+        app:layout_constraintEnd_toEndOf="@+id/footer_buttons_group"
+        />
+
+    <ImageButton
+        android:id="@+id/footer_buttons_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_data_icon"
+        app:layout_constraintStart_toEndOf="@+id/footer_buttons_group"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/footer_textview_data"
+        android:text="@string/footer_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/footer_buttons_data"
+        app:layout_constraintStart_toStartOf="@+id/footer_buttons_data"
+        app:layout_constraintEnd_toEndOf="@+id/footer_buttons_data"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

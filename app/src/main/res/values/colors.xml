@@ -10,4 +10,10 @@
     <color name="notDoneButtonClickedBack">@android:color/holo_red_light</color>
     <color name="notDoneButtonClickedText">@android:color/holo_red_dark</color>
 
+    <color name="textInvalid">@android:color/holo_red_dark</color>
+    <color name="textValid">@android:color/black</color>
+
+
+
+
 </resources>

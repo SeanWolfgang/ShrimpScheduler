@@ -199,3 +199,41 @@ https://www.geeksforgeeks.org/arraylist-isempty-java-example/#:~:text=The%20isEm
 
 SQL or Room distinct - check for unique occurences
 https://stackoverflow.com/questions/47815148/how-to-use-distinct-in-android-room
+
+
+Create new:
+TaskCreateNewActivity		create_task_activity
+	TaskCreateNewFragment			create_task_fragment
+	TaskCreateNewGroupRecyclerFragment	create_task_group_fragment	create_task_group_recycler
+		TaskCreateNewGroupAdapter
+		TaskCreateNewGroupRecyclerFragment
+		TaskCreateNewGroupViewHolder
+	TaskCreateNewSingleDatepickerFragment	create_task_single_datepicker
+	OkCancelButtonFooterFragment		ok_cancel_button_footer_fragment
+TemplateCreateNewActivity	create_template_activity
+GroupCreateNewActivity		create_group_activity
+
+Activity review
+https://android.jlelse.eu/passing-data-between-activities-using-intent-in-android-85cb097f3016
+
+Updating views (textview, checkbox, etc.) from a specific view in a recycler adapter
+https://stackoverflow.com/questions/33784369/recyclerview-get-view-at-particular-position
+
+Recycler view item count from adapter
+https://stackoverflow.com/questions/60162270/how-to-get-recyclerview-item-count
+
+Delayed start to task using async
+https://stackoverflow.com/questions/4177409/java-android-how-to-start-an-asynctask-after-3-seconds-of-delay
+
+String check if null or empty
+https://stackoverflow.com/questions/14721397/checking-if-a-string-is-empty-or-null-in-java
+
+String resources from Java
+https://stackoverflow.com/questions/7493287/android-how-do-i-get-string-from-resources-using-its-name
+
+Edit hint color
+https://stackoverflow.com/questions/30824009/change-edittext-hint-color-when-using-textinputlayout#:~:text=Use%20textColorHint%20to%20set%20the,away%20and%20to%20the%20EditText.
+
+Edit text underline
+https://stackoverflow.com/questions/21480398/edittext-underline-below-text-property/40889531
+

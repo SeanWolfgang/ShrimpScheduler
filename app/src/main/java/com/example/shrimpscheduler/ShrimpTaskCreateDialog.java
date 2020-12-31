@@ -1,26 +1,19 @@
 package com.example.shrimpscheduler;
 
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatDialogFragment;
-import androidx.fragment.app.DialogFragment;
 
 import java.time.LocalDate;
 
@@ -46,12 +39,23 @@ public class ShrimpTaskCreateDialog extends AppCompatDialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.create_task_dialog, null);
+        View view = inflater.inflate(R.layout.create_task_fragment, null);
 
         mainActivity = (MainActivity) getActivity();
         taskTemplateViewModel = mainActivity.getTaskTemplateViewModel();
         shrimpTaskViewModel = mainActivity.getShrimpTaskViewModel();
         groupViewModel = mainActivity.getGroupViewModel();
+
+        String[] groupArray = new String[3];
+        boolean[] checkedGroupArray = new boolean[3];
+
+        groupArray[0] = "0";
+        groupArray[1] = "1";
+        groupArray[2] = "2";
+
+        checkedGroupArray[0] = false;
+        checkedGroupArray[1] = false;
+        checkedGroupArray[2] = false;
 
         builder.setView(view)
                 .setTitle(R.string.create_task_dialog_title)
@@ -74,6 +78,14 @@ public class ShrimpTaskCreateDialog extends AppCompatDialogFragment {
         createShrimpTaskNameEditText = view.findViewById(R.id.create_task_dialog_name);
         createShrimpTaskDescriptionEditText = view.findViewById(R.id.create_task_dialog_description);
         createShrimpTaskCheckbox = view.findViewById(R.id.create_task_dialog_batch_checkbox);
+
+        builder.setMultiChoiceItems(groupArray, null, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                // Update the current focused item's checked status
+                checkedGroupArray[which] = isChecked;
+            }
+        });
 
         return builder.create();
     }

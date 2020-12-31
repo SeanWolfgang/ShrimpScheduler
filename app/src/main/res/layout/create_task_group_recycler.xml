@@ -1,6 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-</LinearLayout>
+    <CheckBox
+        android:id="@+id/create_task_group_recycler_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/create_task_group_recycler_task_fullname"
+        app:layout_constraintTop_toTopOf="@+id/create_task_group_recycler_date_imagebutton"
+        app:layout_constraintBottom_toBottomOf="@+id/create_task_group_recycler_date_imagebutton"
+        />
+    <TextView
+        android:id="@+id/create_task_group_recycler_task_fullname"
+        android:text=""
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/big_padding"
+        app:layout_constraintTop_toTopOf="@+id/create_task_group_recycler_date_imagebutton"
+        app:layout_constraintBottom_toBottomOf="@+id/create_task_group_recycler_date_imagebutton"
+        app:layout_constraintStart_toEndOf="@+id/create_task_group_recycler_name"
+
+        />
+
+    <TextView
+        android:id="@+id/create_task_group_recycler_date_textview"
+        android:text="@string/create_task_group_recycler_date_textview"
+        android:textColor="@android:color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/create_task_group_recycler_date_imagebutton"
+        app:layout_constraintBottom_toBottomOf="@+id/create_task_group_recycler_date_imagebutton"
+        app:layout_constraintEnd_toStartOf="@+id/create_task_group_recycler_date_imagebutton"
+        />
+
+    <ImageButton
+        android:id="@+id/create_task_group_recycler_date_imagebutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_datepicker_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

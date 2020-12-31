@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -20,34 +21,60 @@ import java.util.ArrayList;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 public class MainActivity extends AppCompatActivity
-    implements ButtonRibbonFragment.ButtonRibbonFragmentListener,
-        DatabaseManagementFragment.DataBaseManagementFragmentListener,
-        TaskTemplateCreateNew.TaskTemplateFragmentListener,
-        GroupCreateNew.GroupCreateNewFragmentListener,
-        ShrimpTaskCreateDialog.ShrimpTaskCreateDialogListener {
+        implements TaskDatePickingFragment.TaskDatePickingListener,
+        FooterButtonFragment.FooterButtonFragmentListener,
+        GroupHeaderFragment.GroupHeaderFragmentListener,
+        TemplateHeaderFragment.TemplateHeaderFragmentListener {
 
-    FloatingActionButton fab;
     public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
+    private FragmentManager fragmentManager;
 
-    private ShrimpTaskRecyclerFragmentAll shrimpTaskRecyclerFragmentAll;
-    private ShrimpTaskRecyclerFragmentDate shrimpTaskRecyclerFragmentToday;
-    private ShrimpTaskRecyclerFragmentDate shrimpTaskRecyclerFragmentDate;
-    private ShrimpTaskPagedListRecyclerFragment shrimpTaskPagedListRecyclerFragment;
-    private TaskTemplateRecyclerFragment taskTemplateRecyclerFragment;
-    private GroupRecyclerFragment groupRecyclerFragment;
-    private Fragment buttonRibbonFragment;
-    private Fragment dataPreviewFragment;
-
-    private Fragment databaseManagementFragment;
-    private Fragment newTaskTemplateFragment;
-    private Fragment newGroupFragment;
-
-    private int yearsAdded = 20;
-
+    // Declare models
     private ShrimpTaskViewModel shrimpTaskViewModel;
     private TaskTemplateViewModel taskTemplateViewModel;
     private GroupViewModel groupViewModel;
 
+    /*
+    View fragments
+     */
+
+    // Empty fragment
+    public EmptyFragment emptyFragment0;
+    public EmptyFragment emptyFragment1;
+    public EmptyFragment emptyFragment2;
+    public EmptyFragment emptyFragment3;
+
+    // Task screen variables
+    private Fragment dataPreviewFragment;
+    private TaskDatePickingFragment taskDatePickingFragment;
+    private ShrimpTaskRecyclerFragmentDate shrimpTaskRecyclerFragmentDate;
+
+    // Template screen variables
+    private TemplateHeaderFragment templateHeaderFragment;
+    private TaskTemplateRecyclerFragment taskTemplateRecyclerFragment;
+
+    // Group screen variables
+    private GroupHeaderFragment groupHeaderFragment;
+    private GroupRecyclerFragment groupRecyclerFragment;
+
+    // Data screen variables
+    // private DataRecyclerFragment dataRecyclerFragment;
+
+    // Footer
+    private FooterButtonFragment footerButtonFragment;
+
+
+    /*
+    Create new activities
+     */
+
+
+    //private Fragment databaseManagementFragment;
+    //private Fragment newTaskTemplateFragment;
+    //private Fragment newGroupFragment;
+
+    // Activity variables
+    private int yearsAdded = 20;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -55,95 +82,41 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Assign all groups
+        fragmentManager = getSupportFragmentManager();
+
+        // Assign all models
         shrimpTaskViewModel = new ViewModelProvider(this).get(ShrimpTaskViewModel.class);
         taskTemplateViewModel = new ViewModelProvider(this).get(TaskTemplateViewModel.class);
         groupViewModel = new ViewModelProvider(this).get(GroupViewModel.class);
 
-        shrimpTaskRecyclerFragmentAll = new ShrimpTaskRecyclerFragmentAll();
-        shrimpTaskRecyclerFragmentToday = new ShrimpTaskRecyclerFragmentDate();
-        shrimpTaskRecyclerFragmentDate = new ShrimpTaskRecyclerFragmentDate();
-        shrimpTaskPagedListRecyclerFragment = new ShrimpTaskPagedListRecyclerFragment();
-        taskTemplateRecyclerFragment = new TaskTemplateRecyclerFragment();
-        groupRecyclerFragment = new GroupRecyclerFragment();
-        buttonRibbonFragment = new ButtonRibbonFragment();
+        /*
+        View fragments
+         */
+
+        // Empty Fragment
+        emptyFragment0 = new EmptyFragment();
+        emptyFragment1 = new EmptyFragment();
+        emptyFragment2 = new EmptyFragment();
+        emptyFragment3 = new EmptyFragment();
+
+        // Task screen variables
         dataPreviewFragment = new DataPreviewFragment();
-        newTaskTemplateFragment = new TaskTemplateCreateNew();
-        newGroupFragment = new GroupCreateNew();
+        taskDatePickingFragment = new TaskDatePickingFragment();
+        shrimpTaskRecyclerFragmentDate = new ShrimpTaskRecyclerFragmentDate();
 
-        taskTemplateRecyclerFragment.getAdapter().setOnItemClickListener(new TaskTemplateAdapter.OnTaskTemplateClickListener() {
-            @Override
-            public void onTaskTemplateEditClick(int position) {
-                Toast.makeText(
-                        getApplicationContext(),
-                        taskTemplateRecyclerFragment.getAdapter().getTaskTemplate(  0).getName(),
-                        Toast.LENGTH_LONG).show();
+        // Template screen variables
+        templateHeaderFragment = new TemplateHeaderFragment();
+        taskTemplateRecyclerFragment = new TaskTemplateRecyclerFragment();
 
-            }
-        });
+        // Group screen variables
+        groupHeaderFragment = new GroupHeaderFragment();
+        groupRecyclerFragment = new GroupRecyclerFragment();
 
-        groupRecyclerFragment.getAdapter().setOnItemClickListener(new GroupAdapter.OnGroupTaskClickListener() {
-            @Override
-            public void onGroupDeleteClick(int position) {
-                Group group = groupRecyclerFragment.getAdapter().getGroup(position);
-                groupRecyclerFragment.getGroupViewModel().deleteItem(group.getId());
-            }
-        });
+        // Data screen variables
+        // something to go here once the variable is ready
 
-        shrimpTaskRecyclerFragmentAll.getAdapter().setOnShrimpTaskClickListener(new ShrimpTaskAdapter.OnShrimpTaskClickListener() {
-            @Override
-            public void onDoneButtonClick(int position) {
-                ShrimpTask shrimpTask = shrimpTaskRecyclerFragmentAll.getAdapter().getShrimpTask(position);
-                shrimpTask.setDisposed(true);
-                shrimpTask.setDone(true);
-                shrimpTaskRecyclerFragmentAll.getShrimpTaskViewModel().updateShrimpTask(shrimpTask);
-                // Log.w("myApp", dateArray.toString());
-
-                /*
-                Toast.makeText(
-                        getApplicationContext(),
-                        shrimpTask.getName() + Integer.toString(shrimpTaskRecyclerFragmentAll.getTaskNameMatchCount()),
-                        Toast.LENGTH_LONG).show();
-
-                 */
-            }
-
-            @Override
-            public void onNotDoneButtonClick(int position) {
-                ShrimpTask shrimpTask = shrimpTaskRecyclerFragmentAll.getAdapter().getShrimpTask(position);
-                shrimpTask.setDisposed(true);
-                shrimpTask.setDone(false);
-                shrimpTaskRecyclerFragmentAll.getShrimpTaskViewModel().updateShrimpTask(shrimpTask);
-            }
-        });
-
-        shrimpTaskRecyclerFragmentToday.getAdapter().setOnShrimpTaskClickListener(new ShrimpTaskAdapter.OnShrimpTaskClickListener() {
-            @Override
-            public void onDoneButtonClick(int position) {
-                ShrimpTask shrimpTask = shrimpTaskRecyclerFragmentToday.getAdapter().getShrimpTask(position);
-                shrimpTask.setDisposed(true);
-                shrimpTask.setDone(true);
-                shrimpTaskRecyclerFragmentToday.getShrimpTaskViewModel().updateShrimpTask(shrimpTask);
-                // Log.w("myApp", dateArray.toString());
-
-                /*
-                Toast.makeText(
-                        getApplicationContext(),
-                        shrimpTask.getName() + Integer.toString(shrimpTaskRecyclerFragmentToday.getTaskNameMatchCount()),
-                        Toast.LENGTH_LONG).show();
-
-                 */
-            }
-
-            @Override
-            public void onNotDoneButtonClick(int position) {
-                ShrimpTask shrimpTask = shrimpTaskRecyclerFragmentToday.getAdapter().getShrimpTask(position);
-                shrimpTask.setDisposed(true);
-                shrimpTask.setDone(false);
-                shrimpTaskRecyclerFragmentToday.getShrimpTaskViewModel().updateShrimpTask(shrimpTask);
-            }
-        });
-
+        // Footer
+        footerButtonFragment = new FooterButtonFragment();
 
         shrimpTaskRecyclerFragmentDate.getAdapter().setOnShrimpTaskClickListener(new ShrimpTaskAdapter.OnShrimpTaskClickListener() {
             @Override
@@ -163,66 +136,152 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        displayTasksScreen();
+    }
+
+    public GroupViewModel getGroupViewModel() {
+        return groupViewModel;
+    }
+
+    public ShrimpTaskViewModel getShrimpTaskViewModel() {
+        return shrimpTaskViewModel;
+    }
+
+    public TaskTemplateViewModel getTaskTemplateViewModel() {
+        return taskTemplateViewModel;
+    }
+
+    public void openCreateTaskDialog() {
+        ShrimpTaskCreateDialog createTaskDialog = new ShrimpTaskCreateDialog();
+        createTaskDialog.show(getSupportFragmentManager(), "create task dialog");
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public void calendarButtonListener(LocalDate pickedDate) {
+        shrimpTaskRecyclerFragmentDate.setFilterDate(pickedDate);
+        /*
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.top_container, dataPreviewFragment)
-                .replace(R.id.middle_container, taskTemplateRecyclerFragment)
-                .replace(R.id.bottom_container, buttonRibbonFragment)
+                .replace(R.id.container_2, shrimpTaskRecyclerFragmentDate)
                 .commit();
 
-
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.middle_container, shrimpTaskRecyclerFragmentAll)
-                .commit();
-
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.middle_container, shrimpTaskPagedListRecyclerFragment)
-                .commit();
-
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.middle_container, shrimpTaskRecyclerFragmentDate)
-                .commit();
-
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.middle_container, groupRecyclerFragment)
-                .commit();
-
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.middle_container, shrimpTaskRecyclerFragmentToday)
-                .commit();
-
-        fab = findViewById(R.id.fab);
-
-        fab.setOnClickListener( view -> {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.middle_container, taskTemplateRecyclerFragment)
-                    .commit();
-
-            Intent intent = new Intent(MainActivity.this, ShrimpTaskCreateNew.class);
-            startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
-        });
+         */
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    public void switchModeListener(boolean isEditMode) {
+        if (isEditMode) {
+            // Switch to edit recycler view
+        } else {
+            // Switch to view recycler view
         }
-
-        return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void newTaskListener() {
+        // Open new task activity
+        Intent intent = new Intent(MainActivity.this, TaskCreateNewActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onTaskButtonClicked() {
+        // Open task fragments
+        displayTasksScreen();
+    }
+
+    @Override
+    public void onTemplateButtonClicked() {
+        // Open templates fragments
+        displayTemplatesScreen();
+    }
+
+    @Override
+    public void onSettingsButtonClicked() {
+        // Open settings dialog
+    }
+
+    @Override
+    public void onGroupButtonClicked() {
+        // Open groups fragments
+        displayGroupsScreen();
+    }
+
+    @Override
+    public void onDataButtonClicked() {
+        // Open data fragments
+        displayDataScreen();
+    }
+
+    public void displayTasksScreen() {
+        fragmentManager.beginTransaction()
+                .replace(R.id.container_0, dataPreviewFragment)
+                .replace(R.id.container_1, taskDatePickingFragment)
+                .replace(R.id.container_2, shrimpTaskRecyclerFragmentDate)
+                .replace(R.id.container_3, footerButtonFragment)
+                .commit();
+    }
+
+    public void displayTemplatesScreen() {
+        fragmentManager.beginTransaction()
+                .replace(R.id.container_0, emptyFragment0)
+                .replace(R.id.container_1, templateHeaderFragment)
+                .replace(R.id.container_2, taskTemplateRecyclerFragment)
+                .replace(R.id.container_3, footerButtonFragment)
+                .commit();
+    }
+
+    public void displayGroupsScreen() {
+        fragmentManager.beginTransaction()
+                .replace(R.id.container_0, emptyFragment0)
+                .replace(R.id.container_1, groupHeaderFragment)
+                .replace(R.id.container_2, groupRecyclerFragment)
+                .replace(R.id.container_3, footerButtonFragment)
+                .commit();
+    }
+
+    public void displayDataScreen() {
+        fragmentManager.beginTransaction()
+                .replace(R.id.container_0, emptyFragment0)
+                .replace(R.id.container_1, emptyFragment1)
+                .replace(R.id.container_2, shrimpTaskRecyclerFragmentDate)
+                .replace(R.id.container_3, footerButtonFragment)
+                .commit();
+    }
+
+    @Override
+    public void newGroupListener() {
+
+    }
+
+    @Override
+    public void newTemplateListener() {
+
+    }
+}
+
+/*
+taskTemplateRecyclerFragment.getAdapter().setOnItemClickListener(new TaskTemplateAdapter.OnTaskTemplateClickListener() {
+            @Override
+            public void onTaskTemplateEditClick(int position) {
+                Toast.makeText(
+                        getApplicationContext(),
+                        taskTemplateRecyclerFragment.getAdapter().getTaskTemplate(  0).getName(),
+                        Toast.LENGTH_LONG).show();
+
+            }
+        });
+
+
+groupRecyclerFragment.getAdapter().setOnItemClickListener(new GroupAdapter.OnGroupTaskClickListener() {
+            @Override
+            public void onGroupDeleteClick(int position) {
+                Group group = groupRecyclerFragment.getAdapter().getGroup(position);
+                groupRecyclerFragment.getGroupViewModel().deleteItem(group.getId());
+            }
+        });
+
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -243,87 +302,67 @@ public class MainActivity extends AppCompatActivity
 
             // Log.w("myApp", dateArray.toString());
 
-            /*
+
             Toast.makeText(
                     getApplicationContext(),
                     proposedName + Integer.toString(shrimpTaskRecyclerFragmentAll.getTaskNameMatchCount()),
                     Toast.LENGTH_LONG).show();
 
-             */
 
 
-
-            LocalDate startDate = LocalDate.of(dateArray[0], dateArray[1] + 1, dateArray[2]);
-            LocalDate endDate = LocalDate.of(dateArray[0] + yearsAdded, dateArray[1] + 1, dateArray[2]);
-            int daysInterval = taskTemplate.getDaysBetweenRepeat();
-            long repeatTimes = (DAYS.between(startDate, endDate)) / daysInterval;
+        LocalDate startDate = LocalDate.of(dateArray[0], dateArray[1] + 1, dateArray[2]);
+        LocalDate endDate = LocalDate.of(dateArray[0] + yearsAdded, dateArray[1] + 1, dateArray[2]);
+        int daysInterval = taskTemplate.getDaysBetweenRepeat();
+        long repeatTimes = (DAYS.between(startDate, endDate)) / daysInterval;
 
             if (batchSelectedGroups == null) {
-                for (int i = 0; i < repeatTimes; i++) {
-                    ShrimpTask shrimpTask = new ShrimpTask(proposedName, taskTemplate.getName(), startDate, data.getStringExtra(ShrimpTaskCreateNew.EXTRA_REPLY3));
-
-                    shrimpTaskRecyclerFragmentAll.getShrimpTaskViewModel().insert(shrimpTask);
-
-                    startDate = startDate.plusDays(daysInterval);
-                }
-            } else {
-                for (int j = 0; j < batchSelectedGroups.size(); j++) {
-                    String inBatchName = proposedName + " " + batchSelectedGroups.get(j);
-                    LocalDate inBatchStartDate = startDate;
-
                     for (int i = 0; i < repeatTimes; i++) {
-                        ShrimpTask shrimpTask = new ShrimpTask(inBatchName, taskTemplate.getName(), inBatchStartDate, data.getStringExtra(ShrimpTaskCreateNew.EXTRA_REPLY3));
+        ShrimpTask shrimpTask = new ShrimpTask(proposedName, taskTemplate.getName(), startDate, data.getStringExtra(ShrimpTaskCreateNew.EXTRA_REPLY3));
 
-                        shrimpTaskRecyclerFragmentAll.getShrimpTaskViewModel().insert(shrimpTask);
+        shrimpTaskRecyclerFragmentAll.getShrimpTaskViewModel().insert(shrimpTask);
 
-                        inBatchStartDate = inBatchStartDate.plusDays(daysInterval);
-                    }
-                }
-            }
+        startDate = startDate.plusDays(daysInterval);
+        }
+        } else {
+        for (int j = 0; j < batchSelectedGroups.size(); j++) {
+        String inBatchName = proposedName + " " + batchSelectedGroups.get(j);
+        LocalDate inBatchStartDate = startDate;
 
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.middle_container, shrimpTaskRecyclerFragmentDate)
-                    .commit();
+        for (int i = 0; i < repeatTimes; i++) {
+        ShrimpTask shrimpTask = new ShrimpTask(inBatchName, taskTemplate.getName(), inBatchStartDate, data.getStringExtra(ShrimpTaskCreateNew.EXTRA_REPLY3));
+
+        shrimpTaskRecyclerFragmentAll.getShrimpTaskViewModel().insert(shrimpTask);
+
+        inBatchStartDate = inBatchStartDate.plusDays(daysInterval);
+        }
+        }
+        }
+
+        getSupportFragmentManager().beginTransaction()
+        .replace(R.id.middle_container, shrimpTaskRecyclerFragmentDate)
+        .commit();
 
         } else {
-            Toast.makeText(
-                    getApplicationContext(),
-                    R.string.empty_not_saved,
-                    Toast.LENGTH_LONG).show();
+        Toast.makeText(
+        getApplicationContext(),
+        R.string.empty_not_saved,
+        Toast.LENGTH_LONG).show();
         }
-    }
+        }
 
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public void onDBManageButtonClicked(String input) {
-        switch (input) {
-            case "DeleteAll":
-                shrimpTaskRecyclerFragmentAll.getShrimpTaskViewModel().deleteAll();
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.middle_container, shrimpTaskRecyclerFragmentAll)
-                        .commit();
-                break;
-            case "DeleteFuture":
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.middle_container, shrimpTaskRecyclerFragmentAll)
-                        .commit();
-                break;
-            case "DeleteTemplates":
-                taskTemplateRecyclerFragment.getTaskTemplateViewModel().deleteAll();
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.middle_container, taskTemplateRecyclerFragment)
-                        .commit();
-                break;
-            case "DeleteGroups":
-                groupRecyclerFragment.getGroupViewModel().deleteAll();
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.middle_container, shrimpTaskRecyclerFragmentToday)
-                        .commit();
-                break;
-        }
+    public void onGroupCreateNewButtonClicked(String name) {
+        groupRecyclerFragment.getGroupViewModel().insert(new Group(name, "0"));
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.middle_container, groupRecyclerFragment)
+                .commit();
     }
+
+
 
     @Override
     public void onTaskTemplateButtonClicked(String name, String description, int daysBetweenRepeat, boolean repeat) {
@@ -336,129 +375,4 @@ public class MainActivity extends AppCompatActivity
                 .commit();
     }
 
-    @Override
-    public void onButtonClicked(String buttonTitle) {
-        switch (buttonTitle) {
-            case "ViewTodayTasks":
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.middle_container, shrimpTaskRecyclerFragmentToday)
-                        .commit();
-                break;
-            case "ViewAllTasks":
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.middle_container, shrimpTaskRecyclerFragmentAll)
-                        .commit();
-                break;
-            case "ViewPagedTasks":
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.middle_container, shrimpTaskPagedListRecyclerFragment)
-                        .commit();
-                break;
-            case "ViewTemplates":
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.middle_container, taskTemplateRecyclerFragment)
-                        .commit();
-                break;
-            case "ManageTasks":
-                databaseManagementFragment = new DatabaseManagementFragment();
-
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.middle_container, databaseManagementFragment)
-                        .commit();
-                break;
-            case "ManageTemplates":
-                databaseManagementFragment = new DatabaseManagementFragment();
-
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.middle_container, databaseManagementFragment)
-                        .commit();
-                break;
-            case "NewTaskTemplate":
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.middle_container, newTaskTemplateFragment)
-                        .commit();
-                break;
-            case "NewGroup":
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.middle_container, newGroupFragment)
-                        .commit();
-                break;
-            case "DataHub":
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.middle_container, shrimpTaskRecyclerFragmentAll)
-                        .commit();
-                break;
-             case "ViewGroups":
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.middle_container, groupRecyclerFragment)
-                        .commit();
-                break;
-            case "CreateTaskFragment":
-                openCreateTaskDialog();
-                break;
-        }
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    @Override
-    public void onDateTasksButtonClicked(LocalDate date) {
-        shrimpTaskRecyclerFragmentDate.setFilterDate(date);
-
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.middle_container, shrimpTaskRecyclerFragmentDate)
-                .commit();
-
-        Toast.makeText(
-                getApplicationContext(),
-                date.toString(),
-                Toast.LENGTH_LONG).show();
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    @Override
-    public void onGroupCreateNewButtonClicked(String name) {
-        groupRecyclerFragment.getGroupViewModel().insert(new Group(name, "0"));
-
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.middle_container, groupRecyclerFragment)
-                .commit();
-    }
-
-    public GroupViewModel getGroupViewModel() {
-        return groupViewModel;
-    }
-
-    public void setGroupViewModel(GroupViewModel groupViewModel) {
-        this.groupViewModel = groupViewModel;
-    }
-
-
-    public ShrimpTaskViewModel getShrimpTaskViewModel() {
-        return shrimpTaskViewModel;
-    }
-
-    public void setShrimpTaskViewModel(ShrimpTaskViewModel shrimpTaskViewModel) {
-        this.shrimpTaskViewModel = shrimpTaskViewModel;
-    }
-
-    public TaskTemplateViewModel getTaskTemplateViewModel() {
-        return taskTemplateViewModel;
-    }
-
-    public void setTaskTemplateViewModel(TaskTemplateViewModel taskTemplateViewModel) {
-        this.taskTemplateViewModel = taskTemplateViewModel;
-    }
-
-    public void openCreateTaskDialog() {
-        ShrimpTaskCreateDialog createTaskDialog = new ShrimpTaskCreateDialog();
-        createTaskDialog.show(getSupportFragmentManager(), "create task dialog");
-    }
-
-
-    @Override
-    public void makeShrimpTask(String name, String description, LocalDate startDate, String templateName, String[] groupNames) {
-
-    }
-}
-
-
+ */

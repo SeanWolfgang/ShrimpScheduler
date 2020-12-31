@@ -21,6 +21,7 @@
         </activity>
         <activity android:name=".ShrimpTaskCreateNew"/>
         <activity android:name=".SingleScreenContainer"/>
+        <activity android:name=".TaskCreateNewActivity"/>
     </application>
 
 

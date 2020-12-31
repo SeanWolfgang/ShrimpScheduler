@@ -63,4 +63,23 @@
     <string name="create_task_dialog_negative_button">Cancel</string>
     <string name="create_task_dialog_positive_button">OK</string>
 
+    <string name="footer_task">Tasks</string>
+    <string name="footer_template">Templates</string>
+    <string name="footer_settings">Settings</string>
+    <string name="footer_group">Groups</string>
+    <string name="footer_data">Data</string>
+
+    <string name="template_header_text"><u>Templates...</u></string>
+    <string name="group_header_text"><u>Groups...</u></string>
+
+    <string name="create_task_group_recycler_date_textview">Select date</string>
+
+    <string name="footer_confirm_button">Save</string>
+    <string name="footer_cancel_button">Cancel</string>
+
+    <string name="empty_template_string">None</string>
+    <string name="type_name_error">Name cannot be empty.</string>
+    <string name="group_error">Some name is invalid or date has not been selected.</string>
+    <string name="single_date_error">A start date must be selected.</string>
+
 </resources>
