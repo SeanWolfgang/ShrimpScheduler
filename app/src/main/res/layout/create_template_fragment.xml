@@ -7,6 +7,20 @@
     android:layout_height="match_parent"
     android:padding="@dimen/big_padding">
 
+
+
+    <TextView
+        android:id="@+id/task_template_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/big_padding"
+        android:text="@string/task_template_header"
+        android:textSize="@dimen/big_text"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+     />
+
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/task_template_name"
         android:layout_width="match_parent"
@@ -14,7 +28,7 @@
         android:layout_marginTop="@dimen/big_padding"
         android:hint="@string/task_template_name_hint"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/templateLabel"></com.google.android.material.textfield.TextInputEditText>
+        app:layout_constraintTop_toBottomOf="@+id/task_template_header"></com.google.android.material.textfield.TextInputEditText>
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/task_template_description"
@@ -26,32 +40,24 @@
         app:layout_constraintTop_toBottomOf="@+id/task_template_name"></com.google.android.material.textfield.TextInputEditText>
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/task_template_days_repeat"
+        android:id="@+id/task_template_interval"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="numberSigned"
+        android:digits="0123456789."
+        android:inputType="number"
         android:layout_marginTop="@dimen/big_padding"
         android:hint="@string/task_template_days_repeat_hint"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/task_template_description"></com.google.android.material.textfield.TextInputEditText>
 
     <CheckBox
-        android:id="@+id/task_repeat_setting"
+        android:id="@+id/task_template_repeat_setting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/big_padding"
-        android:text="@string/task_repeat_setting_text"
+        android:text="@string/task_template_repeat_setting_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/task_template_days_repeat"
+        app:layout_constraintTop_toBottomOf="@+id/task_template_interval"
         />
-
-    <Button
-        android:id="@+id/save_task_template_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/big_padding"
-        android:text="@string/save_task_template_button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/task_repeat_setting"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

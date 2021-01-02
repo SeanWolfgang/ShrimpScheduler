@@ -35,8 +35,6 @@ public class TaskCreateNewFragment extends Fragment {
     private CheckBox createShrimpTaskCheckbox;
 
     private TaskTemplateViewModel taskTemplateViewModel;
-    private ShrimpTaskViewModel shrimpTaskViewModel;
-    private GroupViewModel groupViewModel;
 
     private TaskCreateNewFragment.TaskCreateNewFragmentListener listener;
 
@@ -56,8 +54,6 @@ public class TaskCreateNewFragment extends Fragment {
 
         taskCreateNewActivity = (TaskCreateNewActivity) getActivity();
         taskTemplateViewModel = taskCreateNewActivity.getTaskTemplateViewModel();
-        shrimpTaskViewModel = taskCreateNewActivity.getShrimpTaskViewModel();
-        groupViewModel = taskCreateNewActivity.getGroupViewModel();
 
         createShrimpTaskSpinner = view.findViewById(R.id.create_task_dialog_spinner);
         createShrimpTaskNameEditText = view.findViewById(R.id.create_task_dialog_name);

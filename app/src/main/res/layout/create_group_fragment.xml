@@ -17,16 +17,16 @@
         android:textSize="@dimen/big_text"/>
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/new_group_name"
+        android:id="@+id/create_group_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/task_template_name_hint"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/new_group_label"
-        app:layout_constraintEnd_toStartOf="@id/save_new_group"></com.google.android.material.textfield.TextInputEditText>
+        app:layout_constraintEnd_toStartOf="@id/create_new_group"></com.google.android.material.textfield.TextInputEditText>
 
     <Button
-        android:id="@+id/save_new_group"
+        android:id="@+id/create_new_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/medium_text"
@@ -35,8 +35,9 @@
         android:background="@android:color/holo_green_light"
         android:textColor="@android:color/holo_green_dark"
         android:text="@string/check_mark"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/new_group_name"
-        app:layout_constraintBottom_toBottomOf="@+id/new_group_name"/>
+        app:layout_constraintTop_toTopOf="@+id/create_group_name"
+        app:layout_constraintBottom_toBottomOf="@+id/create_group_name"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

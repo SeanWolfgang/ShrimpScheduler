@@ -34,7 +34,7 @@ public class TaskTemplateCreateNew extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.create_template_fragment, container, false);
-
+        /*
         taskTemplateNameEditText = view.findViewById(R.id.task_template_name);
         defaultDescriptionEditText = view.findViewById(R.id.task_template_description);
         daysBetweenRepeatEditText = view.findViewById(R.id.task_template_days_repeat);
@@ -105,4 +105,9 @@ public class TaskTemplateCreateNew extends Fragment {
         repeatCheckbox.setChecked(false);
     }
 
+}
+*/
+
+        return view;
+    }
 }

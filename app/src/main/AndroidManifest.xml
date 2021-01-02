@@ -19,9 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ShrimpTaskCreateNew"/>
-        <activity android:name=".SingleScreenContainer"/>
-        <activity android:name=".CreateTask.TaskCreateNewActivity"/>
+        <activity android:name=".CreateTask.TaskCreateNewActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".CreateTemplate.TemplateCreateNewActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".CreateGroup.GroupCreateNewActivity" android:windowSoftInputMode="adjustResize"/>
     </application>
 
 

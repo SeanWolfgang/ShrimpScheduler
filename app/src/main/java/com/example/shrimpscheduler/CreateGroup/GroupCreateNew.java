@@ -33,7 +33,7 @@ public class GroupCreateNew  extends Fragment {
     private GroupCreateNew.GroupCreateNewFragmentListener listener;
 
 
-    public interface GroupCreateNewFragmentListener{
+    public interface GroupCreateNewFragmentListener {
         void onGroupCreateNewButtonClicked(String name);
     }
 
@@ -41,6 +41,13 @@ public class GroupCreateNew  extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.create_group_fragment, container, false);
 
+        // Delete after here for backup
+        return view;
+    }
+}
+
+
+        /*
         mainActivity = (MainActivity) getActivity();
         groupViewModel = mainActivity.getGroupViewModel();
 
@@ -116,3 +123,4 @@ public class GroupCreateNew  extends Fragment {
         groupName.getText().clear();
     }
 }
+*/

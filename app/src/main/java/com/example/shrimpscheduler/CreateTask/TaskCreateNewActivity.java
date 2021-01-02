@@ -146,10 +146,10 @@ public class TaskCreateNewActivity extends AppCompatActivity
         });
 
         getSupportFragmentManager().beginTransaction()
-        .replace(R.id.create_task_activity_0, taskCreateNewFragment)
-        .replace(R.id.create_task_activity_1, taskCreateNewSingleDatepickerFragment)
-        .replace(R.id.create_task_activity_2, okCancelButtonFooterFragment)
-        .commit();
+            .replace(R.id.create_task_activity_0, taskCreateNewFragment)
+            .replace(R.id.create_task_activity_1, taskCreateNewSingleDatepickerFragment)
+            .replace(R.id.create_task_activity_2, okCancelButtonFooterFragment)
+            .commit();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -390,6 +390,8 @@ public class TaskCreateNewActivity extends AppCompatActivity
             taskCreateNewFragment.setNameRed();
             nameValid = false;
         } else {
+            singleName = name.trim();
+
             if (groupMake) {
                 nameValid = true;
                 names = new ArrayList<>();
@@ -397,14 +399,14 @@ public class TaskCreateNewActivity extends AppCompatActivity
                 // Add code to update arraylist with group checks
 
             } else {
-                if (distinctShrimpTaskNames.contains(name)) {
+                if (distinctShrimpTaskNames.contains(singleName)) {
                     nameValid = false;
                     taskCreateNewFragment.setNameRed();
                 } else {
                     nameValid = true;
                     taskCreateNewFragment.unsetNameRed();
                     names = new ArrayList<>();
-                    names.add(name);
+                    names.add(singleName);
                 }
             }
         }

@@ -10,7 +10,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.shrimpscheduler.CreateGroup.GroupCreateNewActivity;
 import com.example.shrimpscheduler.CreateTask.TaskCreateNewActivity;
+import com.example.shrimpscheduler.CreateTemplate.TemplateCreateNewActivity;
 import com.example.shrimpscheduler.Group.GroupViewModel;
 import com.example.shrimpscheduler.MainFragments.DataPreviewFragment;
 import com.example.shrimpscheduler.MainFragments.EmptyFragment;
@@ -161,12 +163,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void calendarButtonListener(LocalDate pickedDate) {
         shrimpTaskRecyclerFragmentDate.setFilterDate(pickedDate);
-        /*
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container_2, shrimpTaskRecyclerFragmentDate)
-                .commit();
-
-         */
     }
 
     @Override
@@ -252,11 +248,13 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void newGroupListener() {
-
+        Intent intent = new Intent(MainActivity.this, GroupCreateNewActivity.class);
+        startActivity(intent);
     }
 
     @Override
     public void newTemplateListener() {
-
+        Intent intent = new Intent(MainActivity.this, TemplateCreateNewActivity.class);
+        startActivity(intent);
     }
 }

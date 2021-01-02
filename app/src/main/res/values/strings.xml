@@ -4,22 +4,17 @@
     <string name="done_button_text">DONE</string>
     <string name="text_add_task"><u>Add New Task</u></string>
     <string name="task_name_hint">Name</string>
-    <string name="task_template_name_hint">Template Name</string>
     <string name="parent_name_hint">Parent Name</string>
     <string name="pick_time">Start Time</string>
     <string name="pick_date">Start Date</string>
     <string name="description_hint">Description</string>
-    <string name="task_template_description_hint">Default Description</string>
-    <string name="task_template_days_repeat_hint">How many days between repeats?</string>
-    <string name="task_repeat_setting_text">Repeat?</string>
+
     <string name="spinner_hint">Pick a Template</string>
     <string name="save_task_string">Save Task</string>
-    <string name="save_task_template_button">Save Task Template</string>
     <string name="empty_not_saved">Didn\'t save</string>
     <string name="delete_button">DELETE ALL TASKS</string>
     <string name="default_start_time_text">Pick Start Time</string>
     <string name="default_start_date_text">Pick Start Date</string>
-    <string name="task_template_label">Task Template</string>
     <string name="view_today_tasks_button">Today Tasks</string>
     <string name="view_all_tasks_button">All Tasks</string>
     <string name="view_date_tasks_button">Date Tasks</string>
@@ -63,6 +58,14 @@
     <string name="create_task_dialog_negative_button">Cancel</string>
     <string name="create_task_dialog_positive_button">OK</string>
 
+    <string name="task_template_header">Task Template</string>
+    <string name="task_template_name_hint">Template Name</string>
+    <string name="task_template_description_hint">Default Description</string>
+    <string name="task_template_days_repeat_hint">How many days between repeats?</string>
+    <string name="task_template_repeat_setting_text">Repeat?</string>
+    <string name="task_template_save_button">Save Task Template</string>
+
+
     <string name="footer_task">Tasks</string>
     <string name="footer_template">Templates</string>
     <string name="footer_settings">Settings</string>
@@ -81,5 +84,13 @@
     <string name="type_name_error">Name cannot be empty.</string>
     <string name="group_error">Some name is invalid or date has not been selected.</string>
     <string name="single_date_error">A start date must be selected.</string>
+
+    <string name="template_make_name_error">Name cannot be empty or already in use.</string>
+    <string name="template_make_description_error">Description cannot be empty.</string>
+    <string name="template_make_interval_error">If task will repeat, an interval of at least 1 day must be specified.</string>
+
+    <string name="group_make_name_error">Name cannot be empty or already in use.</string>
+
+
 
 </resources>
