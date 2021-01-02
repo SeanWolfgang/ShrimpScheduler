@@ -1,4 +1,4 @@
-package com.example.shrimpscheduler;
+package com.example.shrimpscheduler.ShrimpTaskPack;
 
 import android.os.Build;
 import android.view.ViewGroup;
@@ -7,6 +7,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
+
+import com.example.shrimpscheduler.ShrimpTaskPack.ShrimpTask;
+import com.example.shrimpscheduler.ShrimpTaskViewHolder;
 
 public class ShrimpTaskAdapter extends ListAdapter<ShrimpTask, ShrimpTaskViewHolder> {
     private OnShrimpTaskClickListener mListener;

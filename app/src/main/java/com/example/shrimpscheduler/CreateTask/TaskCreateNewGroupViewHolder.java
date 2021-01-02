@@ -1,22 +1,23 @@
-package com.example.shrimpscheduler;
+package com.example.shrimpscheduler.CreateTask;
 
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.shrimpscheduler.R;
+
 public class TaskCreateNewGroupViewHolder extends RecyclerView.ViewHolder {
     private final CheckBox groupCheckbox;
     private final TextView groupFullNameTextView;
+    private final TextView groupLastDateTextView;
     private final TextView groupDateTextView;
     private final ImageButton groupDateImageButton;
 
@@ -24,6 +25,7 @@ public class TaskCreateNewGroupViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         groupCheckbox = itemView.findViewById(R.id.create_task_group_recycler_name);
         groupFullNameTextView = itemView.findViewById(R.id.create_task_group_recycler_task_fullname);
+        groupLastDateTextView = itemView.findViewById(R.id.create_task_group_recycler_task_lastdate);
         groupDateTextView = itemView.findViewById(R.id.create_task_group_recycler_date_textview);
         groupDateImageButton = itemView.findViewById(R.id.create_task_group_recycler_date_imagebutton);
 

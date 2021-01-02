@@ -1,4 +1,4 @@
-package com.example.shrimpscheduler;
+package com.example.shrimpscheduler.ShrimpTaskPack;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

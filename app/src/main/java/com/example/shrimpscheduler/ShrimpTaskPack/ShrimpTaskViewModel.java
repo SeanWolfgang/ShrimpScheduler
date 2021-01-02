@@ -1,4 +1,4 @@
-package com.example.shrimpscheduler;
+package com.example.shrimpscheduler.ShrimpTaskPack;
 
 import android.app.Application;
 import android.os.Build;
@@ -21,6 +21,7 @@ public class ShrimpTaskViewModel extends AndroidViewModel {
     private LiveData<PagedList<ShrimpTask>> allPagedShrimpTasks;
     private final LiveData<List<ShrimpTask>> todayShrimpTasks;
     private final LiveData<List<String>> distinctShrimpTaskNames;
+    private final LiveData<List<LocalDate>> lastExecuteDate;
     private final LiveData<Integer> totalCount;
     private LiveData<List<ShrimpTask>> dateShrimpTasks;
     private LiveData<Integer> nameCountList;
@@ -40,6 +41,7 @@ public class ShrimpTaskViewModel extends AndroidViewModel {
         allShrimpTasks = shrimpRepository.getAllShrimpTasks();
         todayShrimpTasks = shrimpRepository.getShrimpTaskToday(today);
         distinctShrimpTaskNames = shrimpRepository.getDistinctShrimpTaskNames();
+        lastExecuteDate = shrimpRepository.getLastExecuteDate();
         dateShrimpTasks = shrimpRepository.getShrimpTaskDate(shrimpRepository.getQueryDate());
         totalCount = shrimpRepository.getCountShrimpTask();
         nameCountList = Transformations.switchMap(nameCountSearchName,
@@ -49,28 +51,30 @@ public class ShrimpTaskViewModel extends AndroidViewModel {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    LiveData<Integer> getShrimpTasksNameMatch() {
+    public LiveData<Integer> getShrimpTasksNameMatch() {
         return nameCountList;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    LiveData<List<ShrimpTask>> getShrimpTaskDate() {
+    public LiveData<List<ShrimpTask>> getShrimpTaskDate() {
         return dateShrimpTasks;
     }
 
-    void setFilter(String filter) { nameCountSearchName.setValue(filter); }
+    public void setFilter(String filter) { nameCountSearchName.setValue(filter); }
 
-    void setDate(LocalDate date) { dateFilter.setValue(date); }
+    public void setDate(LocalDate date) { dateFilter.setValue(date); }
 
-    LiveData<List<ShrimpTask>> getAllShrimpTasks() { return allShrimpTasks; }
+    public LiveData<List<ShrimpTask>> getAllShrimpTasks() { return allShrimpTasks; }
 
-    LiveData<List<ShrimpTask>> getShrimpTaskToday() { return todayShrimpTasks; }
+    public LiveData<List<ShrimpTask>> getShrimpTaskToday() { return todayShrimpTasks; }
 
-    LiveData<List<String>> getDistinctShrimpTaskNames() { return distinctShrimpTaskNames; }
+    public LiveData<List<String>> getDistinctShrimpTaskNames() { return distinctShrimpTaskNames; }
 
-    LiveData<List<ShrimpTask>> getShrimpTaskDate(LocalDate date) { return dateShrimpTasks;}
+    public LiveData<List<LocalDate>> getLastExecuteDate() { return lastExecuteDate; }
 
-    LiveData<Integer> getCountShrimpTask() { return totalCount;}
+    public LiveData<List<ShrimpTask>> getShrimpTaskDate(LocalDate date) { return dateShrimpTasks;}
+
+    public LiveData<Integer> getCountShrimpTask() { return totalCount;}
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void insert(ShrimpTask shrimpTask) { shrimpRepository.insert(shrimpTask); }

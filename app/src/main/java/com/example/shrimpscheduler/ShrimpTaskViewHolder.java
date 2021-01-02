@@ -4,15 +4,15 @@ import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.shrimpscheduler.ShrimpTaskPack.ShrimpTaskAdapter;
+
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public class ShrimpTaskViewHolder extends RecyclerView.ViewHolder {
     private final TextView nameTextView;
@@ -80,7 +80,7 @@ public class ShrimpTaskViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    static ShrimpTaskViewHolder create(ViewGroup parent, ShrimpTaskAdapter.OnShrimpTaskClickListener listener) {
+    public static ShrimpTaskViewHolder create(ViewGroup parent, ShrimpTaskAdapter.OnShrimpTaskClickListener listener) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.all_tasks_recycler, parent, false);
         return new ShrimpTaskViewHolder(view, listener);

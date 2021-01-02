@@ -24,11 +24,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import java.lang.reflect.Array;
+import com.example.shrimpscheduler.Group.Group;
+import com.example.shrimpscheduler.Group.GroupViewModel;
+import com.example.shrimpscheduler.ShrimpTaskPack.ShrimpTaskViewModel;
+import com.example.shrimpscheduler.Template.TaskTemplate;
+import com.example.shrimpscheduler.Template.TaskTemplateAdapter;
+import com.example.shrimpscheduler.Template.TaskTemplateViewModel;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
 
 public class ShrimpTaskCreateNew extends AppCompatActivity
     implements DatePickerDialog.OnDateSetListener {

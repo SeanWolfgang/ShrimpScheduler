@@ -12,6 +12,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.shrimpscheduler.Template.TaskTemplateAdapter;
+import com.example.shrimpscheduler.Template.TaskTemplateViewModel;
+
 public class TaskTemplateRecyclerFragment extends Fragment {
     private RecyclerView recyclerView;
     private TaskTemplateViewModel taskTemplateViewModel;

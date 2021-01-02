@@ -1,7 +1,6 @@
-package com.example.shrimpscheduler;
+package com.example.shrimpscheduler.Group;
 
 import androidx.lifecycle.LiveData;
-import androidx.paging.DataSource;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;

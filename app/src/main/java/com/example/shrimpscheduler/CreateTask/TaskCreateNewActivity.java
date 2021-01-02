@@ -1,10 +1,9 @@
-package com.example.shrimpscheduler;
+package com.example.shrimpscheduler.CreateTask;
 
 import android.app.DatePickerDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -14,18 +13,21 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.shrimpscheduler.EmptyFragment;
+import com.example.shrimpscheduler.Group.GroupViewModel;
+import com.example.shrimpscheduler.OkCancelButtonFooterFragment;
+import com.example.shrimpscheduler.R;
+import com.example.shrimpscheduler.ShrimpTaskPack.ShrimpTask;
+import com.example.shrimpscheduler.ShrimpTaskPack.ShrimpTaskViewModel;
+import com.example.shrimpscheduler.Template.TaskTemplateViewModel;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -66,6 +68,7 @@ public class TaskCreateNewActivity extends AppCompatActivity
     private int yearsAdded = 2;
 
     private ArrayList<String> distinctShrimpTaskNames = new ArrayList<>();
+    private ArrayList<LocalDate> lastExecuteDate = new ArrayList<>();
     private ArrayList<String> names = new ArrayList<>();
     private ArrayList<String> selectedGroups = new ArrayList<>();
     private String selectedTemplate;
@@ -109,6 +112,13 @@ public class TaskCreateNewActivity extends AppCompatActivity
             }
         });
 
+        shrimpTaskViewModel.getLastExecuteDate().observe(this, lastExecuteDateList -> {
+            // Update the cached copy of the words in the adapter.
+            for (LocalDate date : lastExecuteDateList) {
+                lastExecuteDate.add(date);
+            }
+        });
+
         taskCreateNewGroupRecyclerFragment.getAdapter().setOnItemClickListener(new TaskCreateNewGroupAdapter.OnTaskCreateNewGroupAdapterClickListener() {
             @Override
             public void onGroupDateClick(String name, int position) {
@@ -142,6 +152,7 @@ public class TaskCreateNewActivity extends AppCompatActivity
         .commit();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void nameChanged(String name) {
         updateName(name);
@@ -155,6 +166,7 @@ public class TaskCreateNewActivity extends AppCompatActivity
         taskDescription = description;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void templateChanged(String templateName, String name, String description, boolean repeat, int interval) {
         selectedTemplate = templateName;
@@ -176,11 +188,13 @@ public class TaskCreateNewActivity extends AppCompatActivity
                     .replace(R.id.create_task_activity_1, taskCreateNewGroupRecyclerFragment)
                     .commit();
             new Handler().postDelayed(new Runnable() {
+                @RequiresApi(api = Build.VERSION_CODES.O)
                 @Override
                 public void run() {
                     updateGroupView();
                 }
             }, 100);
+            updateName(singleName);
         } else {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.create_task_activity_1, taskCreateNewSingleDatepickerFragment)
@@ -269,19 +283,21 @@ public class TaskCreateNewActivity extends AppCompatActivity
                         groupDates.put(name, finalDate);
                         passedTextView.setText(finalDate.toString());
                         passedTextView.setTextColor(getResources().getColor(R.color.textValid));
+                        updateGroupView();
                     }
                 }, pickedDate.getYear(), pickedDate.getMonthValue() - 1, pickedDate.getDayOfMonth());
 
         datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
 
-        //datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
         datePickerDialog.show();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void updateGroupView() {
         for (int i = 0; i < taskCreateNewGroupRecyclerFragment.getAdapter().getItemCount(); i++) {
             CheckBox groupCheckBox = (CheckBox) taskCreateNewGroupRecyclerFragment.getRecyclerView().findViewHolderForAdapterPosition(i).itemView.findViewById(R.id.create_task_group_recycler_name);
             TextView groupTaskFullName = (TextView) taskCreateNewGroupRecyclerFragment.getRecyclerView().findViewHolderForAdapterPosition(i).itemView.findViewById(R.id.create_task_group_recycler_task_fullname);
+            TextView groupLastDate = (TextView) taskCreateNewGroupRecyclerFragment.getRecyclerView().findViewHolderForAdapterPosition(i).itemView.findViewById(R.id.create_task_group_recycler_task_lastdate);
             TextView groupDateTextView = (TextView) taskCreateNewGroupRecyclerFragment.getRecyclerView().findViewHolderForAdapterPosition(i).itemView.findViewById(R.id.create_task_group_recycler_date_textview);
 
             String groupName = groupCheckBox.getText().toString();
@@ -297,19 +313,32 @@ public class TaskCreateNewActivity extends AppCompatActivity
                     groupTaskFullName.setText(taskFullName);
 
                     if (distinctShrimpTaskNames.contains(taskFullName)) {
-                        groupTaskFullName.setTextColor(getResources().getColor(R.color.textInvalid));
+                        groupLastDate.setVisibility(View.VISIBLE);
+                        groupLastDate.setText(lastExecuteDate.get(distinctShrimpTaskNames.indexOf(taskFullName)).toString());
+                        if (groupDates.containsKey(groupName)) {
+                            if( (groupDates.get(groupName).compareTo(lastExecuteDate.get(distinctShrimpTaskNames.indexOf(taskFullName))) > 0)) {
+                                groupTaskFullName.setTextColor(getResources().getColor(R.color.textValid));
+                            } else {
+                                groupTaskFullName.setTextColor(getResources().getColor(R.color.textInvalid));
+                            }
+                        } else {
+                            groupTaskFullName.setTextColor(getResources().getColor(R.color.textInvalid));
+                        }
                     } else {
                         groupTaskFullName.setTextColor(getResources().getColor(R.color.textValid));
+                        groupLastDate.setVisibility(View.GONE);
                     }
                 } else {
                     groupTaskFullName.setText("");
                 }
             } else {
                 groupTaskFullName.setText("");
+                groupLastDate.setVisibility(View.GONE);
             }
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void validateGroupSelections() {
         groupValid = true;
 
@@ -330,7 +359,13 @@ public class TaskCreateNewActivity extends AppCompatActivity
                 if (selectedGroups.contains(groupName)) {
                     names.add(taskFullName);
                     if (distinctShrimpTaskNames.contains(taskFullName)) {
-                        groupValid = false;
+                        if (groupDates.containsKey(groupName)) {
+                            if (groupDates.get(groupName).compareTo(lastExecuteDate.get(distinctShrimpTaskNames.indexOf(taskFullName))) <= 0) {
+                                groupValid = false;
+                            }
+                        } else {
+                            groupValid = false;
+                        }
                     }
                     if (!groupDates.containsKey(groupName)) {
                         groupValid = false;

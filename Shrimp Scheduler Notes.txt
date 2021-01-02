@@ -1,3 +1,21 @@
+TODO
+Edit task
+Fix error messages for task create
+Fix red text date thing -> add second line for last date
+Create new template
+Create new group
+Edit template
+Edit group
+Data tab
+Data preview
+Settings menu
+	Delete all tasks, templates, groups
+	Delete tasks after certain date
+	Delete certain tasks after certain date
+
+
+
+
 @PrimaryKey(autoGenerate = true)
 private int id;
 

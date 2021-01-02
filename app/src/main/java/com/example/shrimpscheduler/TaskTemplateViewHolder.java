@@ -11,8 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import com.example.shrimpscheduler.Template.TaskTemplateAdapter;
 
 public class TaskTemplateViewHolder extends RecyclerView.ViewHolder {
     private final TextView nameTextView;
@@ -55,7 +54,7 @@ public class TaskTemplateViewHolder extends RecyclerView.ViewHolder {
 
     }
 
-    static TaskTemplateViewHolder create(ViewGroup parent, TaskTemplateAdapter.OnTaskTemplateClickListener listener) {
+    public static TaskTemplateViewHolder create(ViewGroup parent, TaskTemplateAdapter.OnTaskTemplateClickListener listener) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.task_template_recycler, parent, false);
         return new TaskTemplateViewHolder(view, listener);

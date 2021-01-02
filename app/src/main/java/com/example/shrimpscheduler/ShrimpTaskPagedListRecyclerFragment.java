@@ -14,6 +14,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.shrimpscheduler.ShrimpTaskPack.ShrimpTaskAdapter;
+import com.example.shrimpscheduler.ShrimpTaskPack.ShrimpTaskViewModel;
+
 public class ShrimpTaskPagedListRecyclerFragment extends Fragment {
     private RecyclerView recyclerView;
     private ShrimpTaskViewModel shrimpTaskViewModel;

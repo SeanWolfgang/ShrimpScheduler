@@ -1,4 +1,4 @@
-package com.example.shrimpscheduler;
+package com.example.shrimpscheduler.Group;
 
 import android.app.Application;
 import android.os.Build;
@@ -8,10 +8,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
-import androidx.paging.LivePagedListBuilder;
-import androidx.paging.PagedList;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public class GroupViewModel extends AndroidViewModel {
@@ -32,13 +29,13 @@ public class GroupViewModel extends AndroidViewModel {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    LiveData<Integer> getGroupNameMatch() {
+    public LiveData<Integer> getGroupNameMatch() {
         return matchGroups;
     }
 
-    LiveData<List<Group>> getAllGroups() { return allGroups; }
+    public LiveData<List<Group>> getAllGroups() { return allGroups; }
 
-    void setGroupNameFilter(String filter) { groupNameFilter.setValue(filter); }
+    public void setGroupNameFilter(String filter) { groupNameFilter.setValue(filter); }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void insert(Group group) { groupRepository.insert(group); }

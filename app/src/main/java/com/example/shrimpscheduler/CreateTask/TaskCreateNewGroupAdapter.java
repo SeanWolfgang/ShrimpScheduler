@@ -1,16 +1,14 @@
-package com.example.shrimpscheduler;
+package com.example.shrimpscheduler.CreateTask;
 
-import android.content.Context;
 import android.os.Build;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
-import java.time.LocalDate;
+import com.example.shrimpscheduler.Group.Group;
 
 public class TaskCreateNewGroupAdapter extends ListAdapter<Group, TaskCreateNewGroupViewHolder> {
     private TaskCreateNewGroupAdapter.OnTaskCreateNewGroupAdapterClickListener mListener;

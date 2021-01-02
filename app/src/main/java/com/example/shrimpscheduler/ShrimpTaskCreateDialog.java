@@ -15,6 +15,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
+import com.example.shrimpscheduler.Group.GroupViewModel;
+import com.example.shrimpscheduler.ShrimpTaskPack.ShrimpTaskViewModel;
+import com.example.shrimpscheduler.Template.TaskTemplateViewModel;
+
 import java.time.LocalDate;
 
 public class ShrimpTaskCreateDialog extends AppCompatDialogFragment {

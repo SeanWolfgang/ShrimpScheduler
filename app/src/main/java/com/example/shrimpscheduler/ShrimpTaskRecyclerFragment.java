@@ -13,9 +13,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SimpleItemAnimator;
 
-import java.time.LocalDate;
+import com.example.shrimpscheduler.ShrimpTaskPack.ShrimpTaskAdapter;
+import com.example.shrimpscheduler.ShrimpTaskPack.ShrimpTaskViewModel;
 
 public class ShrimpTaskRecyclerFragment extends Fragment {
     private RecyclerView recyclerView;

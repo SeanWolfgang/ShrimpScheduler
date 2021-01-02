@@ -1,14 +1,11 @@
-package com.example.shrimpscheduler;
+package com.example.shrimpscheduler.Group;
 
 import android.app.Application;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
-import androidx.paging.LivePagedListBuilder;
-import androidx.paging.PagedList;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RequiresApi(api = Build.VERSION_CODES.O)

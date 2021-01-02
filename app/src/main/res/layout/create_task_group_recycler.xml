@@ -14,6 +14,7 @@
         app:layout_constraintTop_toTopOf="@+id/create_task_group_recycler_date_imagebutton"
         app:layout_constraintBottom_toBottomOf="@+id/create_task_group_recycler_date_imagebutton"
         />
+
     <TextView
         android:id="@+id/create_task_group_recycler_task_fullname"
         android:text=""
@@ -21,6 +22,18 @@
         android:layout_height="wrap_content"
         android:paddingHorizontal="@dimen/big_padding"
         app:layout_constraintTop_toTopOf="@+id/create_task_group_recycler_date_imagebutton"
+        app:layout_constraintBottom_toTopOf="@+id/create_task_group_recycler_task_lastdate"
+        app:layout_constraintStart_toEndOf="@+id/create_task_group_recycler_name"
+
+        />
+
+    <TextView
+        android:id="@+id/create_task_group_recycler_task_lastdate"
+        android:text=""
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/big_padding"
+        app:layout_constraintTop_toBottomOf="@+id/create_task_group_recycler_task_fullname"
         app:layout_constraintBottom_toBottomOf="@+id/create_task_group_recycler_date_imagebutton"
         app:layout_constraintStart_toEndOf="@+id/create_task_group_recycler_name"
 

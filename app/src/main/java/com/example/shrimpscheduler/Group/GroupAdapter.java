@@ -1,4 +1,4 @@
-package com.example.shrimpscheduler;
+package com.example.shrimpscheduler.Group;
 
 import android.os.Build;
 import android.view.ViewGroup;
@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
+
+import com.example.shrimpscheduler.GroupViewHolder;
 
 public class GroupAdapter extends ListAdapter<Group, GroupViewHolder> {
     private OnGroupTaskClickListener mListener;
@@ -36,7 +38,7 @@ public class GroupAdapter extends ListAdapter<Group, GroupViewHolder> {
         holder.bind(current.getName());
     }
 
-    static class GroupDiff extends DiffUtil.ItemCallback<Group> {
+    public static class GroupDiff extends DiffUtil.ItemCallback<Group> {
 
         @Override
         public boolean areItemsTheSame(@NonNull Group oldItem, @NonNull Group newItem) {

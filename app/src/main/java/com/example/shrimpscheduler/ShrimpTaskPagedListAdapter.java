@@ -7,8 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.ListAdapter;
-import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.shrimpscheduler.ShrimpTaskPack.ShrimpTask;
 
 public class ShrimpTaskPagedListAdapter extends PagedListAdapter<ShrimpTask, ShrimpTaskPagedListViewHolder> {
     private OnShrimpTaskPagedListClickListener mListener;

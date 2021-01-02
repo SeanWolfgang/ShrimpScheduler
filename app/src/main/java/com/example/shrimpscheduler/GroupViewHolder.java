@@ -5,13 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.time.LocalDate;
+import com.example.shrimpscheduler.Group.GroupAdapter;
 
 public class GroupViewHolder extends RecyclerView.ViewHolder {
     private final TextView groupName;
@@ -40,7 +39,7 @@ public class GroupViewHolder extends RecyclerView.ViewHolder {
         groupName.setText(name);
     }
 
-    static GroupViewHolder create(ViewGroup parent, GroupAdapter.OnGroupTaskClickListener listener) {
+    public static GroupViewHolder create(ViewGroup parent, GroupAdapter.OnGroupTaskClickListener listener) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.group_recycler, parent, false);
         return new GroupViewHolder(view, listener);

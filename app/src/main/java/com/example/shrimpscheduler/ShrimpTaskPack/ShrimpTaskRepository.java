@@ -1,12 +1,10 @@
-package com.example.shrimpscheduler;
+package com.example.shrimpscheduler.ShrimpTaskPack;
 
 import android.app.Application;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
-import androidx.paging.LivePagedListBuilder;
-import androidx.paging.PagedList;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -19,6 +17,7 @@ public class ShrimpTaskRepository {
     //private LiveData<PagedList<ShrimpTask>> allPagedShrimpTasks;
     private LiveData<List<ShrimpTask>> todayShrimpTasks;
     private LiveData<List<String>> distinctShrimpTaskNames;
+    private LiveData<List<LocalDate>> lastExecuteDate;
     private LiveData<Integer> totalCount;
 
     private LocalDate today = LocalDate.now();
@@ -35,38 +34,41 @@ public class ShrimpTaskRepository {
         allShrimpTasks = shrimpTaskDao.getAllShrimpTasks();
         todayShrimpTasks = shrimpTaskDao.getShrimpTaskToday(today);
         distinctShrimpTaskNames = shrimpTaskDao.getDistinctShrimpTaskNames(today);
+        lastExecuteDate = shrimpTaskDao.getLastExecuteDate(today);
         totalCount = shrimpTaskDao.getCountShrimpTask();
     }
 
     // Room executes all queries on a separate thread.
     // Observed LiveData will notify the observer when the data has changed.
-    LiveData<List<ShrimpTask>> getAllShrimpTasks() { return allShrimpTasks; }
+    public LiveData<List<ShrimpTask>> getAllShrimpTasks() { return allShrimpTasks; }
 
-    LiveData<List<ShrimpTask>> getShrimpTaskDate(LocalDate date) { return shrimpTaskDao.getShrimpTaskDate(date); }
+    public LiveData<List<ShrimpTask>> getShrimpTaskDate(LocalDate date) { return shrimpTaskDao.getShrimpTaskDate(date); }
 
-    LiveData<List<ShrimpTask>> getShrimpTaskToday(LocalDate date) { return shrimpTaskDao.getShrimpTaskToday(date); }
+    public LiveData<List<ShrimpTask>> getShrimpTaskToday(LocalDate date) { return shrimpTaskDao.getShrimpTaskToday(date); }
 
-    LiveData<List<String>> getDistinctShrimpTaskNames() { return shrimpTaskDao.getDistinctShrimpTaskNames(today); }
+    public LiveData<List<String>> getDistinctShrimpTaskNames() { return shrimpTaskDao.getDistinctShrimpTaskNames(today); }
 
-    LiveData<Integer> getShrimpTasksNameMatch(String name) { return shrimpTaskDao.getShrimpTasksNameMatch(name); }
+    public LiveData<List<LocalDate>> getLastExecuteDate() { return shrimpTaskDao.getLastExecuteDate(today); }
 
-    LiveData<Integer> getCountShrimpTask() { return totalCount; }
+    public LiveData<Integer> getShrimpTasksNameMatch(String name) { return shrimpTaskDao.getShrimpTasksNameMatch(name); }
+
+    public LiveData<Integer> getCountShrimpTask() { return totalCount; }
 
     // You must call this on a non-UI thread or your app will throw an exception. Room ensures
     // that you're not doing any long running operations on the main thread, blocking the UI.
-    void insert(ShrimpTask shrimpTask) {
+    public void insert(ShrimpTask shrimpTask) {
         ShrimpTaskDatabase.databaseWriteExecutor.execute(() -> {
             shrimpTaskDao.insert(shrimpTask);
         });
     }
 
-    void deleteAll() {
+    public void deleteAll() {
         ShrimpTaskDatabase.databaseWriteExecutor.execute(() -> {
             shrimpTaskDao.deleteAll();
         });
     }
 
-    void updateShrimpTask(ShrimpTask shrimpTask) {
+    public void updateShrimpTask(ShrimpTask shrimpTask) {
         ShrimpTaskDatabase.databaseWriteExecutor.execute(() -> {
             shrimpTaskDao.updateShrimpTask(shrimpTask);
         });

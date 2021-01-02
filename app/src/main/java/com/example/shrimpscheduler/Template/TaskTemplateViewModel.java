@@ -1,4 +1,4 @@
-package com.example.shrimpscheduler;
+package com.example.shrimpscheduler.Template;
 
 import android.app.Application;
 
@@ -17,7 +17,7 @@ public class TaskTemplateViewModel  extends AndroidViewModel {
         allTaskTemplates = taskTemplateRepository.getAllTaskTemplates();
     }
 
-    LiveData<List<TaskTemplate>> getAllTaskTemplates() { return allTaskTemplates; }
+    public LiveData<List<TaskTemplate>> getAllTaskTemplates() { return allTaskTemplates; }
 
     public void insert(TaskTemplate taskTemplate) { taskTemplateRepository.insert(taskTemplate); }
 

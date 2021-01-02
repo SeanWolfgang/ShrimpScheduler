@@ -1,4 +1,4 @@
-package com.example.shrimpscheduler;
+package com.example.shrimpscheduler.Template;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
