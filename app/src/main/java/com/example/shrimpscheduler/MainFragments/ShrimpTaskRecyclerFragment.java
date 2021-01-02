@@ -1,4 +1,4 @@
-package com.example.shrimpscheduler;
+package com.example.shrimpscheduler.MainFragments;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -14,13 +14,14 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.shrimpscheduler.R;
 import com.example.shrimpscheduler.ShrimpTaskPack.ShrimpTaskAdapter;
 import com.example.shrimpscheduler.ShrimpTaskPack.ShrimpTaskViewModel;
 
-public class ShrimpTaskPagedListRecyclerFragment extends Fragment {
+public class ShrimpTaskRecyclerFragment extends Fragment {
     private RecyclerView recyclerView;
     private ShrimpTaskViewModel shrimpTaskViewModel;
-    public ShrimpTaskPagedListAdapter adapter = new ShrimpTaskPagedListAdapter(new ShrimpTaskAdapter.ShrimpTaskDiff());
+    public ShrimpTaskAdapter adapter = new ShrimpTaskAdapter(new ShrimpTaskAdapter.ShrimpTaskDiff());
     private int taskNameMatchCount;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -33,24 +34,29 @@ public class ShrimpTaskPagedListRecyclerFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-
-        shrimpTaskViewModel.initAllTasks();
-
-        shrimpTaskViewModel.getAllPagedShrimpTasks().observe(this, pagedList -> {
-            adapter.submitList(pagedList);
-        });
-
         recyclerView.setAdapter(adapter);
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setItemViewCacheSize(100);
+
+        shrimpTaskViewModel.getShrimpTasksNameMatch().observe(this, shrimpTaskNameCountDBMatch -> {
+            // Update the cached copy of the words in the adapter.
+            taskNameMatchCount = shrimpTaskNameCountDBMatch;
+        });
 
         return view;
     }
 
     public ShrimpTaskViewModel getShrimpTaskViewModel() {return shrimpTaskViewModel;}
 
-    public ShrimpTaskPagedListAdapter getAdapter() {
+    public ShrimpTaskAdapter getAdapter() {
         return adapter;
+    }
+
+    public void showAllTasks() {
+        shrimpTaskViewModel.getAllShrimpTasks().observe(this, shrimpTasks -> {
+            // Update the cached copy of the words in the adapter.
+            adapter.submitList(shrimpTasks);
+        });
     }
 
     public int getTaskNameMatchCount() {

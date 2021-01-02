@@ -1,4 +1,4 @@
-package com.example.shrimpscheduler;
+package com.example.shrimpscheduler.CreateGroup;
 
 import android.content.Context;
 import android.os.Build;
@@ -19,6 +19,8 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.example.shrimpscheduler.Group.GroupViewModel;
+import com.example.shrimpscheduler.MainActivity;
+import com.example.shrimpscheduler.R;
 
 public class GroupCreateNew  extends Fragment {
     private EditText groupName;

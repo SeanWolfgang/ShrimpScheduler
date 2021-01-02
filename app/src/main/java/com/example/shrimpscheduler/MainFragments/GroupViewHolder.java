@@ -1,4 +1,4 @@
-package com.example.shrimpscheduler;
+package com.example.shrimpscheduler.MainFragments;
 
 import android.os.Build;
 import android.view.LayoutInflater;
@@ -11,6 +11,7 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shrimpscheduler.Group.GroupAdapter;
+import com.example.shrimpscheduler.R;
 
 public class GroupViewHolder extends RecyclerView.ViewHolder {
     private final TextView groupName;

@@ -17,9 +17,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.shrimpscheduler.EmptyFragment;
+import com.example.shrimpscheduler.MainFragments.EmptyFragment;
 import com.example.shrimpscheduler.Group.GroupViewModel;
-import com.example.shrimpscheduler.OkCancelButtonFooterFragment;
+import com.example.shrimpscheduler.MainFragments.OkCancelButtonFooterFragment;
 import com.example.shrimpscheduler.R;
 import com.example.shrimpscheduler.ShrimpTaskPack.ShrimpTask;
 import com.example.shrimpscheduler.ShrimpTaskPack.ShrimpTaskViewModel;

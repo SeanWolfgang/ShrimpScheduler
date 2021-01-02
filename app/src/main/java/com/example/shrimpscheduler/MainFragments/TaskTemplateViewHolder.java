@@ -1,4 +1,4 @@
-package com.example.shrimpscheduler;
+package com.example.shrimpscheduler.MainFragments;
 
 
 import android.os.Build;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.shrimpscheduler.R;
 import com.example.shrimpscheduler.Template.TaskTemplateAdapter;
 
 public class TaskTemplateViewHolder extends RecyclerView.ViewHolder {

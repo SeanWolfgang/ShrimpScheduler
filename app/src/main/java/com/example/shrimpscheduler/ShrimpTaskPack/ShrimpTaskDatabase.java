@@ -7,8 +7,6 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-import com.example.shrimpscheduler.LocalDateTypeConverters;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 

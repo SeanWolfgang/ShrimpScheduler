@@ -1,4 +1,4 @@
-package com.example.shrimpscheduler;
+package com.example.shrimpscheduler.MainFragments;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -14,11 +14,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import com.example.shrimpscheduler.R;
+
 import java.time.LocalDate;
-import java.util.Calendar;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class TaskDatePickingFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
@@ -41,7 +41,7 @@ public class TaskDatePickingFragment extends Fragment implements DatePickerDialo
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.task_date_picking_fragment, container, false);
+        View v = inflater.inflate(R.layout.shrimp_task_date_picking_fragment, container, false);
 
         calendarImageButton = v.findViewById(R.id.task_date_picking_date_imagebutton);
         dateTextView = v.findViewById(R.id.task_date_picking_date_textview);

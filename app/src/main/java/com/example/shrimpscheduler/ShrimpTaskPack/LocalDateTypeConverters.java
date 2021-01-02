@@ -1,4 +1,4 @@
-package com.example.shrimpscheduler;
+package com.example.shrimpscheduler.ShrimpTaskPack;
 
 import android.os.Build;
 

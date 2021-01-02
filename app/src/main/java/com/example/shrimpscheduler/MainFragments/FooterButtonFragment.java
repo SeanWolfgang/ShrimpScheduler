@@ -1,4 +1,4 @@
-package com.example.shrimpscheduler;
+package com.example.shrimpscheduler.MainFragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.example.shrimpscheduler.R;
 
 public class FooterButtonFragment extends Fragment {
     private FooterButtonFragment.FooterButtonFragmentListener listener;
@@ -30,7 +32,7 @@ public class FooterButtonFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.footer_buttons_fragment, container, false);
+        View view = inflater.inflate(R.layout.main_screen_footer_buttons_fragment, container, false);
 
         taskButton = (ImageButton) view.findViewById(R.id.footer_buttons_task);
         templateButton = (ImageButton) view.findViewById(R.id.footer_buttons_template);

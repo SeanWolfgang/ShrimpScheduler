@@ -8,7 +8,7 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
-import com.example.shrimpscheduler.GroupViewHolder;
+import com.example.shrimpscheduler.MainFragments.GroupViewHolder;
 
 public class GroupAdapter extends ListAdapter<Group, GroupViewHolder> {
     private OnGroupTaskClickListener mListener;

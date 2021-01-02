@@ -8,7 +8,7 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
-import com.example.shrimpscheduler.TaskTemplateViewHolder;
+import com.example.shrimpscheduler.MainFragments.TaskTemplateViewHolder;
 
 public class TaskTemplateAdapter extends ListAdapter<TaskTemplate, TaskTemplateViewHolder> {
     private OnTaskTemplateClickListener mListener;
@@ -38,7 +38,7 @@ public class TaskTemplateAdapter extends ListAdapter<TaskTemplate, TaskTemplateV
         holder.bind(current.getName(), current.getDefaultDescription(), current.isRepeat(), current.getDaysBetweenRepeat());
     }
 
-    static class TaskTemplateDiff extends DiffUtil.ItemCallback<TaskTemplate> {
+    public static class TaskTemplateDiff extends DiffUtil.ItemCallback<TaskTemplate> {
 
         @Override
         public boolean areItemsTheSame(@NonNull TaskTemplate oldItem, @NonNull TaskTemplate newItem) {

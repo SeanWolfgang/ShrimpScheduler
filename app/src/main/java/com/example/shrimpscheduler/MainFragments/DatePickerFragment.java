@@ -1,4 +1,4 @@
-package com.example.shrimpscheduler;
+package com.example.shrimpscheduler.MainFragments;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.DialogFragment;

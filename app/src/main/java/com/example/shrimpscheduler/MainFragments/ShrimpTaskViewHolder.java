@@ -1,4 +1,4 @@
-package com.example.shrimpscheduler;
+package com.example.shrimpscheduler.MainFragments;
 
 import android.os.Build;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.shrimpscheduler.R;
 import com.example.shrimpscheduler.ShrimpTaskPack.ShrimpTaskAdapter;
 
 import java.time.LocalDate;
@@ -82,7 +83,7 @@ public class ShrimpTaskViewHolder extends RecyclerView.ViewHolder {
 
     public static ShrimpTaskViewHolder create(ViewGroup parent, ShrimpTaskAdapter.OnShrimpTaskClickListener listener) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.all_tasks_recycler, parent, false);
+                .inflate(R.layout.shrimp_task_recycler, parent, false);
         return new ShrimpTaskViewHolder(view, listener);
     }
 }

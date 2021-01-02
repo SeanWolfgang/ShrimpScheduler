@@ -12,6 +12,15 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.shrimpscheduler.CreateTask.TaskCreateNewActivity;
 import com.example.shrimpscheduler.Group.GroupViewModel;
+import com.example.shrimpscheduler.MainFragments.DataPreviewFragment;
+import com.example.shrimpscheduler.MainFragments.EmptyFragment;
+import com.example.shrimpscheduler.MainFragments.FooterButtonFragment;
+import com.example.shrimpscheduler.MainFragments.GroupHeaderFragment;
+import com.example.shrimpscheduler.MainFragments.GroupRecyclerFragment;
+import com.example.shrimpscheduler.MainFragments.ShrimpTaskRecyclerFragmentDate;
+import com.example.shrimpscheduler.MainFragments.TaskDatePickingFragment;
+import com.example.shrimpscheduler.MainFragments.TaskTemplateRecyclerFragment;
+import com.example.shrimpscheduler.MainFragments.TemplateHeaderFragment;
 import com.example.shrimpscheduler.ShrimpTaskPack.ShrimpTask;
 import com.example.shrimpscheduler.ShrimpTaskPack.ShrimpTaskAdapter;
 import com.example.shrimpscheduler.ShrimpTaskPack.ShrimpTaskViewModel;
@@ -146,11 +155,6 @@ public class MainActivity extends AppCompatActivity
 
     public TaskTemplateViewModel getTaskTemplateViewModel() {
         return taskTemplateViewModel;
-    }
-
-    public void openCreateTaskDialog() {
-        ShrimpTaskCreateDialog createTaskDialog = new ShrimpTaskCreateDialog();
-        createTaskDialog.show(getSupportFragmentManager(), "create task dialog");
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
