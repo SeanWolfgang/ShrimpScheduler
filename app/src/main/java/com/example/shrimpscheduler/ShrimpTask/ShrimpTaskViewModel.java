@@ -1,4 +1,4 @@
-package com.example.shrimpscheduler.ShrimpTaskPack;
+package com.example.shrimpscheduler.ShrimpTask;
 
 import android.app.Application;
 import android.os.Build;
@@ -24,7 +24,9 @@ public class ShrimpTaskViewModel extends AndroidViewModel {
     private final LiveData<List<LocalDate>> lastExecuteDate;
     private final LiveData<Integer> totalCount;
     private LiveData<List<ShrimpTask>> dateShrimpTasks;
+    private LiveData<List<ShrimpTask>> futureShrimpTaskNameSpecified;
     private LiveData<Integer> nameCountList;
+    private LiveData<ShrimpTask> shrimpTaskSpecifiedID;
 
     private ShrimpTaskDao shrimpTaskDao;
 
@@ -32,7 +34,8 @@ public class ShrimpTaskViewModel extends AndroidViewModel {
 
     MutableLiveData<String> nameCountSearchName = new MutableLiveData<>();
     MutableLiveData<LocalDate> dateFilter = new MutableLiveData<>();
-    MutableLiveData<String> filterTaskNameSearch = new MutableLiveData<>();
+    MutableLiveData<String> nameFilter = new MutableLiveData<>();
+    MutableLiveData<Integer> IDFilter = new MutableLiveData<>();
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public ShrimpTaskViewModel (Application application) {
@@ -48,6 +51,10 @@ public class ShrimpTaskViewModel extends AndroidViewModel {
                 name -> shrimpRepository.getShrimpTasksNameMatch(name));
         dateShrimpTasks = Transformations.switchMap(dateFilter,
                 date -> shrimpRepository.getShrimpTaskDate(date));
+        futureShrimpTaskNameSpecified = Transformations.switchMap(nameFilter,
+                name -> shrimpRepository.getFutureShrimpTaskNameSpecified(name));
+        shrimpTaskSpecifiedID = Transformations.switchMap(IDFilter,
+                ID -> shrimpRepository.getSelectShrimpTaskID(ID));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -64,6 +71,10 @@ public class ShrimpTaskViewModel extends AndroidViewModel {
 
     public void setDate(LocalDate date) { dateFilter.setValue(date); }
 
+    public void setNameFilter(String name) { nameFilter.setValue(name); }
+
+    public void setIDFilter(int ID) { IDFilter.setValue(ID); }
+
     public LiveData<List<ShrimpTask>> getAllShrimpTasks() { return allShrimpTasks; }
 
     public LiveData<List<ShrimpTask>> getShrimpTaskToday() { return todayShrimpTasks; }
@@ -74,6 +85,10 @@ public class ShrimpTaskViewModel extends AndroidViewModel {
 
     public LiveData<List<ShrimpTask>> getShrimpTaskDate(LocalDate date) { return dateShrimpTasks;}
 
+    public LiveData<List<ShrimpTask>> getFutureShrimpTaskNameSpecified() { return futureShrimpTaskNameSpecified;}
+
+    public LiveData<ShrimpTask> getSelectShrimpTaskID() { return shrimpTaskSpecifiedID;}
+
     public LiveData<Integer> getCountShrimpTask() { return totalCount;}
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -81,6 +96,9 @@ public class ShrimpTaskViewModel extends AndroidViewModel {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void deleteAll() {shrimpRepository.deleteAll();}
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void deleteItem(int id) {shrimpRepository.deleteItem(id); }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void updateShrimpTask(ShrimpTask shrimpTask) {shrimpRepository.updateShrimpTask(shrimpTask);}

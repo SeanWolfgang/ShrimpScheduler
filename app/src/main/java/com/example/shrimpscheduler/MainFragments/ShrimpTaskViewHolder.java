@@ -11,7 +11,7 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shrimpscheduler.R;
-import com.example.shrimpscheduler.ShrimpTaskPack.ShrimpTaskAdapter;
+import com.example.shrimpscheduler.ShrimpTask.ShrimpTaskAdapter;
 
 import java.time.LocalDate;
 

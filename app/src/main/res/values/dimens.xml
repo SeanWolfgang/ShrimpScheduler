@@ -9,4 +9,8 @@
     <dimen name="button_ribbon_min_height">50dp</dimen>
     <dimen name="button_ribbon_min_width">40dp</dimen>
 
+    <dimen name="task_recycler_button_dim">40dp</dimen>
+
+    <dimen name="calendar_button">40dp</dimen>
+
 </resources>

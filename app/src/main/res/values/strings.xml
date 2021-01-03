@@ -57,6 +57,8 @@
     <string name="create_task_dialog_title">New Task</string>
     <string name="create_task_dialog_negative_button">Cancel</string>
     <string name="create_task_dialog_positive_button">OK</string>
+    <string name="create_task_selected_date">Selected:</string>
+    <string name="create_task_last_exist_date">Last Exist Date:</string>
 
     <string name="task_template_header">Task Template</string>
     <string name="task_template_name_hint">Template Name</string>
@@ -90,6 +92,12 @@
     <string name="template_make_interval_error">If task will repeat, an interval of at least 1 day must be specified.</string>
 
     <string name="group_make_name_error">Name cannot be empty or already in use.</string>
+
+    <string name="create_task_edit_checkbox">Modify all remaining instances?</string>
+    <string name="create_task_single_datepicker_edit_date_old">Old Date:</string>
+    <string name="create_task_single_datepicker_edit_date_new">New Date: </string>
+
+    <string name="edit_name_description_empty">Cannot save with an empty description.</string>
 
 
 

@@ -21,8 +21,8 @@ import com.example.shrimpscheduler.MainFragments.EmptyFragment;
 import com.example.shrimpscheduler.Group.GroupViewModel;
 import com.example.shrimpscheduler.MainFragments.OkCancelButtonFooterFragment;
 import com.example.shrimpscheduler.R;
-import com.example.shrimpscheduler.ShrimpTaskPack.ShrimpTask;
-import com.example.shrimpscheduler.ShrimpTaskPack.ShrimpTaskViewModel;
+import com.example.shrimpscheduler.ShrimpTask.ShrimpTask;
+import com.example.shrimpscheduler.ShrimpTask.ShrimpTaskViewModel;
 import com.example.shrimpscheduler.Template.TaskTemplateViewModel;
 
 import java.time.LocalDate;
@@ -36,13 +36,13 @@ public class TaskCreateNewActivity extends AppCompatActivity
         TaskCreateNewSingleDatepickerFragment.TaskCreateNewSingleDatepickerFragmentListener,
         OkCancelButtonFooterFragment.OkCancelButtonFooterFragmentListener {
 
-    private FragmentManager fragmentManager;
-    private boolean groupMake = false;
+    public FragmentManager fragmentManager;
+    public boolean groupMake = false;
 
     // Declare models
-    private ShrimpTaskViewModel shrimpTaskViewModel;
-    private TaskTemplateViewModel taskTemplateViewModel;
-    private GroupViewModel groupViewModel;
+    public ShrimpTaskViewModel shrimpTaskViewModel;
+    public TaskTemplateViewModel taskTemplateViewModel;
+    public GroupViewModel groupViewModel;
 
     /*
     View fragments
@@ -77,7 +77,7 @@ public class TaskCreateNewActivity extends AppCompatActivity
     private String singleName;
     private LocalDate singleDate;
     private String taskDescription = "";
-    HashMap<String, LocalDate> groupDates = new HashMap<String, LocalDate>();
+    private HashMap<String, LocalDate> groupDates = new HashMap<String, LocalDate>();
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -179,6 +179,7 @@ public class TaskCreateNewActivity extends AppCompatActivity
         taskDescription = description;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void checkedStateChange(boolean checkedState) {
         groupMake = checkedState;
@@ -199,6 +200,14 @@ public class TaskCreateNewActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.create_task_activity_1, taskCreateNewSingleDatepickerFragment)
                     .commit();
+
+            new Handler().postDelayed(new Runnable() {
+                @RequiresApi(api = Build.VERSION_CODES.O)
+                @Override
+                public void run() {
+                    updateSingleDate();
+                }
+            }, 100);
         }
     }
 
@@ -208,6 +217,7 @@ public class TaskCreateNewActivity extends AppCompatActivity
         singleDateValid = true;
         singleDate = pickedDate;
         taskCreateNewSingleDatepickerFragment.unsetTextRed();
+        updateSingleDate();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -306,7 +316,10 @@ public class TaskCreateNewActivity extends AppCompatActivity
             if (selectedGroups.contains(groupName)) {
                 groupCheckBox.setChecked(true);
                 if (groupDates.containsKey(groupName)) {
-                    groupDateTextView.setText(groupDates.get(groupName).toString());
+                    //String selectedDateString = getResources().getString(R.string.create_task_selected_date);
+                    //selectedDateString = selectedDateString + " " + groupDates.get(groupName).toString();
+                    String selectedDateString = groupDates.get(groupName).toString();
+                    groupDateTextView.setText(selectedDateString);
                 }
 
                 if (singleName != null && !singleName.trim().isEmpty()) {
@@ -314,7 +327,9 @@ public class TaskCreateNewActivity extends AppCompatActivity
 
                     if (distinctShrimpTaskNames.contains(taskFullName)) {
                         groupLastDate.setVisibility(View.VISIBLE);
-                        groupLastDate.setText(lastExecuteDate.get(distinctShrimpTaskNames.indexOf(taskFullName)).toString());
+                        String lastDateString = getResources().getString(R.string.create_task_last_exist_date);
+                        lastDateString = lastDateString + " " + lastExecuteDate.get(distinctShrimpTaskNames.indexOf(taskFullName)).toString();
+                        groupLastDate.setText(lastDateString);
                         if (groupDates.containsKey(groupName)) {
                             if( (groupDates.get(groupName).compareTo(lastExecuteDate.get(distinctShrimpTaskNames.indexOf(taskFullName))) > 0)) {
                                 groupTaskFullName.setTextColor(getResources().getColor(R.color.textValid));
@@ -383,6 +398,7 @@ public class TaskCreateNewActivity extends AppCompatActivity
                 Toast.LENGTH_LONG).show();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void updateName(String name) {
         singleName = name;
 
@@ -410,6 +426,46 @@ public class TaskCreateNewActivity extends AppCompatActivity
                 }
             }
         }
+
+        updateSingleDate();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void updateSingleDate() {
+        if (!groupMake) {
+            TextView selectedDate = taskCreateNewSingleDatepickerFragment.getView().findViewById(R.id.create_task_single_datepicker_textview);
+            TextView existingDate = taskCreateNewSingleDatepickerFragment.getView().findViewById(R.id.create_task_single_datepicker_old_date_textview);
+
+            if (singleDate != null) {
+                String selectedDateString = getResources().getString(R.string.create_task_selected_date);
+                selectedDateString = selectedDateString + " " + singleDate.toString();
+                selectedDate.setText(selectedDateString);
+            }
+
+            if (singleName != null && !singleName.trim().isEmpty()) {
+                if (distinctShrimpTaskNames.contains(singleName)) {
+                    LocalDate lastExecuteDateitem = lastExecuteDate.get(distinctShrimpTaskNames.indexOf(singleName));
+
+                    if (singleDate != null) {
+                        if (singleDate.compareTo(lastExecuteDateitem) > 0) {
+                            taskCreateNewFragment.unsetNameRed();
+                        } else {
+                            taskCreateNewFragment.setNameRed();
+                        }
+                    }
+
+
+                    String lastDateString = getResources().getString(R.string.create_task_last_exist_date);
+                    lastDateString = lastDateString + " " + lastExecuteDateitem.toString();
+                    existingDate.setText(lastDateString);
+                    existingDate.setVisibility(View.VISIBLE);
+                } else {
+                    existingDate.setVisibility(View.GONE);
+                }
+            } else {
+                existingDate.setVisibility(View.GONE);
+            }
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -426,4 +482,6 @@ public class TaskCreateNewActivity extends AppCompatActivity
         }
 
     }
+
+
 }

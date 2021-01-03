@@ -1,4 +1,4 @@
-package com.example.shrimpscheduler.ShrimpTaskPack;
+package com.example.shrimpscheduler.ShrimpTask;
 
 import androidx.lifecycle.LiveData;
 import androidx.paging.DataSource;
@@ -7,8 +7,6 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
-
-import com.example.shrimpscheduler.ShrimpTaskPack.ShrimpTask;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -33,6 +31,9 @@ public interface ShrimpTaskDao {
     @Query("SELECT * FROM shrimptask WHERE execute_time = :date ORDER BY id")
     LiveData<List<ShrimpTask>> getShrimpTaskDate(LocalDate date);
 
+    @Query("SELECT * FROM shrimptask WHERE name LIKE :name AND execute_time >= :date ORDER BY execute_time asc, id")
+    LiveData<List<ShrimpTask>> getFutureShrimpTaskNameSpecified(String name, LocalDate date);
+
     @Query("SELECT * FROM shrimptask WHERE execute_time = :date ORDER BY id")
     LiveData<List<ShrimpTask>> getShrimpTaskToday(LocalDate date);
 
@@ -48,8 +49,11 @@ public interface ShrimpTaskDao {
     @Query("DELETE FROM shrimptask")
     public void deleteAll();
 
+    @Query("DELETE FROM shrimptask WHERE id = :id")
+    public void deleteItem(int id);
+
     @Query("SELECT * FROM shrimptask WHERE id == :id")
-    public ShrimpTask selectShrimpTaskID(int id);
+    public LiveData<ShrimpTask> getSelectShrimpTaskID(int id);
 
     @Update
     public void updateShrimpTask(ShrimpTask... shrimpTasks);

@@ -26,7 +26,7 @@
     <FrameLayout
         android:id="@+id/create_task_activity_2"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/create_task_activity_1"
         app:layout_constraintBottom_toBottomOf="parent"

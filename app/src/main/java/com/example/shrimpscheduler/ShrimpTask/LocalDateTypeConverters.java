@@ -1,4 +1,4 @@
-package com.example.shrimpscheduler.ShrimpTaskPack;
+package com.example.shrimpscheduler.ShrimpTask;
 
 import android.os.Build;
 
@@ -6,9 +6,6 @@ import androidx.annotation.RequiresApi;
 import androidx.room.TypeConverter;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class LocalDateTypeConverters {
 

@@ -23,6 +23,7 @@ import java.time.LocalDate;
 public class TaskCreateNewSingleDatepickerFragment extends Fragment {
     private ImageButton taskCreateNewSingleImagebutton;
     private TextView taskCreateNewSingleTextview;
+    private TextView taskCreateNewSingleTextviewOld;
 
     private LocalDate pickedDate = LocalDate.now();
 
@@ -35,6 +36,7 @@ public class TaskCreateNewSingleDatepickerFragment extends Fragment {
 
         taskCreateNewSingleImagebutton = view.findViewById(R.id.create_task_single_datepicker_imagebutton);
         taskCreateNewSingleTextview = view.findViewById(R.id.create_task_single_datepicker_textview);
+        taskCreateNewSingleTextviewOld = view.findViewById(R.id.create_task_single_datepicker_old_date_textview);
 
         taskCreateNewSingleImagebutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +56,8 @@ public class TaskCreateNewSingleDatepickerFragment extends Fragment {
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         // Do something with the date chosen by the user
                         pickedDate = LocalDate.of(year, month + 1, dayOfMonth);
-                        taskCreateNewSingleTextview.setText("" + pickedDate.toString());
+                        String newString = getResources().getString(R.string.create_task_single_datepicker_edit_date_new) + " " + pickedDate.toString();
+                        taskCreateNewSingleTextview.setText(newString);
                         listener.selectedDate(pickedDate);
                     }
                 }, pickedDate.getYear(), pickedDate.getMonthValue() - 1, pickedDate.getDayOfMonth());
@@ -86,5 +89,14 @@ public class TaskCreateNewSingleDatepickerFragment extends Fragment {
 
     public void unsetTextRed() {
         taskCreateNewSingleTextview.setTextColor(getResources().getColor(R.color.textValid));
+    }
+
+    public void configureForEdit(LocalDate oldDate, LocalDate newDate) {
+        String newString = getResources().getString(R.string.create_task_single_datepicker_edit_date_new) + " " + newDate.toString();
+        String oldString = getResources().getString(R.string.create_task_single_datepicker_edit_date_old) + " " + oldDate.toString();
+
+        taskCreateNewSingleTextview.setText(newString);
+        taskCreateNewSingleTextviewOld.setText(oldString);
+        taskCreateNewSingleTextviewOld.setVisibility(View.VISIBLE);
     }
 }

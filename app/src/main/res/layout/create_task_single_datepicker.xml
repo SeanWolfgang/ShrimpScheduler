@@ -8,9 +8,10 @@
     <ImageButton
         android:id="@+id/create_task_single_datepicker_imagebutton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/calendar_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/create_task_single_datepicker_textview"
+        app:layout_constraintBottom_toBottomOf="@+id/create_task_single_datepicker_old_date_textview"
         android:src="@drawable/ic_datepicker_icon"/>
 
     <TextView
@@ -19,9 +20,19 @@
         android:layout_height="wrap_content"
         android:text="@string/default_start_date_text"
         android:textSize="@dimen/medium_text"
-        app:layout_constraintBottom_toBottomOf="@+id/create_task_single_datepicker_imagebutton"
+        app:layout_constraintBottom_toTopOf="@+id/create_task_single_datepicker_old_date_textview"
         app:layout_constraintStart_toEndOf="@+id/create_task_single_datepicker_imagebutton"
-        app:layout_constraintTop_toTopOf="@+id/create_task_single_datepicker_imagebutton" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/create_task_single_datepicker_old_date_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:visibility="gone"
+        android:textSize="@dimen/medium_text"
+        app:layout_constraintStart_toEndOf="@+id/create_task_single_datepicker_imagebutton"
+        app:layout_constraintTop_toBottomOf="@+id/create_task_single_datepicker_textview" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

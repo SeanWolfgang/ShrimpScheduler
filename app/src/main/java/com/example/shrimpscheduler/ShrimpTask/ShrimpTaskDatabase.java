@@ -1,4 +1,4 @@
-package com.example.shrimpscheduler.ShrimpTaskPack;
+package com.example.shrimpscheduler.ShrimpTask;
 
 import android.content.Context;
 

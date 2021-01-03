@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.shrimpscheduler.CreateGroup.GroupCreateNewActivity;
 import com.example.shrimpscheduler.CreateTask.TaskCreateNewActivity;
+import com.example.shrimpscheduler.CreateTask.TaskCreateNewActivityEdit;
 import com.example.shrimpscheduler.CreateTemplate.TemplateCreateNewActivity;
 import com.example.shrimpscheduler.Group.GroupViewModel;
 import com.example.shrimpscheduler.MainFragments.DataPreviewFragment;
@@ -19,13 +20,15 @@ import com.example.shrimpscheduler.MainFragments.EmptyFragment;
 import com.example.shrimpscheduler.MainFragments.FooterButtonFragment;
 import com.example.shrimpscheduler.MainFragments.GroupHeaderFragment;
 import com.example.shrimpscheduler.MainFragments.GroupRecyclerFragment;
+import com.example.shrimpscheduler.MainFragments.ShrimpTaskEditRecyclerFragment;
 import com.example.shrimpscheduler.MainFragments.ShrimpTaskRecyclerFragmentDate;
 import com.example.shrimpscheduler.MainFragments.TaskDatePickingFragment;
 import com.example.shrimpscheduler.MainFragments.TaskTemplateRecyclerFragment;
 import com.example.shrimpscheduler.MainFragments.TemplateHeaderFragment;
-import com.example.shrimpscheduler.ShrimpTaskPack.ShrimpTask;
-import com.example.shrimpscheduler.ShrimpTaskPack.ShrimpTaskAdapter;
-import com.example.shrimpscheduler.ShrimpTaskPack.ShrimpTaskViewModel;
+import com.example.shrimpscheduler.ShrimpTask.ShrimpTask;
+import com.example.shrimpscheduler.ShrimpTask.ShrimpTaskAdapter;
+import com.example.shrimpscheduler.ShrimpTask.ShrimpTaskEditAdapter;
+import com.example.shrimpscheduler.ShrimpTask.ShrimpTaskViewModel;
 import com.example.shrimpscheduler.Template.TaskTemplateViewModel;
 
 import java.time.LocalDate;
@@ -37,6 +40,12 @@ public class MainActivity extends AppCompatActivity
         TemplateHeaderFragment.TemplateHeaderFragmentListener {
 
     public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
+    public static final String EXTRA_1 = "TEMPLATE_NAME";
+    public static final String EXTRA_2 = "TASK_NAME";
+    public static final String EXTRA_3 = "TASK_DESCRIPTION";
+    public static final String EXTRA_4 = "TASK_DATE";
+    public static final String EXTRA_5 = "ID";
+
     private FragmentManager fragmentManager;
 
     // Declare models
@@ -58,6 +67,7 @@ public class MainActivity extends AppCompatActivity
     private Fragment dataPreviewFragment;
     private TaskDatePickingFragment taskDatePickingFragment;
     private ShrimpTaskRecyclerFragmentDate shrimpTaskRecyclerFragmentDate;
+    private ShrimpTaskEditRecyclerFragment shrimpTaskEditRecyclerFragment;
 
     // Template screen variables
     private TemplateHeaderFragment templateHeaderFragment;
@@ -111,6 +121,7 @@ public class MainActivity extends AppCompatActivity
         dataPreviewFragment = new DataPreviewFragment();
         taskDatePickingFragment = new TaskDatePickingFragment();
         shrimpTaskRecyclerFragmentDate = new ShrimpTaskRecyclerFragmentDate();
+        shrimpTaskEditRecyclerFragment = new ShrimpTaskEditRecyclerFragment();
 
         // Template screen variables
         templateHeaderFragment = new TemplateHeaderFragment();
@@ -144,6 +155,36 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        shrimpTaskEditRecyclerFragment.getAdapter().setOnShrimpTaskEditClickListener(new ShrimpTaskEditAdapter.OnShrimpTaskEditClickListener() {
+            @Override
+            public void onEditButtonClick(int position) {
+                Intent intent = new Intent(MainActivity.this, TaskCreateNewActivityEdit.class);
+
+                ShrimpTask shrimpTask = shrimpTaskEditRecyclerFragment.getAdapter().getShrimpTask(position);
+
+                LocalDate executeDate = shrimpTask.getExecuteTime();
+
+                int[] sendDate = new int[3];
+                sendDate[0] = executeDate.getYear();
+                sendDate[1] = executeDate.getMonthValue();
+                sendDate[2] = executeDate.getDayOfMonth();
+
+                intent.putExtra(EXTRA_1, shrimpTask.getParentName());
+                intent.putExtra(EXTRA_2, shrimpTask.getName());
+                intent.putExtra(EXTRA_3, shrimpTask.getDescription());
+                intent.putExtra(EXTRA_4, sendDate);
+                intent.putExtra(EXTRA_5, shrimpTask.getId());
+
+                startActivity(intent);
+            }
+
+            @Override
+            public void onDeleteButtonClick(int position) {
+                ShrimpTask shrimpTask = shrimpTaskRecyclerFragmentDate.getAdapter().getShrimpTask(position);
+                shrimpTaskEditRecyclerFragment.getShrimpTaskViewModel().deleteItem(shrimpTask.getId());
+            }
+        });
+
         displayTasksScreen();
     }
 
@@ -163,15 +204,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void calendarButtonListener(LocalDate pickedDate) {
         shrimpTaskRecyclerFragmentDate.setFilterDate(pickedDate);
+        shrimpTaskEditRecyclerFragment.setFilterDate(pickedDate);
     }
 
     @Override
     public void switchModeListener(boolean isEditMode) {
-        if (isEditMode) {
-            // Switch to edit recycler view
-        } else {
-            // Switch to view recycler view
-        }
+        switchTaskEditMode(isEditMode);
     }
 
     @Override
@@ -241,7 +279,7 @@ public class MainActivity extends AppCompatActivity
         fragmentManager.beginTransaction()
                 .replace(R.id.container_0, emptyFragment0)
                 .replace(R.id.container_1, emptyFragment1)
-                .replace(R.id.container_2, shrimpTaskRecyclerFragmentDate)
+                .replace(R.id.container_2, shrimpTaskEditRecyclerFragment)
                 .replace(R.id.container_3, footerButtonFragment)
                 .commit();
     }
@@ -256,5 +294,17 @@ public class MainActivity extends AppCompatActivity
     public void newTemplateListener() {
         Intent intent = new Intent(MainActivity.this, TemplateCreateNewActivity.class);
         startActivity(intent);
+    }
+
+    private void switchTaskEditMode(boolean editMode) {
+        if (editMode) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container_2, shrimpTaskRecyclerFragmentDate)
+                    .commit();
+        } else {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container_2, shrimpTaskEditRecyclerFragment)
+                    .commit();
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.shrimpscheduler.ShrimpTaskPack;
+package com.example.shrimpscheduler.ShrimpTask;
 
 import android.app.Application;
 import android.os.Build;
@@ -14,7 +14,6 @@ public class ShrimpTaskRepository {
 
     private ShrimpTaskDao shrimpTaskDao;
     private LiveData<List<ShrimpTask>> allShrimpTasks;
-    //private LiveData<PagedList<ShrimpTask>> allPagedShrimpTasks;
     private LiveData<List<ShrimpTask>> todayShrimpTasks;
     private LiveData<List<String>> distinctShrimpTaskNames;
     private LiveData<List<LocalDate>> lastExecuteDate;
@@ -44,6 +43,10 @@ public class ShrimpTaskRepository {
 
     public LiveData<List<ShrimpTask>> getShrimpTaskDate(LocalDate date) { return shrimpTaskDao.getShrimpTaskDate(date); }
 
+    public LiveData<List<ShrimpTask>> getFutureShrimpTaskNameSpecified(String name) { return shrimpTaskDao.getFutureShrimpTaskNameSpecified(name, today); }
+
+    public LiveData<ShrimpTask> getSelectShrimpTaskID(int ID) { return shrimpTaskDao.getSelectShrimpTaskID(ID); }
+
     public LiveData<List<ShrimpTask>> getShrimpTaskToday(LocalDate date) { return shrimpTaskDao.getShrimpTaskToday(date); }
 
     public LiveData<List<String>> getDistinctShrimpTaskNames() { return shrimpTaskDao.getDistinctShrimpTaskNames(today); }
@@ -65,6 +68,12 @@ public class ShrimpTaskRepository {
     public void deleteAll() {
         ShrimpTaskDatabase.databaseWriteExecutor.execute(() -> {
             shrimpTaskDao.deleteAll();
+        });
+    }
+
+    void deleteItem(int id) {
+        ShrimpTaskDatabase.databaseWriteExecutor.execute(() -> {
+            shrimpTaskDao.deleteItem(id);
         });
     }
 

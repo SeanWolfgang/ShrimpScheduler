@@ -16,13 +16,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shrimpscheduler.R;
 import com.example.shrimpscheduler.ShrimpTask.ShrimpTaskAdapter;
+import com.example.shrimpscheduler.ShrimpTask.ShrimpTaskEditAdapter;
 import com.example.shrimpscheduler.ShrimpTask.ShrimpTaskViewModel;
 
-public class ShrimpTaskRecyclerFragment extends Fragment {
+import java.time.LocalDate;
+
+@RequiresApi(api = Build.VERSION_CODES.O)
+public class ShrimpTaskEditRecyclerFragment extends Fragment {
     private RecyclerView recyclerView;
-    private ShrimpTaskViewModel shrimpTaskViewModel;
-    public ShrimpTaskAdapter adapter = new ShrimpTaskAdapter(new ShrimpTaskAdapter.ShrimpTaskDiff());
-    private int taskNameMatchCount;
+    public ShrimpTaskEditAdapter adapter = new ShrimpTaskEditAdapter(new ShrimpTaskEditAdapter.ShrimpTaskDiff());
+    private ShrimpTaskViewModel dateShrimpTaskViewModel;
+    private LocalDate filterDate = LocalDate.now();
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Nullable
@@ -30,7 +34,7 @@ public class ShrimpTaskRecyclerFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.shrimp_task_content_main, container, false);
 
-        shrimpTaskViewModel = new ViewModelProvider(this).get(ShrimpTaskViewModel.class);
+        dateShrimpTaskViewModel = new ViewModelProvider(this).get(ShrimpTaskViewModel.class);
 
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
@@ -38,35 +42,23 @@ public class ShrimpTaskRecyclerFragment extends Fragment {
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setItemViewCacheSize(100);
 
-        shrimpTaskViewModel.getShrimpTasksNameMatch().observe(this, shrimpTaskNameCountDBMatch -> {
-            // Update the cached copy of the words in the adapter.
-            taskNameMatchCount = shrimpTaskNameCountDBMatch;
+        dateShrimpTaskViewModel.setDate(filterDate);
+
+        dateShrimpTaskViewModel.getShrimpTaskDate().observe(this, dateTasks -> {
+            dateShrimpTaskViewModel.setDate(filterDate);
+            adapter.submitList(dateTasks);
         });
 
         return view;
     }
 
-    public ShrimpTaskViewModel getShrimpTaskViewModel() {return shrimpTaskViewModel;}
+    public ShrimpTaskViewModel getShrimpTaskViewModel() {return dateShrimpTaskViewModel;}
 
-    public ShrimpTaskAdapter getAdapter() {
+    public ShrimpTaskEditAdapter getAdapter() {
         return adapter;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void showAllTasks() {
-        shrimpTaskViewModel.getAllShrimpTasks().observe(this, shrimpTasks -> {
-            // Update the cached copy of the words in the adapter.
-            adapter.submitList(shrimpTasks);
-        });
+    public void setFilterDate(LocalDate filterDate) {
+        this.filterDate = filterDate;
     }
-
-    public int getTaskNameMatchCount() {
-        return taskNameMatchCount;
-    }
-
-    /*
-    public void setAdapter(ShrimpTaskAdapter adapter) {
-        this.adapter = adapter;
-    }
-    */
 }

@@ -19,10 +19,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
-import com.example.shrimpscheduler.Group.GroupViewModel;
 import com.example.shrimpscheduler.R;
-import com.example.shrimpscheduler.ShrimpTaskPack.ShrimpTaskViewModel;
 import com.example.shrimpscheduler.Template.TaskTemplate;
 import com.example.shrimpscheduler.Template.TaskTemplateViewModel;
 
@@ -33,6 +32,7 @@ public class TaskCreateNewFragment extends Fragment {
     private EditText createShrimpTaskNameEditText;
     private EditText createShrimpTaskDescriptionEditText;
     private CheckBox createShrimpTaskCheckbox;
+    private View underline;
 
     private TaskTemplateViewModel taskTemplateViewModel;
 
@@ -52,13 +52,19 @@ public class TaskCreateNewFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.create_task_fragment, container, false);
 
-        taskCreateNewActivity = (TaskCreateNewActivity) getActivity();
-        taskTemplateViewModel = taskCreateNewActivity.getTaskTemplateViewModel();
+        try {
+            taskCreateNewActivity = (TaskCreateNewActivity) getActivity();
+            taskTemplateViewModel = taskCreateNewActivity.getTaskTemplateViewModel();
+        } catch (ClassCastException e) {
+            taskTemplateViewModel = new ViewModelProvider(this).get(TaskTemplateViewModel.class);
+        }
 
-        createShrimpTaskSpinner = view.findViewById(R.id.create_task_dialog_spinner);
-        createShrimpTaskNameEditText = view.findViewById(R.id.create_task_dialog_name);
-        createShrimpTaskDescriptionEditText = view.findViewById(R.id.create_task_dialog_description);
-        createShrimpTaskCheckbox = view.findViewById(R.id.create_task_dialog_batch_checkbox);
+
+        createShrimpTaskSpinner = view.findViewById(R.id.create_task_spinner);
+        createShrimpTaskNameEditText = view.findViewById(R.id.create_task_name);
+        createShrimpTaskDescriptionEditText = view.findViewById(R.id.create_task_description);
+        createShrimpTaskCheckbox = view.findViewById(R.id.create_task_batch_checkbox);
+        underline = view.findViewById(R.id.create_task_underline);
 
         spinnerStrings.add(getContext().getString(R.string.empty_template_string));
         templateNameStrings.add("");
@@ -167,5 +173,17 @@ public class TaskCreateNewFragment extends Fragment {
 
     public void unsetNameRed() {
         createShrimpTaskNameEditText.setTextColor(getResources().getColor(R.color.textValid));
+    }
+
+    public void configureForEdit(String name, String description) {
+        createShrimpTaskSpinner.setEnabled(false);
+        createShrimpTaskSpinner.setVisibility(View.GONE);
+        underline.setVisibility(View.GONE);
+        createShrimpTaskNameEditText.setText(name);
+        createShrimpTaskNameEditText.setEnabled(false);
+        createShrimpTaskNameEditText.setTextColor(getResources().getColor(android.R.color.black));
+        createShrimpTaskDescriptionEditText.setText(description);
+        createShrimpTaskDescriptionEditText.setTextColor(getResources().getColor(android.R.color.black));
+        createShrimpTaskCheckbox.setText(getResources().getString(R.string.create_task_edit_checkbox));
     }
 }

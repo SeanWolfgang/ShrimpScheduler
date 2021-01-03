@@ -1,19 +1,19 @@
-TODO
-Edit task
-Fix error messages for task create
+DONE
 Fix red text date thing -> add second line for last date
 Create new template
 Create new group
+
+TODO
+Fix error messages for task create
+Edit task
 Edit template
 Edit group
-Data tab
-Data preview
 Settings menu
 	Delete all tasks, templates, groups
 	Delete tasks after certain date
 	Delete certain tasks after certain date
-
-
+Data tab
+Data preview
 
 
 @PrimaryKey(autoGenerate = true)
@@ -255,3 +255,56 @@ https://stackoverflow.com/questions/30824009/change-edittext-hint-color-when-usi
 Edit text underline
 https://stackoverflow.com/questions/21480398/edittext-underline-below-text-property/40889531
 
+Get Int Extra
+https://teamtreehouse.com/community/id-like-to-use-the-getintextra-method-but-am-unsure-how-to-use-it
+
+Days between dates LocalDate
+https://stackoverflow.com/questions/27005861/calculate-days-between-two-dates-in-java-8
+
+LocalDate PlusDays
+https://www.geeksforgeeks.org/localdate-plusdays-method-in-java-with-examples/#:~:text=The%20plusDays()%20method%20of,unaffected%20by%20this%20method%20call.
+
+Make EditText not Editable
+https://stackoverflow.com/questions/9470171/edittext-non-editable
+
+And MySQL
+https://www.brainbell.com/tutorials/MySQL/Combining_WHERE_Clauses.htm
+
+Shortcut for going between error or warnings in AndroidStudio
+https://stackoverflow.com/questions/39826711/how-to-navigate-to-error-lines-in-android-studio-by-shortcut
+
+LocalDate compare
+https://beginnersbook.com/2017/10/java-localdate-compareto-method-example/
+
+Group by after sorting MySQL
+https://stackoverflow.com/questions/6572110/order-by-date-and-time-before-group-by-name-in-mysql/6572292
+
+SQL tester
+https://www.w3schools.com/sql/trysql.asp?filename=trysql_select_groupby
+
+SQL Group
+https://www.w3schools.com/sql/sql_groupby.asp
+
+SQL Last
+http://www-db.deis.unibo.it/courses/TW/DOCS/w3schools/sql/sql_func_last.asp.html
+
+Move fragments up when keyboard opens
+https://stackoverflow.com/questions/27172512/how-to-move-the-layoutfragment-up-when-the-soft-keyboard-is-shown-in-android
+https://www.xspdf.com/resolution/50987381.html
+android:windowSoftInputMode​="stateVisible|adjustResize"
+
+SQL select distinct
+https://stackoverflow.com/questions/6127338/sql-mysql-select-distinct-unique-but-return-all-columns
+
+Git branch
+https://stackoverflow.com/questions/14655816/how-to-commit-changes-to-a-new-branch
+https://www.atlassian.com/git/tutorials/using-branches#:~:text=In%20Git%2C%20branches%20are%20a,branch%20to%20encapsulate%20your%20changes.
+	git checkout -b your-new-branch
+	git add <files>
+	git commit -m <message>
+
+Make views invisible Android
+https://stackoverflow.com/questions/4127725/how-can-i-remove-a-button-or-make-it-invisible-in-android
+
+Select first/last/least in MySQL
+https://www.xaprb.com/blog/2006/12/07/how-to-select-the-firstleastmax-row-per-group-in-sql/
