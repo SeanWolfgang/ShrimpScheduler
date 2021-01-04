@@ -1,26 +1,40 @@
-package com.example.shrimpscheduler.MainFragments;
+package com.example.shrimpscheduler.Group;
 
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.shrimpscheduler.Group.GroupAdapter;
 import com.example.shrimpscheduler.R;
 
 public class GroupViewHolder extends RecyclerView.ViewHolder {
     private final TextView groupName;
-    private final Button deleteGroupButton;
+    private final ImageButton editGroupButton;
+    private final ImageButton deleteGroupButton;
 
     private GroupViewHolder(View itemView, GroupAdapter.OnGroupTaskClickListener listener) {
         super(itemView);
         groupName = itemView.findViewById(R.id.group_name_recycler);
-        deleteGroupButton = itemView.findViewById(R.id.delete_group_button);
+        editGroupButton = itemView.findViewById(R.id.group_edit_button);
+        deleteGroupButton = itemView.findViewById(R.id.group_delete_button);
+
+        editGroupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onGroupEditClick(position);
+                    }
+                }
+            }
+        });
 
         deleteGroupButton.setOnClickListener(new View.OnClickListener() {
             @Override

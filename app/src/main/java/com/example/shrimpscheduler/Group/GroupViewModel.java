@@ -16,7 +16,9 @@ public class GroupViewModel extends AndroidViewModel {
     private final LiveData<List<Group>> allGroups;
     //private final LiveData<Integer> totalCount;
     private LiveData<Integer> matchGroups;
+    private LiveData<Group> groupSpecifiedID;
 
+    MutableLiveData<Integer> IDFilter = new MutableLiveData<>();
     MutableLiveData<String> groupNameFilter = new MutableLiveData<>();
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -26,6 +28,8 @@ public class GroupViewModel extends AndroidViewModel {
         allGroups = groupRepository.getAllGroups();
         matchGroups = Transformations.switchMap(groupNameFilter,
                 name -> groupRepository.getGroupNameMatch(name));
+        groupSpecifiedID = Transformations.switchMap(IDFilter,
+                ID -> groupRepository.getSelectGroupID(ID));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -36,6 +40,10 @@ public class GroupViewModel extends AndroidViewModel {
     public LiveData<List<Group>> getAllGroups() { return allGroups; }
 
     public void setGroupNameFilter(String filter) { groupNameFilter.setValue(filter); }
+
+    public LiveData<Group> getGroupSpecifiedID() { return groupSpecifiedID;}
+
+    public void setIDFilter(int ID) { IDFilter.setValue(ID); }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void insert(Group group) { groupRepository.insert(group); }

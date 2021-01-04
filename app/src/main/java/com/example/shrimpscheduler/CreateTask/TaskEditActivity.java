@@ -32,7 +32,7 @@ import java.util.ArrayList;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
-public class TaskCreateNewActivityEdit  extends AppCompatActivity  implements TaskCreateNewFragment.TaskCreateNewFragmentListener,
+public class TaskEditActivity extends AppCompatActivity  implements TaskCreateNewFragment.TaskCreateNewFragmentListener,
         TaskCreateNewSingleDatepickerFragment.TaskCreateNewSingleDatepickerFragmentListener,
         OkCancelButtonFooterFragment.OkCancelButtonFooterFragmentListener {
     public FragmentManager fragmentManager;
@@ -48,6 +48,7 @@ public class TaskCreateNewActivityEdit  extends AppCompatActivity  implements Ta
     private int passedID;
 
     private boolean modifyAllFuture;
+    private boolean resetDisposition;
     private LocalDate newDate;
     private ShrimpTask modifyTask;
     private ArrayList<ShrimpTask> nameMatchTasks = new ArrayList<>();
@@ -105,14 +106,25 @@ public class TaskCreateNewActivityEdit  extends AppCompatActivity  implements Ta
             }
         });
 
-        new Handler().postDelayed(new Runnable() {
-            @RequiresApi(api =  Build.VERSION_CODES.O)
-            @Override
-            public void run() {
-                configureFragmentsForEdit();
-            }
-        }, 100);
-
+        try {
+            configureFragmentsForEdit();
+        } catch (IllegalStateException e) {
+            new Handler().postDelayed(new Runnable() {
+                @RequiresApi(api =  Build.VERSION_CODES.O)
+                @Override
+                public void run() {
+                    configureFragmentsForEdit();
+                }
+            }, 100);
+        } catch (NullPointerException e) {
+            new Handler().postDelayed(new Runnable() {
+                @RequiresApi(api =  Build.VERSION_CODES.O)
+                @Override
+                public void run() {
+                    configureFragmentsForEdit();
+                }
+            }, 100);
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -133,6 +145,10 @@ public class TaskCreateNewActivityEdit  extends AppCompatActivity  implements Ta
                         eachTask.setDescription(passedDescription);
                         eachTask.setExecuteTime(eachTask.getExecuteTime().plusDays(dateDelta));
 
+                        if (resetDisposition) {
+                            eachTask.setDisposed(false);
+                        }
+
                         shrimpTaskViewModel.updateShrimpTask(eachTask);
                     }
                 }
@@ -141,10 +157,13 @@ public class TaskCreateNewActivityEdit  extends AppCompatActivity  implements Ta
                 modifyTask.setDescription(passedDescription);
                 modifyTask.setExecuteTime(newDate);
 
+                if (resetDisposition) {
+                    modifyTask.setDisposed(false);
+                }
+
                 shrimpTaskViewModel.updateShrimpTask(modifyTask);
                 finish();
             }
-
         }
     }
 
@@ -190,6 +209,11 @@ public class TaskCreateNewActivityEdit  extends AppCompatActivity  implements Ta
     @Override
     public void checkedStateChange(boolean checkedState) {
         modifyAllFuture = checkedState;
+    }
+
+    @Override
+    public void checkedEditResetStateChange(boolean checkedState) {
+        resetDisposition = checkedState;
     }
 
     private void displayTextScreen(String inputText) {

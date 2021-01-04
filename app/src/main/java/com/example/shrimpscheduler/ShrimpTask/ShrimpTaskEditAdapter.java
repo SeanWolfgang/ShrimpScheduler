@@ -8,9 +8,6 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
-import com.example.shrimpscheduler.MainFragments.ShrimpTaskEditViewHolder;
-import com.example.shrimpscheduler.MainFragments.ShrimpTaskViewHolder;
-
 public class ShrimpTaskEditAdapter extends ListAdapter<ShrimpTask, ShrimpTaskEditViewHolder> {
     private ShrimpTaskEditAdapter.OnShrimpTaskEditClickListener mListener;
 

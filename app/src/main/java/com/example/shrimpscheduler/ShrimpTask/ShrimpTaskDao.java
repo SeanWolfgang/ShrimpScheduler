@@ -40,6 +40,12 @@ public interface ShrimpTaskDao {
     @Query("SELECT COUNT(id) FROM shrimptask WHERE name = :name")
     LiveData<Integer> getShrimpTasksNameMatch(String name);
 
+    @Query("SELECT * FROM shrimptask WHERE `group` = :group")
+    LiveData<List<ShrimpTask>> getShrimpTasksGroupMatch(String group);
+
+    @Query("SELECT * FROM shrimptask WHERE parent_name = :template")
+    LiveData<List<ShrimpTask>> getShrimpTasksTemplateMatch(String template);
+
     @Query("SELECT COUNT(id) FROM shrimptask")
     LiveData<Integer> getCountShrimpTask();
 

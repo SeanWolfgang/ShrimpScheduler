@@ -27,6 +27,8 @@ public class TaskTemplateRepository {
         return allTaskTemplates;
     }
 
+    public LiveData<TaskTemplate> getSelectTaskTemplateID(int ID) { return taskTemplateDao.getSelectTaskTemplateID(ID); }
+
     // You must call this on a non-UI thread or your app will throw an exception. Room ensures
     // that you're not doing any long running operations on the main thread, blocking the UI.
     void insert(TaskTemplate taskTemplate) {
@@ -40,4 +42,17 @@ public class TaskTemplateRepository {
             taskTemplateDao.deleteAll();
         });
     }
+
+    void deleteItem(int id) {
+        TaskTemplateDatabase.databaseWriteExecutor.execute(() -> {
+            taskTemplateDao.deleteItem(id);
+        });
+    }
+
+    public void updateTemplate(TaskTemplate taskTemplate) {
+        TaskTemplateDatabase.databaseWriteExecutor.execute(() -> {
+            taskTemplateDao.updateTaskTemplate(taskTemplate);
+        });
+    }
+
 }

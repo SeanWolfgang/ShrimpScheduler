@@ -5,6 +5,7 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
@@ -30,6 +31,8 @@ public class GroupRepository {
     LiveData<List<Group>> getAllGroups() { return allGroups; }
 
     LiveData<Integer> getGroupNameMatch(String name) { return groupDao.getGroupNameMatch(name); }
+
+    public LiveData<Group> getSelectGroupID(int ID) { return groupDao.getSelectGroupID(ID); }
 
     void insert(Group group) {
         GroupDatabase.databaseWriteExecutor.execute(() -> {

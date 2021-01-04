@@ -27,9 +27,6 @@
     <string name="new_template_button">New Template</string>
     <string name="check_mark">\u2713</string>
     <string name="ballot_x">\u2717</string>
-    <string name="delete_all">Delete EVERYTHING in DB</string>
-    <string name="delete_future">Delete all future tasks</string>
-    <string name="delete_templates">Delete all task templates</string>
     <string name="something_placeholder">Do something in future?</string>
     <string name="edit_string">Edit</string>
 
@@ -74,8 +71,8 @@
     <string name="footer_group">Groups</string>
     <string name="footer_data">Data</string>
 
-    <string name="template_header_text"><u>Templates...</u></string>
-    <string name="group_header_text"><u>Groups...</u></string>
+    <string name="template_header_text"><u>Templates</u></string>
+    <string name="group_header_text"><u>Groups</u></string>
 
     <string name="create_task_group_recycler_date_textview">Select date</string>
 
@@ -94,11 +91,30 @@
     <string name="group_make_name_error">Name cannot be empty or already in use.</string>
 
     <string name="create_task_edit_checkbox">Modify all remaining instances?</string>
+    <string name="create_task_edit_reset_checkbox">Reset done/not done?</string>
     <string name="create_task_single_datepicker_edit_date_old">Old Date:</string>
     <string name="create_task_single_datepicker_edit_date_new">New Date: </string>
 
     <string name="edit_name_description_empty">Cannot save with an empty description.</string>
 
+    <string name="edit_task_label">Edit Task</string>
+    <string name="edit_template_label">Edit Template</string>
+    <string name="edit_group_label">Edit Group</string>
 
+    <string name="no_group_string">None</string>
+    <string name="no_item_string">None</string>
+
+    <string name="reserved_group_error">This name is reserved for system use.</string>
+    <string name="reserved_item_error">This name is reserved for system use.</string>
+    <string name="between_name_group_string">\u0020-\u0020</string>
+
+    <string name="settings_header"><u>Manage Items</u></string>
+    <string name="settings_delete_all_tasks">Delete all tasks.</string>
+    <string name="settings_delete_all_templates">Delete all templates.</string>
+    <string name="settings_delete_all_groups">Delete all groups.</string>
+    <string name="settings_delete_future_task_name">Delete tasks after effective date by name.</string>
+    <string name="settings_delete_future_task_template">Delete tasks after effective date by template.</string>
+    <string name="settings_delete_future_task_group">Delete tasks after effective date by group.</string>
+    <string name="settings_datepicker">EFFECTIVE DATE</string>
 
 </resources>

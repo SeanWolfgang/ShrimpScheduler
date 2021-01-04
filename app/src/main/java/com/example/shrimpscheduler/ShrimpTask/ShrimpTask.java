@@ -29,11 +29,15 @@ public class ShrimpTask {
     @ColumnInfo(name= "disposed")
     private boolean disposed = false;
 
-    public ShrimpTask(String name, String parentName, LocalDate executeTime, String description) {
+    @ColumnInfo(name= "group")
+    private String group;
+
+    public ShrimpTask(String name, String parentName, LocalDate executeTime, String description, String group) {
         this.name = name;
         this.parentName = parentName;
         this.executeTime = executeTime;
         this.description = description;
+        this.group = group;
     }
 
     public int getId() {
@@ -90,5 +94,13 @@ public class ShrimpTask {
 
     public void setDisposed(boolean disposed) {
         this.disposed = disposed;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
     }
 }

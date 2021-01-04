@@ -32,6 +32,7 @@ public class TaskCreateNewFragment extends Fragment {
     private EditText createShrimpTaskNameEditText;
     private EditText createShrimpTaskDescriptionEditText;
     private CheckBox createShrimpTaskCheckbox;
+    private CheckBox createShrimpTaskEditResetCheckbox;
     private View underline;
 
     private TaskTemplateViewModel taskTemplateViewModel;
@@ -64,6 +65,7 @@ public class TaskCreateNewFragment extends Fragment {
         createShrimpTaskNameEditText = view.findViewById(R.id.create_task_name);
         createShrimpTaskDescriptionEditText = view.findViewById(R.id.create_task_description);
         createShrimpTaskCheckbox = view.findViewById(R.id.create_task_batch_checkbox);
+        createShrimpTaskEditResetCheckbox = view.findViewById(R.id.create_task_edit_reset_checkbox);
         underline = view.findViewById(R.id.create_task_underline);
 
         spinnerStrings.add(getContext().getString(R.string.empty_template_string));
@@ -71,7 +73,6 @@ public class TaskCreateNewFragment extends Fragment {
         templateDescriptionStrings.add("");
         templateRepeats.add(false);
         templateIntervals.add(1);
-
 
         taskTemplateViewModel.getAllTaskTemplates().observe(this, taskTemplates -> {
             // Update the cached copy of the words in the adapter.
@@ -106,6 +107,13 @@ public class TaskCreateNewFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 listener.checkedStateChange(isChecked);
+            }
+        });
+
+        createShrimpTaskEditResetCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                listener.checkedEditResetStateChange(isChecked);
             }
         });
 
@@ -154,6 +162,7 @@ public class TaskCreateNewFragment extends Fragment {
         void descriptionChanged(String description);
         void templateChanged(String templateName, String name, String description, boolean repeat, int daysBetweenRepeat);
         void checkedStateChange(boolean checkedState);
+        void checkedEditResetStateChange(boolean checkedState);
     }
 
     @Override
@@ -185,5 +194,7 @@ public class TaskCreateNewFragment extends Fragment {
         createShrimpTaskDescriptionEditText.setText(description);
         createShrimpTaskDescriptionEditText.setTextColor(getResources().getColor(android.R.color.black));
         createShrimpTaskCheckbox.setText(getResources().getString(R.string.create_task_edit_checkbox));
+
+        createShrimpTaskEditResetCheckbox.setVisibility(View.VISIBLE);
     }
 }

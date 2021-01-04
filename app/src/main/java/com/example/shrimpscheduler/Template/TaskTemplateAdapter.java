@@ -8,13 +8,12 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
-import com.example.shrimpscheduler.MainFragments.TaskTemplateViewHolder;
-
 public class TaskTemplateAdapter extends ListAdapter<TaskTemplate, TaskTemplateViewHolder> {
     private OnTaskTemplateClickListener mListener;
 
     public interface OnTaskTemplateClickListener {
         void onTaskTemplateEditClick(int position);
+        void onTaskTemplateDeleteClick(int position);
     }
 
     public void setOnItemClickListener(TaskTemplateAdapter.OnTaskTemplateClickListener listener) {

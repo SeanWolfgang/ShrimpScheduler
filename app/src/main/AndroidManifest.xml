@@ -20,9 +20,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".CreateTask.TaskCreateNewActivity" android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".CreateTask.TaskCreateNewActivityEdit" android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".CreateTask.TaskEditActivity" android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".CreateTemplate.TemplateCreateNewActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".CreateTemplate.TemplateEditActivity" android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".CreateGroup.GroupCreateNewActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".CreateGroup.GroupEditActivity" android:windowSoftInputMode="adjustResize"/>
     </application>
 
 

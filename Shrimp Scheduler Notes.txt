@@ -2,16 +2,15 @@ DONE
 Fix red text date thing -> add second line for last date
 Create new template
 Create new group
-
-TODO
 Fix error messages for task create
 Edit task
 Edit template
 Edit group
 Settings menu
 	Delete all tasks, templates, groups
-	Delete tasks after certain date
-	Delete certain tasks after certain date
+	Delete by name, template, group
+
+TODO
 Data tab
 Data preview
 
@@ -308,3 +307,31 @@ https://stackoverflow.com/questions/4127725/how-can-i-remove-a-button-or-make-it
 
 Select first/last/least in MySQL
 https://www.xaprb.com/blog/2006/12/07/how-to-select-the-firstleastmax-row-per-group-in-sql/
+
+Delete last two characters of Java string
+https://stackoverflow.com/questions/30708036/delete-the-last-two-characters-of-the-string
+
+Android adding charts and bar charts stacked bar charts and other graphs
+https://github.com/PhilJay/MPAndroidChart
+https://medium.com/@mobindustry/how-to-quickly-implement-beautiful-charts-in-your-android-app-cf4caf050772
+https://www.youtube.com/watch?v=jTYi0Q7lLco&ab_channel=SarthiTechnology
+
+Iterate through HashMap -> Get HashMap keys and values by index
+https://stackoverflow.com/questions/3973512/java-hashmap-how-to-get-a-key-and-value-by-index
+
+Java string replace
+https://beginnersbook.com/2013/12/java-string-replace-replacefirst-replaceall-method-examples/
+
+Java string indexof
+https://www.w3schools.com/java/ref_string_indexof.asp
+
+Adding spaces to string resources Android
+https://stackoverflow.com/questions/10862975/how-to-put-space-character-into-a-string-name-in-xml/10862999#:~:text=Insert%20%5Cu0020%20directly%20in%20the,you%20would%20like%20to%20preserve.&text=Android%20doesn't%20support%20keeping,unicode%20in%20between%20the%20words.&text=It%20is%20a%20unicode%20space%20character.
+
+Android Room table location in emulator
+https://stackoverflow.com/questions/44429372/view-contents-of-database-created-with-room-persistence-library
+View -> Tool Windows -> Device File Explorer -> /data/data/{$packageId}/databases/ -> Save As -> https://sqlitebrowser.org/
+
+Room version migration
+https://www.youtube.com/watch?v=-IV2i-IXIAU&ab_channel=AsyncAndroid
+

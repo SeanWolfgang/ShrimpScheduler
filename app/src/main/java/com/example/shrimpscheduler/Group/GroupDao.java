@@ -18,7 +18,7 @@ public interface GroupDao {
     LiveData<Integer> getGroupNameMatch(String name);
 
     @Query("SELECT * FROM `group` WHERE id = :id")
-    public Group getGroup(int id);
+    public LiveData<Group> getSelectGroupID(int id);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     public void insert(Group group);

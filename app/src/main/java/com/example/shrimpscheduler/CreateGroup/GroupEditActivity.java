@@ -1,9 +1,9 @@
 package com.example.shrimpscheduler.CreateGroup;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
+import android.os.Handler;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -12,17 +12,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.shrimpscheduler.CreateTemplate.TemplateCreateNewFragment;
 import com.example.shrimpscheduler.Group.Group;
 import com.example.shrimpscheduler.Group.GroupViewModel;
+import com.example.shrimpscheduler.MainActivity;
 import com.example.shrimpscheduler.MainFragments.OkCancelButtonFooterFragment;
 import com.example.shrimpscheduler.R;
-import com.example.shrimpscheduler.Template.TaskTemplate;
-import com.example.shrimpscheduler.Template.TaskTemplateViewModel;
+import com.example.shrimpscheduler.ShrimpTask.ShrimpTask;
+import com.example.shrimpscheduler.ShrimpTask.ShrimpTaskViewModel;
 
 import java.util.ArrayList;
 
-public class GroupCreateNewActivity extends AppCompatActivity
+public class GroupEditActivity extends AppCompatActivity
         implements GroupCreateNewFragment.GroupCreateNewFragmentListener,
         OkCancelButtonFooterFragment.OkCancelButtonFooterFragmentListener {
 
@@ -31,15 +31,29 @@ public class GroupCreateNewActivity extends AppCompatActivity
     private OkCancelButtonFooterFragment okCancelButtonFooterFragment;
 
     private GroupViewModel groupViewModel;
+    public ShrimpTaskViewModel shrimpTaskViewModel;
 
     private ArrayList<String> groupNames = new ArrayList<>();
 
     private String groupName;
+    private String passedGroupName;
+    private int passedID;
     private boolean nameRepeated = false;
 
+    private Group modifyGroup;
+    private ArrayList<ShrimpTask> groupShrimpTasks = new ArrayList<>();
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+
+        passedGroupName = intent.getStringExtra(MainActivity.EXTRA_6);
+        passedID = intent.getIntExtra(MainActivity.EXTRA_7, 0);
+
+        groupName = passedGroupName;
 
         setContentView(R.layout.create_group_activity);
         fragmentManager = getSupportFragmentManager();
@@ -54,13 +68,54 @@ public class GroupCreateNewActivity extends AppCompatActivity
 
         // Assign template view model
         groupViewModel = new ViewModelProvider(this).get(GroupViewModel.class);
+        shrimpTaskViewModel = new ViewModelProvider(this).get(ShrimpTaskViewModel.class);
+
+        // Set filters
+        groupViewModel.setIDFilter(passedID);
+        shrimpTaskViewModel.setGroupFilter(passedGroupName);
+
+        groupViewModel.getGroupSpecifiedID().observe(this, selectedGroup -> {
+            // Update the cached copy of the words in the adapter.
+            modifyGroup = selectedGroup;
+        });
 
         groupViewModel.getAllGroups().observe(this, allGroups -> {
             // Update the cached copy of the words in the adapter.
             for (Group group : allGroups) {
                 groupNames.add(group.getName());
             }
+
+            if (groupNames.contains(passedGroupName)) {
+                groupNames.remove(passedGroupName);
+            }
         });
+
+        shrimpTaskViewModel.getShrimpTasksGroupMatch().observe(this, matchedTasksGroups -> {
+            // Update the cached copy of the words in the adapter.
+            for (ShrimpTask matchedTask : matchedTasksGroups) {
+                groupShrimpTasks.add(matchedTask);
+            }
+        });
+
+        try {
+            configureForEdit(passedGroupName);
+        } catch (IllegalStateException e) {
+            new Handler().postDelayed(new Runnable() {
+                @RequiresApi(api =  Build.VERSION_CODES.O)
+                @Override
+                public void run() {
+                    configureForEdit(passedGroupName);
+                }
+            }, 100);
+        } catch (NullPointerException e) {
+            new Handler().postDelayed(new Runnable() {
+                @RequiresApi(api =  Build.VERSION_CODES.O)
+                @Override
+                public void run() {
+                    configureForEdit(passedGroupName);
+                }
+            }, 100);
+        }
     }
 
     @Override
@@ -83,10 +138,23 @@ public class GroupCreateNewActivity extends AppCompatActivity
         }
 
         if (valid) {
-            Group insertingGroup;
-            insertingGroup = new Group(groupName, "0");
+            modifyGroup.setName(groupName);
 
-            groupViewModel.insert(insertingGroup);
+            groupViewModel.updateGroup(modifyGroup);
+
+            if (groupShrimpTasks.size() > 0) {
+               for (ShrimpTask groupTask : groupShrimpTasks) {
+
+                   String taskOldName = groupTask.getName();
+                   String taskNewName = taskOldName.substring(0, taskOldName.length() - passedGroupName.length());
+                   taskNewName = taskNewName + groupName;
+
+                   groupTask.setName(taskNewName);
+                   groupTask.setGroup(groupName);
+
+                   shrimpTaskViewModel.updateShrimpTask(groupTask);
+               }
+            }
 
             finish();
         }
@@ -116,4 +184,7 @@ public class GroupCreateNewActivity extends AppCompatActivity
                 Toast.LENGTH_LONG).show();
     }
 
+    private void configureForEdit(String editName) {
+        groupCreateNewFragment.configureForEdit(editName);
+    }
 }

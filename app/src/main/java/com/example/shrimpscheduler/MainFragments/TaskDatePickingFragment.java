@@ -17,8 +17,11 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.example.shrimpscheduler.R;
+import com.example.shrimpscheduler.ShrimpTask.ShrimpTask;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class TaskDatePickingFragment extends Fragment implements DatePickerDialog.OnDateSetListener {

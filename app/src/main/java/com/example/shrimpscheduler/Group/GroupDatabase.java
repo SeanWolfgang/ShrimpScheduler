@@ -24,7 +24,7 @@ public abstract class GroupDatabase extends RoomDatabase {
             synchronized (GroupDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            GroupDatabase.class, "group_database")
+                            GroupDatabase.class, "group")
                             .build();
                 }
             }

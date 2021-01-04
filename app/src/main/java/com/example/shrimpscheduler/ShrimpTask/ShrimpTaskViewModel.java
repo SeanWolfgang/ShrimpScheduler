@@ -25,6 +25,8 @@ public class ShrimpTaskViewModel extends AndroidViewModel {
     private final LiveData<Integer> totalCount;
     private LiveData<List<ShrimpTask>> dateShrimpTasks;
     private LiveData<List<ShrimpTask>> futureShrimpTaskNameSpecified;
+    private LiveData<List<ShrimpTask>> shrimpTasksGroupMatch;
+    private LiveData<List<ShrimpTask>> shrimpTasksTemplateMatch;
     private LiveData<Integer> nameCountList;
     private LiveData<ShrimpTask> shrimpTaskSpecifiedID;
 
@@ -36,6 +38,8 @@ public class ShrimpTaskViewModel extends AndroidViewModel {
     MutableLiveData<LocalDate> dateFilter = new MutableLiveData<>();
     MutableLiveData<String> nameFilter = new MutableLiveData<>();
     MutableLiveData<Integer> IDFilter = new MutableLiveData<>();
+    MutableLiveData<String> groupFilter = new MutableLiveData<>();
+    MutableLiveData<String> templateFilter = new MutableLiveData<>();
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public ShrimpTaskViewModel (Application application) {
@@ -55,6 +59,10 @@ public class ShrimpTaskViewModel extends AndroidViewModel {
                 name -> shrimpRepository.getFutureShrimpTaskNameSpecified(name));
         shrimpTaskSpecifiedID = Transformations.switchMap(IDFilter,
                 ID -> shrimpRepository.getSelectShrimpTaskID(ID));
+        shrimpTasksGroupMatch = Transformations.switchMap(groupFilter,
+                group -> shrimpRepository.getShrimpTasksGroupMatch(group));
+        shrimpTasksTemplateMatch = Transformations.switchMap(templateFilter,
+                template -> shrimpRepository.getShrimpTasksTemplateMatch(template));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -73,6 +81,10 @@ public class ShrimpTaskViewModel extends AndroidViewModel {
 
     public void setNameFilter(String name) { nameFilter.setValue(name); }
 
+    public void setGroupFilter(String group) { groupFilter.setValue(group); }
+
+    public void setTemplateFilter(String template) { templateFilter.setValue(template); }
+
     public void setIDFilter(int ID) { IDFilter.setValue(ID); }
 
     public LiveData<List<ShrimpTask>> getAllShrimpTasks() { return allShrimpTasks; }
@@ -86,6 +98,10 @@ public class ShrimpTaskViewModel extends AndroidViewModel {
     public LiveData<List<ShrimpTask>> getShrimpTaskDate(LocalDate date) { return dateShrimpTasks;}
 
     public LiveData<List<ShrimpTask>> getFutureShrimpTaskNameSpecified() { return futureShrimpTaskNameSpecified;}
+
+    public LiveData<List<ShrimpTask>> getShrimpTasksGroupMatch() { return shrimpTasksGroupMatch;}
+
+    public LiveData<List<ShrimpTask>> getShrimpTasksTemplateMatch() { return shrimpTasksTemplateMatch;}
 
     public LiveData<ShrimpTask> getSelectShrimpTaskID() { return shrimpTaskSpecifiedID;}
 

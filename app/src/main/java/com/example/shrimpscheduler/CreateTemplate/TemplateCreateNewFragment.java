@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import com.example.shrimpscheduler.R;
 
 public class TemplateCreateNewFragment extends Fragment {
+    private TextView createTemplateNameLabel;
     private EditText createTemplateNameEditText;
     private EditText createTemplateDescriptionEditText;
     private EditText createTemplateIntervalEditText;
@@ -30,6 +32,7 @@ public class TemplateCreateNewFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.create_template_fragment, container, false);
 
+        createTemplateNameLabel = view.findViewById(R.id.task_template_header);
         createTemplateNameEditText = view.findViewById(R.id.task_template_name);
         createTemplateDescriptionEditText = view.findViewById(R.id.task_template_description);
         createTemplateIntervalEditText = view.findViewById(R.id.task_template_interval);
@@ -128,5 +131,16 @@ public class TemplateCreateNewFragment extends Fragment {
 
     public void unsetNameRed() {
         createTemplateNameEditText.setTextColor(getResources().getColor(R.color.textValid));
+    }
+
+    public void configureForEdit(String editName, String editDescription, boolean editRepeat, int editInterval) {
+        createTemplateNameLabel.setText(getResources().getString(R.string.edit_template_label));
+
+        createTemplateNameEditText.setText(editName);
+        createTemplateDescriptionEditText.setText(editDescription);
+        createTemplateRepeatCheckbox.setChecked(editRepeat);
+        if (editRepeat) {
+            createTemplateIntervalEditText.setText(Integer.toString(editInterval));
+        }
     }
 }

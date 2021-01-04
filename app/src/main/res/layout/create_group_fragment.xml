@@ -8,7 +8,7 @@
     android:padding="@dimen/big_padding">
 
     <TextView
-        android:id="@+id/new_group_label"
+        android:id="@+id/create_group_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/task_template_name_hint"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/new_group_label"
+        app:layout_constraintTop_toBottomOf="@+id/create_group_label"
         app:layout_constraintEnd_toStartOf="@id/create_new_group"></com.google.android.material.textfield.TextInputEditText>
 
     <Button

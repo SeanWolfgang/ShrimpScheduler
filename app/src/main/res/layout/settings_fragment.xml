@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/settings_header"
+        android:text="@string/settings_header"
+        android:textSize="@dimen/big_text"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <Button
+        android:id="@+id/settings_delete_all_tasks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_delete_all_tasks"
+        app:layout_constraintTop_toBottomOf="@id/settings_header"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <Button
+        android:id="@+id/settings_delete_all_templates"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_delete_all_templates"
+        app:layout_constraintTop_toBottomOf="@id/settings_delete_all_tasks"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <Button
+        android:id="@+id/settings_delete_all_groups"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_delete_all_groups"
+        app:layout_constraintTop_toBottomOf="@id/settings_delete_all_templates"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <Button
+        android:id="@+id/settings_delete_future_task_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_delete_future_task_name"
+        app:layout_constraintTop_toBottomOf="@id/settings_delete_all_groups"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <ImageButton
+        android:id="@+id/settings_delete_future_task_name_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_list_icon"
+        app:layout_constraintTop_toTopOf="@id/settings_delete_future_task_name"
+        app:layout_constraintBottom_toBottomOf="@id/settings_delete_future_task_name"
+        app:layout_constraintStart_toEndOf="@id/settings_delete_future_task_name"
+        />
+
+    <Button
+        android:id="@+id/settings_delete_future_task_template"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_delete_future_task_template"
+        app:layout_constraintTop_toBottomOf="@id/settings_delete_future_task_name"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <ImageButton
+        android:id="@+id/settings_delete_future_task_template_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_list_icon"
+        app:layout_constraintTop_toTopOf="@id/settings_delete_future_task_template"
+        app:layout_constraintBottom_toBottomOf="@id/settings_delete_future_task_template"
+        app:layout_constraintStart_toEndOf="@id/settings_delete_future_task_template"
+        />
+
+    <Button
+        android:id="@+id/settings_delete_future_task_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_delete_future_task_group"
+        app:layout_constraintTop_toBottomOf="@id/settings_delete_future_task_template"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <ImageButton
+        android:id="@+id/settings_delete_future_task_group_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_list_icon"
+        app:layout_constraintTop_toTopOf="@id/settings_delete_future_task_group"
+        app:layout_constraintBottom_toBottomOf="@id/settings_delete_future_task_group"
+        app:layout_constraintStart_toEndOf="@id/settings_delete_future_task_group"
+        />
+
+    <TextView
+        android:id="@+id/settings_datepicker_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_datepicker"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <Button
+        android:id="@+id/settings_datepicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/settings_datepicker_label"
+        app:layout_constraintEnd_toEndOf="@+id/settings_datepicker_label"
+        app:layout_constraintStart_toStartOf="@+id/settings_datepicker_label"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

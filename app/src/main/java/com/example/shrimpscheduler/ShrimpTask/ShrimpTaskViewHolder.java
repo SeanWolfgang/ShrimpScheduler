@@ -1,4 +1,4 @@
-package com.example.shrimpscheduler.MainFragments;
+package com.example.shrimpscheduler.ShrimpTask;
 
 import android.os.Build;
 import android.view.LayoutInflater;
@@ -11,7 +11,6 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shrimpscheduler.R;
-import com.example.shrimpscheduler.ShrimpTask.ShrimpTaskAdapter;
 
 import java.time.LocalDate;
 

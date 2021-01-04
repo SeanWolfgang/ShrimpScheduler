@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import com.example.shrimpscheduler.R;
 
 public class GroupCreateNewFragment extends Fragment {
+    private TextView createGroupTextView;
     private EditText createGroupEditText;
 
     private GroupCreateNewFragment.GroupCreateNewFragmentListener listener;
@@ -27,6 +29,7 @@ public class GroupCreateNewFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.create_group_fragment, container, false);
 
+        createGroupTextView = view.findViewById(R.id.create_group_label);
         createGroupEditText = view.findViewById(R.id.create_group_name);
 
         createGroupEditText.addTextChangedListener(new TextWatcher() {
@@ -69,5 +72,10 @@ public class GroupCreateNewFragment extends Fragment {
 
     public void unsetNameRed() {
         createGroupEditText.setTextColor(getResources().getColor(R.color.textValid));
+    }
+
+    public void configureForEdit(String editName) {
+        createGroupTextView.setText(getResources().getString(R.string.edit_group_label));
+        createGroupEditText.setText(editName);
     }
 }

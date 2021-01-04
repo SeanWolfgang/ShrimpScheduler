@@ -1,4 +1,4 @@
-package com.example.shrimpscheduler.MainFragments;
+package com.example.shrimpscheduler.Template;
 
 
 import android.os.Build;
@@ -6,20 +6,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shrimpscheduler.R;
-import com.example.shrimpscheduler.Template.TaskTemplateAdapter;
 
 public class TaskTemplateViewHolder extends RecyclerView.ViewHolder {
     private final TextView nameTextView;
     private final TextView descriptionTextView;
     private final TextView repeatTextView;
     private final TextView repeatIntervalTextView;
-    private final Button editButton;
+    private final ImageButton editButton;
+    private final ImageButton deleteButton;
 
     private TaskTemplateViewHolder(View itemView, TaskTemplateAdapter.OnTaskTemplateClickListener listener) {
         super(itemView);
@@ -27,7 +28,8 @@ public class TaskTemplateViewHolder extends RecyclerView.ViewHolder {
         descriptionTextView = itemView.findViewById(R.id.template_description);
         repeatTextView = itemView.findViewById(R.id.template_repeat);
         repeatIntervalTextView = itemView.findViewById(R.id.repeat_interval);
-        editButton = itemView.findViewById(R.id.edit_button);
+        editButton = itemView.findViewById(R.id.template_edit_button);
+        deleteButton = itemView.findViewById(R.id.template_delete_button);
 
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,6 +38,18 @@ public class TaskTemplateViewHolder extends RecyclerView.ViewHolder {
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
                         listener.onTaskTemplateEditClick(position);
+                    }
+                }
+            }
+        });
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onTaskTemplateDeleteClick(position);
                     }
                 }
             }

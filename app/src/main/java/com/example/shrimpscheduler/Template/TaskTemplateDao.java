@@ -23,6 +23,12 @@ public interface TaskTemplateDao {
     @Query("DELETE FROM tasktemplate")
     void deleteAll();
 
+    @Query("DELETE FROM tasktemplate WHERE id = :id")
+    public void deleteItem(int id);
+
+    @Query("SELECT * FROM tasktemplate WHERE id == :id")
+    public LiveData<TaskTemplate> getSelectTaskTemplateID(int id);
+
     @Update
     public void updateTaskTemplate(TaskTemplate... taskTemplates);
 }

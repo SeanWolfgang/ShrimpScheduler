@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.shrimpscheduler.Group.Group;
 import com.example.shrimpscheduler.MainFragments.EmptyFragment;
 import com.example.shrimpscheduler.Group.GroupViewModel;
 import com.example.shrimpscheduler.MainFragments.OkCancelButtonFooterFragment;
@@ -211,6 +212,11 @@ public class TaskCreateNewActivity extends AppCompatActivity
         }
     }
 
+    @Override
+    public void checkedEditResetStateChange(boolean checkedState) {
+        // Don't do anything with this because it's not the edit activity
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void selectedDate(LocalDate pickedDate) {
@@ -250,13 +256,13 @@ public class TaskCreateNewActivity extends AppCompatActivity
                 for (int i = 0; i < names.size(); i++) {
                     LocalDate startDate = groupDates.get(selectedGroups.get(i));
                     LocalDate endDate  = startDate.plusYears(yearsAdded);
-                    ShrimpTask baseShrimpTask = new ShrimpTask(names.get(i), selectedTemplate, startDate, taskDescription);
+                    ShrimpTask baseShrimpTask = new ShrimpTask(names.get(i), selectedTemplate, startDate, taskDescription, selectedGroups.get(i));
                     placeShrimpTasks(baseShrimpTask, startDate, endDate);
                 }
                 finish();
             } else {
                 LocalDate endDate  = singleDate.plusYears(yearsAdded);
-                ShrimpTask baseShrimpTask = new ShrimpTask(names.get(0), selectedTemplate, singleDate, taskDescription);
+                ShrimpTask baseShrimpTask = new ShrimpTask(names.get(0), selectedTemplate, singleDate, taskDescription, getResources().getString(R.string.no_group_string));
                 placeShrimpTasks(baseShrimpTask, singleDate, endDate);
                 finish();
             }
@@ -311,7 +317,7 @@ public class TaskCreateNewActivity extends AppCompatActivity
             TextView groupDateTextView = (TextView) taskCreateNewGroupRecyclerFragment.getRecyclerView().findViewHolderForAdapterPosition(i).itemView.findViewById(R.id.create_task_group_recycler_date_textview);
 
             String groupName = groupCheckBox.getText().toString();
-            String taskFullName = singleName + " " + groupName;
+            String taskFullName = singleName + getResources().getString(R.string.between_name_group_string) + groupName;
 
             if (selectedGroups.contains(groupName)) {
                 groupCheckBox.setChecked(true);
@@ -369,7 +375,7 @@ public class TaskCreateNewActivity extends AppCompatActivity
                 TextView groupDateTextView = (TextView) taskCreateNewGroupRecyclerFragment.getRecyclerView().findViewHolderForAdapterPosition(i).itemView.findViewById(R.id.create_task_group_recycler_date_textview);
 
                 String groupName = groupCheckBox.getText().toString();
-                String taskFullName = singleName + " " + groupName;
+                String taskFullName = singleName + getResources().getString(R.string.between_name_group_string) + groupName;
 
                 if (selectedGroups.contains(groupName)) {
                     names.add(taskFullName);
@@ -474,7 +480,7 @@ public class TaskCreateNewActivity extends AppCompatActivity
 
         if (templateRepeat) {
             for (int i = 0; i < repeatTimes; i++) {
-                shrimpTaskViewModel.insert(new ShrimpTask(newShrimpTask.getName(), newShrimpTask.getParentName(), startDate, newShrimpTask.getDescription()));
+                shrimpTaskViewModel.insert(new ShrimpTask(newShrimpTask.getName(), newShrimpTask.getParentName(), startDate, newShrimpTask.getDescription(), newShrimpTask.getGroup()));
                 startDate = startDate.plusDays(templateInterval);
             }
         } else {
