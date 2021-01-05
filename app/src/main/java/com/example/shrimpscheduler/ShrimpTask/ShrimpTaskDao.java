@@ -31,6 +31,9 @@ public interface ShrimpTaskDao {
     @Query("SELECT * FROM shrimptask WHERE execute_time = :date ORDER BY id")
     LiveData<List<ShrimpTask>> getShrimpTaskDate(LocalDate date);
 
+    @Query("SELECT * FROM shrimptask WHERE execute_time >= :beginDate AND execute_time <= :endDate ORDER BY id")
+    LiveData<List<ShrimpTask>> getShrimpTaskDateRange(LocalDate beginDate, LocalDate endDate);
+
     @Query("SELECT * FROM shrimptask WHERE name LIKE :name AND execute_time >= :date ORDER BY execute_time asc, id")
     LiveData<List<ShrimpTask>> getFutureShrimpTaskNameSpecified(String name, LocalDate date);
 

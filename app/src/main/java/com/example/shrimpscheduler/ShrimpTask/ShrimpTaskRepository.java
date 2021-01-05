@@ -22,6 +22,8 @@ public class ShrimpTaskRepository {
     private LocalDate today = LocalDate.now();
     private LocalDate beginningOfTime = LocalDate.of(1,1,1);
     private LocalDate queryDate = LocalDate.now();
+    private LocalDate beginDate = LocalDate.now().minusDays(4);
+    private LocalDate endDate = LocalDate.now().plusDays(2);
 
     // Note that in order to unit test the ShrimpTaskRepository, you have to remove the Application
     // dependency. This adds complexity and much more code, and this sample is not about testing.
@@ -43,6 +45,8 @@ public class ShrimpTaskRepository {
     public LiveData<List<ShrimpTask>> getAllShrimpTasks() { return allShrimpTasks; }
 
     public LiveData<List<ShrimpTask>> getShrimpTaskDate(LocalDate date) { return shrimpTaskDao.getShrimpTaskDate(date); }
+
+    public LiveData<List<ShrimpTask>> getShrimpTaskDateRange(LocalDate beginDate, LocalDate endDate) { return shrimpTaskDao.getShrimpTaskDateRange(beginDate, endDate); }
 
     public LiveData<List<ShrimpTask>> getFutureShrimpTaskNameSpecified(String name) { return shrimpTaskDao.getFutureShrimpTaskNameSpecified(name, today); }
 
@@ -95,6 +99,8 @@ public class ShrimpTaskRepository {
     public LocalDate getQueryDate() {
         return queryDate;
     }
+    public LocalDate getBeginDate() { return beginDate; }
+    public LocalDate getEndDate() { return endDate; }
 
     public ShrimpTaskDao getShrimpTaskDao() {
         return shrimpTaskDao;

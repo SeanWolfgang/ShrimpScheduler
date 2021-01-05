@@ -24,6 +24,7 @@ public class ShrimpTaskViewModel extends AndroidViewModel {
     private final LiveData<List<LocalDate>> lastExecuteDate;
     private final LiveData<Integer> totalCount;
     private LiveData<List<ShrimpTask>> dateShrimpTasks;
+    private LiveData<List<ShrimpTask>> dateRangeShrimpTasks;
     private LiveData<List<ShrimpTask>> futureShrimpTaskNameSpecified;
     private LiveData<List<ShrimpTask>> shrimpTasksGroupMatch;
     private LiveData<List<ShrimpTask>> shrimpTasksTemplateMatch;
@@ -50,6 +51,7 @@ public class ShrimpTaskViewModel extends AndroidViewModel {
         distinctShrimpTaskNames = shrimpRepository.getDistinctShrimpTaskNames();
         lastExecuteDate = shrimpRepository.getLastExecuteDate();
         dateShrimpTasks = shrimpRepository.getShrimpTaskDate(shrimpRepository.getQueryDate());
+        dateRangeShrimpTasks = shrimpRepository.getShrimpTaskDateRange(shrimpRepository.getBeginDate(), shrimpRepository.getEndDate());
         totalCount = shrimpRepository.getCountShrimpTask();
         nameCountList = Transformations.switchMap(nameCountSearchName,
                 name -> shrimpRepository.getShrimpTasksNameMatch(name));
@@ -96,6 +98,8 @@ public class ShrimpTaskViewModel extends AndroidViewModel {
     public LiveData<List<LocalDate>> getLastExecuteDate() { return lastExecuteDate; }
 
     public LiveData<List<ShrimpTask>> getShrimpTaskDate(LocalDate date) { return dateShrimpTasks;}
+
+    public LiveData<List<ShrimpTask>> getShrimpTaskDateRange() { return dateRangeShrimpTasks;}
 
     public LiveData<List<ShrimpTask>> getFutureShrimpTaskNameSpecified() { return futureShrimpTaskNameSpecified;}
 

@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity
     public EmptyFragment emptyFragment3;
 
     // Task screen variables
-    private Fragment dataPreviewFragment;
+    private DataPreviewFragment dataPreviewFragment;
     private TaskDatePickingFragment taskDatePickingFragment;
     private ShrimpTaskRecyclerFragmentDate shrimpTaskRecyclerFragmentDate;
     private ShrimpTaskEditRecyclerFragment shrimpTaskEditRecyclerFragment;
@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity
                 shrimpTask.setDisposed(true);
                 shrimpTask.setDone(true);
                 shrimpTaskRecyclerFragmentDate.getShrimpTaskViewModel().updateShrimpTask(shrimpTask);
-                displayTextScreen(shrimpTask.getParentName());
+                dataPreviewFragment.updateCharts();
             }
 
             @Override
@@ -177,6 +177,7 @@ public class MainActivity extends AppCompatActivity
                 shrimpTask.setDisposed(true);
                 shrimpTask.setDone(false);
                 shrimpTaskRecyclerFragmentDate.getShrimpTaskViewModel().updateShrimpTask(shrimpTask);
+                dataPreviewFragment.updateCharts();
             }
         });
 

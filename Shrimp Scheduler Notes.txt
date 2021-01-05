@@ -335,3 +335,9 @@ View -> Tool Windows -> Device File Explorer -> /data/data/{$packageId}/database
 Room version migration
 https://www.youtube.com/watch?v=-IV2i-IXIAU&ab_channel=AsyncAndroid
 
+Define arraylist in one line
+https://www.java67.com/2015/10/how-to-declare-arraylist-with-values-in-java.html
+
+MPAndroid Chart hide values
+https://stackoverflow.com/questions/30757664/how-to-hide-drawn-values-in-mpandroidchart
+
