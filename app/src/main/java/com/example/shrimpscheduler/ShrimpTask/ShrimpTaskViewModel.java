@@ -21,6 +21,10 @@ public class ShrimpTaskViewModel extends AndroidViewModel {
     private LiveData<PagedList<ShrimpTask>> allPagedShrimpTasks;
     private final LiveData<List<ShrimpTask>> todayShrimpTasks;
     private final LiveData<List<String>> distinctShrimpTaskNames;
+    private final LiveData<List<ShrimpTask>> pastShrimpTasks;
+    private final LiveData<List<String>> pastDistinctShrimpTaskNames;
+    private final LiveData<List<String>> pastDistinctShrimpTaskTemplates;
+    private final LiveData<List<String>> pastDistinctShrimpTaskGroups;
     private final LiveData<List<LocalDate>> lastExecuteDate;
     private final LiveData<Integer> totalCount;
     private LiveData<List<ShrimpTask>> dateShrimpTasks;
@@ -49,6 +53,10 @@ public class ShrimpTaskViewModel extends AndroidViewModel {
         allShrimpTasks = shrimpRepository.getAllShrimpTasks();
         todayShrimpTasks = shrimpRepository.getShrimpTaskToday(today);
         distinctShrimpTaskNames = shrimpRepository.getDistinctShrimpTaskNames();
+        pastShrimpTasks = shrimpRepository.getPastShrimpTasks();
+        pastDistinctShrimpTaskNames = shrimpRepository.getPastDistinctShrimpTaskNames();
+        pastDistinctShrimpTaskTemplates = shrimpRepository.getPastDistinctTaskTemplateNames();
+        pastDistinctShrimpTaskGroups = shrimpRepository.getPastDistinctGroupNames();
         lastExecuteDate = shrimpRepository.getLastExecuteDate();
         dateShrimpTasks = shrimpRepository.getShrimpTaskDate(shrimpRepository.getQueryDate());
         dateRangeShrimpTasks = shrimpRepository.getShrimpTaskDateRange(shrimpRepository.getBeginDate(), shrimpRepository.getEndDate());
@@ -94,6 +102,11 @@ public class ShrimpTaskViewModel extends AndroidViewModel {
     public LiveData<List<ShrimpTask>> getShrimpTaskToday() { return todayShrimpTasks; }
 
     public LiveData<List<String>> getDistinctShrimpTaskNames() { return distinctShrimpTaskNames; }
+
+    public LiveData<List<ShrimpTask>> getPastShrimpTasks() { return pastShrimpTasks; }
+    public LiveData<List<String>> getPastDistinctShrimpTaskNames() { return pastDistinctShrimpTaskNames; }
+    public LiveData<List<String>> getPastDistinctShrimpTaskTemplates() { return pastDistinctShrimpTaskTemplates; }
+    public LiveData<List<String>> getPastDistinctShrimpTaskGroups() { return pastDistinctShrimpTaskGroups; }
 
     public LiveData<List<LocalDate>> getLastExecuteDate() { return lastExecuteDate; }
 

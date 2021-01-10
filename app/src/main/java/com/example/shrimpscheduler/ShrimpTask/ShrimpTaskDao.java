@@ -16,9 +16,6 @@ public interface ShrimpTaskDao {
     @Query("SELECT * FROM shrimptask ORDER BY execute_time asc, id")
     LiveData<List<ShrimpTask>> getAllShrimpTasks();
 
-    @Query("SELECT name FROM ( SELECT *, max(execute_time) FROM shrimptask WHERE execute_time >= :date GROUP BY name ORDER BY name)")
-    LiveData<List<String>> getDistinctShrimpTaskNames(LocalDate date);
-
     @Query("SELECT execute_time FROM ( SELECT *, max(execute_time) FROM shrimptask WHERE execute_time >= :date GROUP BY name ORDER BY name)")
     LiveData<List<LocalDate>> getLastExecuteDate(LocalDate date);
 
@@ -66,4 +63,27 @@ public interface ShrimpTaskDao {
 
     @Update
     public void updateShrimpTask(ShrimpTask... shrimpTasks);
+
+    // Task data filtering queries
+
+    // Names
+    @Query("SELECT name FROM ( SELECT *, max(execute_time) FROM shrimptask WHERE execute_time >= :date GROUP BY name ORDER BY name)")
+    LiveData<List<String>> getDistinctShrimpTaskNames(LocalDate date);
+
+    // Names for data recycler
+    @Query("SELECT * FROM shrimptask WHERE execute_time <= :date ORDER BY execute_time asc, id")
+    LiveData<List<ShrimpTask>> getPastShrimpTasks(LocalDate date);
+
+    // Names for data recycler
+    @Query("SELECT name FROM ( SELECT *, max(execute_time) FROM shrimptask WHERE execute_time <= :date GROUP BY name ORDER BY name)")
+    LiveData<List<String>> getPastDistinctShrimpTaskNames(LocalDate date);
+
+    // Templates for data recycler
+    @Query("SELECT parent_name FROM ( SELECT *, max(execute_time) FROM shrimptask WHERE execute_time <= :date GROUP BY parent_name ORDER BY parent_name)")
+    LiveData<List<String>> getPastDistinctShrimpTaskTemplates(LocalDate date);
+
+    // Groups for data recycler
+    @Query("SELECT `group` FROM ( SELECT *, max(execute_time) FROM shrimptask WHERE execute_time <= :date GROUP BY `group` ORDER BY `group`)")
+    LiveData<List<String>> getPastDistinctShrimpTaskGroups(LocalDate date);
+
 }

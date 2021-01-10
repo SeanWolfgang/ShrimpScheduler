@@ -16,6 +16,10 @@ public class ShrimpTaskRepository {
     private LiveData<List<ShrimpTask>> allShrimpTasks;
     private LiveData<List<ShrimpTask>> todayShrimpTasks;
     private LiveData<List<String>> distinctShrimpTaskNames;
+    private LiveData<List<ShrimpTask>> pastShrimpTasks;
+    private LiveData<List<String>> pastDistinctShrimpTaskNames;
+    private LiveData<List<String>> pastDistinctTaskTemplateNames;
+    private LiveData<List<String>> pastDistinctGroupNames;
     private LiveData<List<LocalDate>> lastExecuteDate;
     private LiveData<Integer> totalCount;
 
@@ -36,6 +40,10 @@ public class ShrimpTaskRepository {
         allShrimpTasks = shrimpTaskDao.getAllShrimpTasks();
         todayShrimpTasks = shrimpTaskDao.getShrimpTaskToday(today);
         distinctShrimpTaskNames = shrimpTaskDao.getDistinctShrimpTaskNames(today);
+        pastShrimpTasks = shrimpTaskDao.getPastShrimpTasks(today);
+        pastDistinctShrimpTaskNames = shrimpTaskDao.getPastDistinctShrimpTaskNames(today);
+        pastDistinctTaskTemplateNames = shrimpTaskDao.getPastDistinctShrimpTaskTemplates(today);
+        pastDistinctGroupNames = shrimpTaskDao.getPastDistinctShrimpTaskGroups(today);
         lastExecuteDate = shrimpTaskDao.getLastExecuteDate(today);
         totalCount = shrimpTaskDao.getCountShrimpTask();
     }
@@ -59,6 +67,11 @@ public class ShrimpTaskRepository {
     public LiveData<List<ShrimpTask>> getShrimpTaskToday(LocalDate date) { return shrimpTaskDao.getShrimpTaskToday(date); }
 
     public LiveData<List<String>> getDistinctShrimpTaskNames() { return shrimpTaskDao.getDistinctShrimpTaskNames(today); }
+    public LiveData<List<ShrimpTask>> getPastShrimpTasks() { return shrimpTaskDao.getPastShrimpTasks(today); }
+
+    public LiveData<List<String>> getPastDistinctShrimpTaskNames() { return shrimpTaskDao.getPastDistinctShrimpTaskNames(today); }
+    public LiveData<List<String>> getPastDistinctTaskTemplateNames() { return shrimpTaskDao.getPastDistinctShrimpTaskTemplates(today); }
+    public LiveData<List<String>> getPastDistinctGroupNames() { return shrimpTaskDao.getPastDistinctShrimpTaskGroups(today); }
 
     public LiveData<List<LocalDate>> getLastExecuteDate() { return shrimpTaskDao.getLastExecuteDate(today); }
 

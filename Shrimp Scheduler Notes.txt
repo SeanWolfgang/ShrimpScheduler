@@ -341,3 +341,11 @@ https://www.java67.com/2015/10/how-to-declare-arraylist-with-values-in-java.html
 MPAndroid Chart hide values
 https://stackoverflow.com/questions/30757664/how-to-hide-drawn-values-in-mpandroidchart
 
+ForEach hashmap
+https://www.baeldung.com/java-iterate-map
+
+Android pichart from MPChart tutorial
+https://medium.com/@clyeung0714/using-mpandroidchart-for-android-application-piechart-123d62d4ddc0
+
+Hide zeros on pie chart MPChart
+https://stackoverflow.com/questions/32940999/how-to-hide-zero-values-in-pie-chart-mpchart-android

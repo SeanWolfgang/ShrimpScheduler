@@ -17,10 +17,12 @@ import com.example.shrimpscheduler.CreateTask.TaskCreateNewActivity;
 import com.example.shrimpscheduler.CreateTask.TaskEditActivity;
 import com.example.shrimpscheduler.CreateTemplate.TemplateCreateNewActivity;
 import com.example.shrimpscheduler.CreateTemplate.TemplateEditActivity;
+import com.example.shrimpscheduler.DataViewing.Data;
 import com.example.shrimpscheduler.Group.Group;
 import com.example.shrimpscheduler.Group.GroupAdapter;
 import com.example.shrimpscheduler.Group.GroupViewModel;
 import com.example.shrimpscheduler.MainFragments.DataPreviewFragment;
+import com.example.shrimpscheduler.MainFragments.DataRecyclerFragment;
 import com.example.shrimpscheduler.MainFragments.EmptyFragment;
 import com.example.shrimpscheduler.MainFragments.FooterButtonFragment;
 import com.example.shrimpscheduler.MainFragments.GroupHeaderFragment;
@@ -105,7 +107,7 @@ public class MainActivity extends AppCompatActivity
     private GroupRecyclerFragment groupRecyclerFragment;
 
     // Data screen variables
-    // private DataRecyclerFragment dataRecyclerFragment;
+    private DataRecyclerFragment dataRecyclerFragment;
 
     // Footer
     private FooterButtonFragment footerButtonFragment;
@@ -156,7 +158,7 @@ public class MainActivity extends AppCompatActivity
         groupRecyclerFragment = new GroupRecyclerFragment();
 
         // Data screen variables
-        // something to go here once the variable is ready
+        dataRecyclerFragment = new DataRecyclerFragment();
 
         // Footer
         footerButtonFragment = new FooterButtonFragment();
@@ -257,6 +259,7 @@ public class MainActivity extends AppCompatActivity
         });
 
         displayTasksScreen();
+        //displayDataScreen();
     }
 
     public GroupViewModel getGroupViewModel() {
@@ -359,9 +362,9 @@ public class MainActivity extends AppCompatActivity
 
     public void displayDataScreen() {
         fragmentManager.beginTransaction()
-                .replace(R.id.container_0, emptyFragment0)
-                .replace(R.id.container_1, emptyFragment1)
-                .replace(R.id.container_2, shrimpTaskEditRecyclerFragment)
+                .replace(R.id.container_0, dataPreviewFragment)
+                .replace(R.id.container_1, emptyFragment0)
+                .replace(R.id.container_2, dataRecyclerFragment)
                 .replace(R.id.container_3, footerButtonFragment)
                 .commit();
     }
@@ -474,4 +477,22 @@ public class MainActivity extends AppCompatActivity
             }
         }
     }
+
+    private void setRecyclerDataGroup(ArrayList<Data> passDataGroup) {
+        dataRecyclerFragment.submitListToAdapter(passDataGroup);
+    }
+
+    /*
+    private ArrayList<Data> getDataGroupFilterTask(ArrayList<ShrimpTask> shrimpTaskList, LocalDate startDate) {
+        ArrayList<ShrimpTask> madeList = new ArrayList<>();
+
+        for (ShrimpTask eachTask : shrimpTaskList) {
+            if (eachTask.getExecuteTime().compareTo(startDate) > 0=) {
+                madeList.add(eachTask);
+            }
+        }
+
+
+    }
+     */
 }
