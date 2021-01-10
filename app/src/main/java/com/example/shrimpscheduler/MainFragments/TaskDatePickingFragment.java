@@ -115,6 +115,14 @@ public class TaskDatePickingFragment extends Fragment implements DatePickerDialo
         }
     }
 
+    public Boolean isEditMode() {
+        return editMode;
+    }
+
+    public void setEditMode(Boolean editMode) {
+        this.editMode = editMode;
+    }
+
     @Override
     public void onDetach() {
         super.onDetach();

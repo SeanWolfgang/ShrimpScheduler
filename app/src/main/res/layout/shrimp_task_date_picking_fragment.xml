@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="@dimen/activity_horizontal_margin_small"
+    >
 
     <ImageButton
         android:id="@+id/task_date_picking_date_imagebutton"

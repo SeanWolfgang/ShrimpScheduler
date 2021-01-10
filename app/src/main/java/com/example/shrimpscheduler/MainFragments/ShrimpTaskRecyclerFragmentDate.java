@@ -1,10 +1,12 @@
 package com.example.shrimpscheduler.MainFragments;
 
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,8 +18,14 @@ import java.time.LocalDate;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class ShrimpTaskRecyclerFragmentDate extends ShrimpTaskRecyclerFragment {
+    private ShrimpTaskRecyclerFragmentDate.ShrimpTaskRecyclerFragmentDateUpdatedListener listener;
     private ShrimpTaskViewModel dateShrimpTaskViewModel;
     private LocalDate filterDate = LocalDate.now();
+
+    public interface ShrimpTaskRecyclerFragmentDateUpdatedListener{
+        void taskDateViewUpdatedListener();
+    }
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Nullable
@@ -30,8 +38,8 @@ public class ShrimpTaskRecyclerFragmentDate extends ShrimpTaskRecyclerFragment {
         dateShrimpTaskViewModel.setDate(filterDate);
 
         dateShrimpTaskViewModel.getShrimpTaskDate().observe(this, dateTasks -> {
-            dateShrimpTaskViewModel.setDate(filterDate);
             adapter.submitList(dateTasks);
+            listener.taskDateViewUpdatedListener();
         });
 
         /*
@@ -48,6 +56,33 @@ public class ShrimpTaskRecyclerFragmentDate extends ShrimpTaskRecyclerFragment {
     public ShrimpTaskViewModel getShrimpTaskViewModel() {return dateShrimpTaskViewModel; }
 
     public void setFilterDate(LocalDate filterDate) {
+        this.filterDate = filterDate;
+        dateShrimpTaskViewModel.setDate(filterDate);
+    }
+
+    private void displayTextScreenShort(String inputText) {
+        Toast.makeText(
+                getContext(),
+                inputText,
+                Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof ShrimpTaskRecyclerFragmentDate.ShrimpTaskRecyclerFragmentDateUpdatedListener) {
+            listener = (ShrimpTaskRecyclerFragmentDate.ShrimpTaskRecyclerFragmentDateUpdatedListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement ShrimpTaskRecyclerFragmentDateUpdatedListener");
+        }
+    }
+
+    public LocalDate getFilterDate() {
+        return filterDate;
+    }
+
+    public void setFilterDateNoCommit(LocalDate filterDate) {
         this.filterDate = filterDate;
     }
 }

@@ -45,7 +45,6 @@ public class ShrimpTaskEditRecyclerFragment extends Fragment {
         dateShrimpTaskViewModel.setDate(filterDate);
 
         dateShrimpTaskViewModel.getShrimpTaskDate().observe(this, dateTasks -> {
-            dateShrimpTaskViewModel.setDate(filterDate);
             adapter.submitList(dateTasks);
         });
 
@@ -60,5 +59,14 @@ public class ShrimpTaskEditRecyclerFragment extends Fragment {
 
     public void setFilterDate(LocalDate filterDate) {
         this.filterDate = filterDate;
+        dateShrimpTaskViewModel.setDate(filterDate);
+    }
+
+    public void setFilterDateNoCommit(LocalDate filterDate) {
+        this.filterDate = filterDate;
+    }
+
+    public LocalDate getFilterDate() {
+        return filterDate;
     }
 }

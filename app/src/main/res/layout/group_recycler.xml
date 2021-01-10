@@ -4,14 +4,15 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/big_padding">
+    android:padding="@dimen/small_padding"
+    >
 
     <TextView
         android:id="@+id/group_name_recycler"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textSize="@dimen/medium_text"
-        android:paddingHorizontal="@dimen/big_padding"
+        android:paddingHorizontal="@dimen/smallest_padding"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/group_delete_button"

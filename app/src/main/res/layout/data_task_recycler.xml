@@ -29,7 +29,7 @@
         android:id="@+id/data_recycler_results"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/big_text"
+        android:textSize="@dimen/small_text"
         app:layout_constraintBottom_toBottomOf="@+id/data_recycler_data"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

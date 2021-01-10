@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,6 +29,7 @@ import com.example.shrimpscheduler.Template.TaskTemplateViewModel;
 import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 
 public class DataRecyclerFragment extends Fragment {
@@ -101,15 +103,11 @@ public class DataRecyclerFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void run() {
-                setFilterMode("name");
+                setFilterMode(filterMode);
             }
         }, 100);
 
         return view;
-    }
-
-    public void submitListToAdapter(ArrayList<Data> submitDataList) {
-        adapter.submitList(submitDataList);
     }
 
     public DataAdapter getAdapter() {
@@ -122,6 +120,7 @@ public class DataRecyclerFragment extends Fragment {
             filterMode = inputMode;
 
             shrimpTaskViewModel.getPastShrimpTasks().observe(this, allTasks -> {
+
                 if (filterMode.equals("name")) {
                     nameDataHash.forEach((k, v) -> {
                         v.setNotDisposedCount(0);
@@ -148,9 +147,9 @@ public class DataRecyclerFragment extends Fragment {
                     if (filterMode.equals("name")) {
                         tempData = nameDataHash.get(task.getName());
                     } else if (filterMode.equals("template")) {
-                        tempData = templateDataHash.get(task.getName());
+                        tempData = templateDataHash.get(task.getParentName());
                     } else if (filterMode.equals("group")) {
-                        tempData = groupDataHash.get(task.getName());
+                        tempData = groupDataHash.get(task.getGroup());
                     } else {
                         break;
                     }
@@ -169,21 +168,36 @@ public class DataRecyclerFragment extends Fragment {
                 }
 
                 if (filterMode.equals("name")) {
-                    namesDataList.clear();
+                    namesDataList = new ArrayList<>();
                     nameDataHash.forEach((k, v) -> namesDataList.add(v));
+                    namesDataList.sort(Comparator.comparing(a -> a.getTitle()));
                     adapter.submitList(namesDataList);
                 } else if (filterMode.equals("template")) {
-                    templatesDataList.clear();
+                    templatesDataList = new ArrayList<>();
                     templateDataHash.forEach((k, v) -> templatesDataList.add(v));
+                    templatesDataList.sort(Comparator.comparing(a -> a.getTitle()));
                     adapter.submitList(templatesDataList);
                 } else if (filterMode.equals("group")) {
-                    groupsDataList.clear();
+                    groupsDataList = new ArrayList<>();
                     groupDataHash.forEach((k, v) -> groupsDataList.add(v));
+                    groupsDataList.sort(Comparator.comparing(a -> a.getTitle()));
                     adapter.submitList(groupsDataList);
                 }
             });
         } else {
             // Do nothing since the filter mode is invalid
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void updateData() {
+        setFilterMode(filterMode);
+    }
+
+    private void displayTextScreenShort(String inputText) {
+        Toast.makeText(
+                getContext(),
+                inputText,
+                Toast.LENGTH_SHORT).show();
     }
 }

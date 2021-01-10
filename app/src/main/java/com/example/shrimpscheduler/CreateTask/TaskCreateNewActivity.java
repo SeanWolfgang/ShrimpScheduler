@@ -476,9 +476,9 @@ public class TaskCreateNewActivity extends AppCompatActivity
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void placeShrimpTasks(ShrimpTask newShrimpTask, LocalDate startDate, LocalDate endDate) {
-        long repeatTimes = (DAYS.between(startDate, endDate)) / templateInterval;
-
         if (templateRepeat) {
+            long repeatTimes = (DAYS.between(startDate, endDate)) / templateInterval;
+
             for (int i = 0; i < repeatTimes; i++) {
                 shrimpTaskViewModel.insert(new ShrimpTask(newShrimpTask.getName(), newShrimpTask.getParentName(), startDate, newShrimpTask.getDescription(), newShrimpTask.getGroup()));
                 startDate = startDate.plusDays(templateInterval);

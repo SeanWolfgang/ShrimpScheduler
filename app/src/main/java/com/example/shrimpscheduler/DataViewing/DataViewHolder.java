@@ -12,11 +12,14 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shrimpscheduler.R;
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -106,14 +109,29 @@ public class DataViewHolder extends RecyclerView.ViewHolder {
         //grouping the data set from entry to chart
         PieData pieData = new PieData(pieDataSet);
         //showing the value of the entries, default true if not set
-        pieData.setDrawValues(true);
+        pieData.setDrawValues(false);
+        pieData.setValueFormatter(new MyValueFormatter());
 
         recyclerChart.setDrawHoleEnabled(false);
         recyclerChart.setDrawEntryLabels(false);
         recyclerChart.getDescription().setEnabled(false);
         recyclerChart.getLegend().setEnabled(false);
+        recyclerChart.animateY(500, Easing.EaseInOutQuad);
 
         recyclerChart.setData(pieData);
         recyclerChart.invalidate();
+    }
+
+    private class MyValueFormatter extends ValueFormatter {
+        private DecimalFormat mFormat;
+
+        public MyValueFormatter() {
+            mFormat = new DecimalFormat("#");
+        }
+
+        @Override
+        public String getFormattedValue(float value) {
+            return mFormat.format(value);
+        }
     }
 }

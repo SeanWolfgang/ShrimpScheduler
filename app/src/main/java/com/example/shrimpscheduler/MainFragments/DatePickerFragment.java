@@ -28,6 +28,4 @@ public class DatePickerFragment extends DialogFragment{
         datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
         return datePickerDialog;
     }
-
-
 }

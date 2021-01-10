@@ -117,4 +117,9 @@
     <string name="settings_delete_future_task_group">Delete tasks after effective date by group.</string>
     <string name="settings_datepicker">EFFECTIVE DATE</string>
 
+    <string name="data_filter_label_string">Group by:</string>
+    <string name="data_filter_label_name">name</string>
+    <string name="data_filter_label_template">template</string>
+    <string name="data_filter_label_group">group</string>
+
 </resources>

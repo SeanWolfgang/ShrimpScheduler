@@ -2,6 +2,7 @@ package com.example.shrimpscheduler.DataViewing;
 
 import android.os.Build;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -45,20 +46,10 @@ public class DataAdapter extends ListAdapter<Data, DataViewHolder> {
 
         @Override
         public boolean areContentsTheSame(@NonNull Data oldItem, @NonNull Data newItem) {
-            boolean same = true;
-
-            if (true || false) {
-
-            }
-
-            if (!oldItem.getTitle().equals(newItem.getTitle()) ||
-                    (oldItem.getNotDisposedCount() != newItem.getNotDisposedCount()) ||
-                    (oldItem.getDoneCount() != newItem.getDoneCount()) ||
-                    (oldItem.getNotDoneCount() != newItem.getNotDoneCount())){
-                same = false;
-            }
-
-            return same;
+            return oldItem.getTitle().equals(newItem.getTitle()) &&
+                    oldItem.getNotDisposedCount() == newItem.getNotDisposedCount() &&
+                    oldItem.getDoneCount() == newItem.getDoneCount() &&
+                    oldItem.getNotDoneCount() == newItem.getNotDoneCount();
         }
     }
 }

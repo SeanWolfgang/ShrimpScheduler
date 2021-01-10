@@ -349,3 +349,29 @@ https://medium.com/@clyeung0714/using-mpandroidchart-for-android-application-pie
 
 Hide zeros on pie chart MPChart
 https://stackoverflow.com/questions/32940999/how-to-hide-zero-values-in-pie-chart-mpchart-android
+
+
+uPDATES
+Fixed edit mode double click requirement. Now only one click OK
+
+
+Performance analysis - Memory monitor - Allocation Tracker tab - Heap tab
+https://www.youtube.com/watch?v=OrLEoIsMIAc&ab_channel=GoogleDevelopers
+https://developer.android.com/studio/profile/memory-profiler
+https://developer.android.com/studio/profile/cpu-profiler
+https://stackoverflow.com/questions/6946478/what-triggers-a-views-measure-to-be-called
+https://dev.to/pyricau/android-vitals-profiling-app-startup-32ek
+https://developer.android.com/topic/performance/vitals/render
+
+Remove decimal values from bar chart MPCHART description
+https://stackoverflow.com/questions/44799799/how-to-remove-decimal-value-from-the-barchart
+
+Change labels on MPCHART
+https://stackoverflow.com/questions/38857038/mpandroidchart-adding-labels-to-bar-chart
+
+LocalDate formatting
+https://stackoverflow.com/questions/28177370/how-to-format-localdate-to-string
+
+Sorting lists of objects by attribute in Java 8
+https://stackoverflow.com/questions/33487063/java-8-sort-list-of-objects-by-attribute-without-custom-comparator
+

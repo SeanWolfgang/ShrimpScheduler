@@ -21,6 +21,7 @@ import com.example.shrimpscheduler.DataViewing.Data;
 import com.example.shrimpscheduler.Group.Group;
 import com.example.shrimpscheduler.Group.GroupAdapter;
 import com.example.shrimpscheduler.Group.GroupViewModel;
+import com.example.shrimpscheduler.MainFragments.DataFilterFragment;
 import com.example.shrimpscheduler.MainFragments.DataPreviewFragment;
 import com.example.shrimpscheduler.MainFragments.DataRecyclerFragment;
 import com.example.shrimpscheduler.MainFragments.EmptyFragment;
@@ -50,7 +51,9 @@ public class MainActivity extends AppCompatActivity
         FooterButtonFragment.FooterButtonFragmentListener,
         GroupHeaderFragment.GroupHeaderFragmentListener,
         TemplateHeaderFragment.TemplateHeaderFragmentListener,
-        SettingsFragment.SettingsFragmentListener{
+        SettingsFragment.SettingsFragmentListener,
+        ShrimpTaskRecyclerFragmentDate.ShrimpTaskRecyclerFragmentDateUpdatedListener,
+        DataFilterFragment.DataFilterFragmentListener{
 
     public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
 
@@ -107,6 +110,7 @@ public class MainActivity extends AppCompatActivity
     private GroupRecyclerFragment groupRecyclerFragment;
 
     // Data screen variables
+    private DataFilterFragment dataFilterFragment;
     private DataRecyclerFragment dataRecyclerFragment;
 
     // Footer
@@ -158,6 +162,7 @@ public class MainActivity extends AppCompatActivity
         groupRecyclerFragment = new GroupRecyclerFragment();
 
         // Data screen variables
+        dataFilterFragment = new DataFilterFragment();
         dataRecyclerFragment = new DataRecyclerFragment();
 
         // Footer
@@ -166,20 +171,20 @@ public class MainActivity extends AppCompatActivity
         shrimpTaskRecyclerFragmentDate.getAdapter().setOnShrimpTaskClickListener(new ShrimpTaskAdapter.OnShrimpTaskClickListener() {
             @Override
             public void onDoneButtonClick(int position) {
+                displayTextScreenShort("DONE");
                 ShrimpTask shrimpTask = shrimpTaskRecyclerFragmentDate.getAdapter().getShrimpTask(position);
                 shrimpTask.setDisposed(true);
                 shrimpTask.setDone(true);
                 shrimpTaskRecyclerFragmentDate.getShrimpTaskViewModel().updateShrimpTask(shrimpTask);
-                dataPreviewFragment.updateCharts();
             }
 
             @Override
             public void onNotDoneButtonClick(int position) {
+                displayTextScreenShort("UNDONE");
                 ShrimpTask shrimpTask = shrimpTaskRecyclerFragmentDate.getAdapter().getShrimpTask(position);
                 shrimpTask.setDisposed(true);
                 shrimpTask.setDone(false);
                 shrimpTaskRecyclerFragmentDate.getShrimpTaskViewModel().updateShrimpTask(shrimpTask);
-                dataPreviewFragment.updateCharts();
             }
         });
 
@@ -208,7 +213,7 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onDeleteButtonClick(int position) {
-                ShrimpTask shrimpTask = shrimpTaskRecyclerFragmentDate.getAdapter().getShrimpTask(position);
+                ShrimpTask shrimpTask = shrimpTaskEditRecyclerFragment.getAdapter().getShrimpTask(position);
                 shrimpTaskEditRecyclerFragment.getShrimpTaskViewModel().deleteItem(shrimpTask.getId());
             }
         });
@@ -277,8 +282,16 @@ public class MainActivity extends AppCompatActivity
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void calendarButtonListener(LocalDate pickedDate) {
-        shrimpTaskRecyclerFragmentDate.setFilterDate(pickedDate);
-        shrimpTaskEditRecyclerFragment.setFilterDate(pickedDate);
+        if (shrimpTaskRecyclerFragmentDate != null && shrimpTaskRecyclerFragmentDate.isVisible()) {
+            shrimpTaskRecyclerFragmentDate.setFilterDate(pickedDate);
+        } else {
+            shrimpTaskRecyclerFragmentDate.setFilterDateNoCommit(pickedDate);
+        }
+        if (shrimpTaskEditRecyclerFragment != null && shrimpTaskEditRecyclerFragment.isVisible()) {
+            shrimpTaskEditRecyclerFragment.setFilterDate(pickedDate);
+        } else {
+            shrimpTaskEditRecyclerFragment.setFilterDateNoCommit(pickedDate);
+        }
     }
 
     @Override
@@ -323,7 +336,10 @@ public class MainActivity extends AppCompatActivity
         displayDataScreen();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void displayTasksScreen() {
+        taskDatePickingFragment.setEditMode(false);
+
         fragmentManager.beginTransaction()
                 .replace(R.id.container_0, dataPreviewFragment)
                 .replace(R.id.container_1, taskDatePickingFragment)
@@ -350,7 +366,6 @@ public class MainActivity extends AppCompatActivity
                 .commit();
     }
 
-
     public void displayGroupsScreen() {
         fragmentManager.beginTransaction()
                 .replace(R.id.container_0, emptyFragment0)
@@ -363,7 +378,7 @@ public class MainActivity extends AppCompatActivity
     public void displayDataScreen() {
         fragmentManager.beginTransaction()
                 .replace(R.id.container_0, dataPreviewFragment)
-                .replace(R.id.container_1, emptyFragment0)
+                .replace(R.id.container_1, dataFilterFragment)
                 .replace(R.id.container_2, dataRecyclerFragment)
                 .replace(R.id.container_3, footerButtonFragment)
                 .commit();
@@ -384,11 +399,11 @@ public class MainActivity extends AppCompatActivity
     private void switchTaskEditMode(boolean editMode) {
         if (editMode) {
             fragmentManager.beginTransaction()
-                    .replace(R.id.container_2, shrimpTaskRecyclerFragmentDate)
+                    .replace(R.id.container_2, shrimpTaskEditRecyclerFragment)
                     .commit();
         } else {
             fragmentManager.beginTransaction()
-                    .replace(R.id.container_2, shrimpTaskEditRecyclerFragment)
+                    .replace(R.id.container_2, shrimpTaskRecyclerFragmentDate)
                     .commit();
         }
     }
@@ -398,6 +413,13 @@ public class MainActivity extends AppCompatActivity
                 getApplicationContext(),
                 inputText,
                 Toast.LENGTH_LONG).show();
+    }
+
+    private void displayTextScreenShort(String inputText) {
+        Toast.makeText(
+                getApplicationContext(),
+                inputText,
+                Toast.LENGTH_SHORT).show();
     }
 
     /*
@@ -478,8 +500,16 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void setRecyclerDataGroup(ArrayList<Data> passDataGroup) {
-        dataRecyclerFragment.submitListToAdapter(passDataGroup);
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public void taskDateViewUpdatedListener() {
+        dataPreviewFragment.updateCharts();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public void dataFilterSpinnerChanged(String selectedString) {
+        dataRecyclerFragment.setFilterMode(selectedString);
     }
 
     /*

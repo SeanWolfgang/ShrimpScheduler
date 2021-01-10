@@ -19,6 +19,7 @@ public class Data {
         notDoneCount = 0;
     }
 
+
     public ArrayList<ShrimpTask> getTaskList() {
         return taskList;
     }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -49,6 +50,12 @@ public class GroupRecyclerFragment extends Fragment {
         return adapter;
     }
 
+    private void displayTextScreenShort(String inputText) {
+        Toast.makeText(
+                getContext(),
+                inputText,
+                Toast.LENGTH_SHORT).show();
+    }
     /*
     public void setAdapter(TaskTemplateAdapter adapter) {
         this.adapter = adapter;

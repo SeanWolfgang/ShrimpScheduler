@@ -11,7 +11,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.shrimpscheduler.MainActivity;
@@ -19,21 +18,19 @@ import com.example.shrimpscheduler.R;
 import com.example.shrimpscheduler.ShrimpTask.ShrimpTask;
 import com.example.shrimpscheduler.ShrimpTask.ShrimpTaskViewModel;
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -84,6 +81,7 @@ public class DataPreviewFragment extends Fragment {
         //l.setXEntrySpace(6f);
 
         chart.getDescription().setEnabled(false);
+        chart.getLegend().setEnabled(false);
 
         // scaling can now only be done on x- and y-axis separately
         chart.setPinchZoom(false);
@@ -168,7 +166,9 @@ public class DataPreviewFragment extends Fragment {
         // have as many colors as stack-values per entry
         int[] colors = new int[3];
 
-        System.arraycopy(ColorTemplate.MATERIAL_COLORS, 0, colors, 0, 3);
+        colors[0] = Color.GREEN;
+        colors[1] = Color.RED;
+        colors[2] = Color.GRAY;
 
         return colors;
     }
@@ -184,13 +184,22 @@ public class DataPreviewFragment extends Fragment {
     public void updateCharts() {
         shrimpTaskViewModel.getShrimpTaskDateRange().observe(this, shrimpTaskDateRange -> {
             LocalDate startDay = LocalDate.now().minusDays(4);
+            LocalDate labelDay = LocalDate.now().minusDays(4);
             LocalDate endDay = LocalDate.now().plusDays(2);
 
             dayTaskNumbersList.clear();
 
+            String[] labels = new String[8];
+            labels[0] = "--";
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E");
+
             for (int i = 0; i <= DAYS.between(startDay, endDay); i++ ) {
                 dayTaskNumbersList.add(i, new float[]{0,0,0});
+                labels[i+1] = labelDay.format(formatter);
+                labelDay = labelDay.plusDays(1);
             }
+            labels[5] = "today";
+            chart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
 
             for (ShrimpTask eachTask : shrimpTaskDateRange) {
                 int dayDifference = (int) DAYS.between(startDay, eachTask.getExecuteTime());
@@ -206,8 +215,8 @@ public class DataPreviewFragment extends Fragment {
                 }
             }
             setData(dayTaskNumbersList);
-        });
 
-        chart.invalidate();
+            chart.invalidate();
+        });
     }
 }
